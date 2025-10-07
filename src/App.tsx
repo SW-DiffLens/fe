@@ -1,10 +1,5 @@
 function App() {
-
-  return (
-    <>
-      <div>difflens</div>
-    </>
-  )
+  return <div>difflens</div>;
 }
 
-export default App
+export default App;
