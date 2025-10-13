@@ -1,1 +1,286 @@
 @import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-primary-50: #f5f4fe;
+  --color-primary-100: #edebfc;
+  --color-primary-200: #dedafa;
+  --color-primary-300: #c5bdf5;
+  --color-primary-400: #a697ee;
+  --color-primary-500: #8569e4;
+  --color-primary-600: #764ed9;
+  --color-primary-700: #663cc5;
+  --color-primary-800: #5532a0;
+  --color-primary-900: #482488;
+  --color-primary-950: #201a58;
+
+  --color-secondary-50: #fef4ff;
+  --color-secondary-100: #fde7ff;
+  --color-secondary-200: #fccdff;
+  --color-secondary-300: #fd9afe;
+  --color-secondary-400: #fc76fc;
+  --color-secondary-500: #f342f2;
+  --color-secondary-600: #d722d2;
+  --color-secondary-700: #b219aa;
+  --color-secondary-800: #92168a;
+  --color-secondary-900: #77186f;
+  --color-secondary-950: #50024a;
+
+  --color-tertiary-50: #eff5ff;
+  --color-tertiary-100: #dae7ff;
+  --color-tertiary-200: #bed6ff;
+  --color-tertiary-300: #94bfff;
+  --color-tertiary-400: #5d9afd;
+  --color-tertiary-500: #3773fa;
+  --color-tertiary-600: #2154ef;
+  --color-tertiary-700: #193edc;
+  --color-tertiary-800: #1b3482;
+  --color-tertiary-900: #1c318c;
+  --color-tertiary-950: #162055;
+
+  /* Typography - Font Family */
+  --font-family-primary: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  --font-family-secondary: "Pretendard", system-ui, -apple-system, sans-serif;
+
+  /* Typography - Font Sizes (정확한 디자인 시스템 값) */
+  --font-size-h1: 4rem; /* 64px */
+  --font-size-h2: 3rem; /* 48px */
+  --font-size-h3: 2rem; /* 32px */
+  --font-size-h4: 1.5rem; /* 24px */
+  --font-size-h5: 1.25rem; /* 20px */
+  --font-size-h6: 1.125rem; /* 18px */
+  --font-size-subtitle1: 1rem; /* 16px */
+  --font-size-subtitle2: 0.875rem; /* 14px */
+
+  --font-size-body1: 1rem; /* 16px */
+  --font-size-body2: 0.875rem; /* 14px */
+
+  --font-size-button-large: 0.9375rem; /* 15px */
+  --font-size-button-medium: 0.875rem; /* 14px */
+  --font-size-button-small: 0.8125rem; /* 13px */
+
+  --font-size-caption: 0.75rem; /* 12px */
+  --font-size-overline: 0.75rem; /* 12px */
+  --font-size-label: 0.75rem; /* 12px */
+
+  --font-size-component-title-01: 3rem; /* 48px */
+  --font-size-component-title-02: 15rem; /* 240px */
+
+  --font-size-legend: 0.8125rem; /* 13px */
+
+  /* Typography - Font Weights */
+  --font-weight-black: 900;
+  --font-weight-bold: 700;
+  --font-weight-semibold: 600;
+  --font-weight-medium: 500;
+  --font-weight-regular: 400;
+  --font-weight-light: 300;
+
+  /* Typography - Line Heights (정확한 디자인 시스템 값) */
+  --line-height-h1: 5rem; /* 80px */
+  --line-height-h2: 4rem; /* 64px */
+  --line-height-h3: 3rem; /* 48px */
+  --line-height-h4: 2.25rem; /* 36px */
+  --line-height-h5: 1.875rem; /* 30px */
+  --line-height-h6: 1.75rem; /* 28px */
+
+  --line-height-subtitle1: 1.5rem; /* 24px */
+  --line-height-subtitle2: 1.375rem; /* 22px */
+
+  --line-height-body1: 1.5rem; /* 24px */
+  --line-height-body2: 1.375rem; /* 22px */
+
+  --line-height-button-large: 1.5rem; /* 24px */
+  --line-height-button-medium: 1.375rem; /* 22px */
+  --line-height-button-small: 1.25rem; /* 20px */
+
+  --line-height-caption: 1.125rem; /* 18px */
+  --line-height-overline: 1.125rem; /* 18px */
+  --line-height-label: 1.125rem; /* 18px */
+
+  --line-height-component-title-01: 4rem; /* 64px */
+  --line-height-component-title-02: 15rem; /* 240px */
+
+  --line-height-legend: 1.125rem; /* 18px */
+}
+
+/* Typography Utility Classes */
+.text-h1-primary {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h1);
+}
+
+.text-h2-primary {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h2);
+}
+
+.text-h3-primary {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h3);
+}
+
+.text-h4-primary {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h4);
+}
+
+.text-h5-primary {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h5);
+}
+
+.text-h6-primary {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h6);
+}
+
+.text-h1-secondary {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h1);
+}
+
+.text-h2-secondary {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h2);
+}
+
+.text-h3-secondary {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h3);
+}
+
+.text-h4-secondary {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h4);
+}
+
+.text-h5-secondary {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h5);
+}
+
+.text-h6-secondary {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h6);
+}
+
+.text-subtitle1 {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-subtitle1);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-subtitle1);
+}
+
+.text-subtitle2 {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-subtitle2);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-subtitle2);
+}
+
+.text-body1 {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-body1);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body1);
+}
+
+.text-body2 {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-body2);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body2);
+}
+
+.text-button-large {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-button-large);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-button-large);
+}
+
+.text-button-medium {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-button-medium);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-button-medium);
+}
+
+.text-button-small {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-button-small);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-button-small);
+}
+
+.text-caption {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-caption);
+}
+
+.text-overline {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-overline);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-overline);
+  text-transform: uppercase;
+}
+
+.text-label {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-label);
+  text-transform: uppercase;
+}
+
+.text-component-title-01 {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-component-title-01);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-component-title-01);
+  text-transform: uppercase;
+}
+
+.text-component-title-02 {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-component-title-02);
+  font-weight: var(--font-weight-black);
+  line-height: var(--line-height-component-title-02);
+  text-transform: uppercase;
+}
+
+.text-legend {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-legend);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-legend);
+  text-transform: uppercase;
+}
