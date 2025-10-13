@@ -1,6 +1,6 @@
 import React from "react";
 
-type ButtonVariant = "filled" | "unfilled" | "icon";
+type ButtonVariant = "filled" | "outlined" | "icon";
 type ButtonSize = "large" | "medium" | "small";
 
 interface ButtonProps {
@@ -19,7 +19,7 @@ const sizeClasses = {
 
 const variantClasses = {
   filled: "bg-primary-700 text-white",
-  unfilled: "bg-transparent text-gray-800 border border-primary-700",
+  outlined: "bg-transparent text-gray-800 border border-primary-700",
   icon: "bg-primary-700 text-white flex items-center gap-[4px]",
 };
 
@@ -30,7 +30,7 @@ export default function Button({
   onClick,
   disabled = false,
 }: ButtonProps) {
-  const baseClasses = "rounded-lg disabled:cursor-not-allowed";
+  const baseClasses = "rounded-lg disabled:cursor-not-allowed cursor-pointer";
   const sizeClass = sizeClasses[size];
   const variantClass = variantClasses[variant];
 
