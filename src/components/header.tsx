@@ -1,4 +1,3 @@
-import React from "react";
 import logoContainer from "@/assets/logo_container.svg";
 import Button from "@/components/button";
 import chevronDownIcon from "@/assets/ic_chevron_down.svg";
