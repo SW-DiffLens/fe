@@ -89,8 +89,7 @@
   --color-chart-gray: #bebebe;
 
   /* Typography - Font Family */
-  --font-family-primary: "Roboto", system-ui, -apple-system, sans-serif;
-  --font-family-secondary: "Pretendard", system-ui, -apple-system, sans-serif;
+  --font-family-pretendard: "Pretendard", system-ui, -apple-system, sans-serif;
 
   /* Typography - Font Sizes */
   --font-size-h1: 4rem; /* 64px */
@@ -153,7 +152,7 @@
 
   --line-height-caption: 1.125rem; /* 18px */
   --line-height-overline: 1.125rem; /* 18px */
-  --line-height-label: 1.125rem; /* 18px */
+  --line-height-label: 1.25rem; /* 20px */
 
   --line-height-component-title-01: 4rem; /* 64px */
   --line-height-component-title-02: 15rem; /* 240px */
@@ -162,148 +161,106 @@
 }
 
 /* Typography Utility Classes */
-.text-h1-primary {
-  font-family: var(--font-family-primary);
+.text-h1 {
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-h1);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-h1);
 }
 
-.text-h2-primary {
-  font-family: var(--font-family-primary);
+.text-h2 {
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-h2);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-h2);
 }
 
-.text-h3-primary {
-  font-family: var(--font-family-primary);
+.text-h3 {
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-h3);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-h3);
 }
 
-.text-h4-primary {
-  font-family: var(--font-family-primary);
+.text-h4 {
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-h4);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-h4);
 }
 
-.text-h5-primary {
-  font-family: var(--font-family-primary);
+.text-h5 {
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-h5);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-h5);
 }
 
-.text-h6-primary {
-  font-family: var(--font-family-primary);
-  font-size: var(--font-size-h6);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-h6);
-}
-
-.text-h1-secondary {
-  font-family: var(--font-family-secondary);
-  font-size: var(--font-size-h1);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-h1);
-}
-
-.text-h2-secondary {
-  font-family: var(--font-family-secondary);
-  font-size: var(--font-size-h2);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-h2);
-}
-
-.text-h3-secondary {
-  font-family: var(--font-family-secondary);
-  font-size: var(--font-size-h3);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-h3);
-}
-
-.text-h4-secondary {
-  font-family: var(--font-family-secondary);
-  font-size: var(--font-size-h4);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-h4);
-}
-
-.text-h5-secondary {
-  font-family: var(--font-family-secondary);
-  font-size: var(--font-size-h5);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-h5);
-}
-
-.text-h6-secondary {
-  font-family: var(--font-family-secondary);
+.text-h6 {
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-h6);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-h6);
 }
 
 .text-subtitle1 {
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-subtitle1);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-subtitle1);
 }
 
 .text-subtitle2 {
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-subtitle2);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-subtitle2);
 }
 
 .text-body1 {
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-body1);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-body1);
 }
 
 .text-body2 {
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-body2);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-body2);
 }
 
 .text-button-large {
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-button-large);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-button-large);
 }
 
 .text-button-medium {
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-button-medium);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-button-medium);
 }
 
 .text-button-small {
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-button-small);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-button-small);
 }
 
 .text-caption {
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-caption);
   font-weight: var(--font-weight-light);
   line-height: var(--line-height-caption);
 }
 
 .text-overline {
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-overline);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-overline);
@@ -311,7 +268,7 @@
 }
 
 .text-label {
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-label);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-label);
@@ -319,7 +276,7 @@
 }
 
 .text-component-title-01 {
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-component-title-01);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-component-title-01);
@@ -327,7 +284,7 @@
 }
 
 .text-component-title-02 {
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-component-title-02);
   font-weight: var(--font-weight-black);
   line-height: var(--line-height-component-title-02);
@@ -335,7 +292,7 @@
 }
 
 .text-legend {
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family-pretendard);
   font-size: var(--font-size-legend);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-legend);
