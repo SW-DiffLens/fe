@@ -26,7 +26,7 @@ export default function Landing() {
           <div className="flex gap-[16px]">
             <Button variant="icon" size="medium">
               <div>회원가입</div>
-              <ArrowRightIcon color="black" width={14} height={14} />
+              <ArrowRightIcon color="white" width={14} height={14} />
             </Button>
             <Button variant="outlined" size="medium">
               로그인
