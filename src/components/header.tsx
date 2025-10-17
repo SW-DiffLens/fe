@@ -1,4 +1,4 @@
-import logoContainer from "@/assets/logo_container.svg";
+import LogoContainer from "@/assets/logos/logo_container";
 import Button from "@/components/button";
 import ChevronDownIcon from "@/assets/icons/ic_chevron_down";
 import MyPageIcon from "@/assets/icons/ic_mypage";
@@ -17,11 +17,7 @@ export default function Header({
 }: HeaderProps) {
   return (
     <div className="flex items-center justify-between px-[80px] py-[16px] bg-opacity-100">
-      <img
-        src={logoContainer}
-        alt="logoContainer"
-        className="w-[128px] h-[26px]"
-      />
+      <LogoContainer width={128} height={26} />
       {isLoggedIn === "false" && (
         <div className="flex items-center gap-[16px]">
           <Button variant="outlined" size="large">

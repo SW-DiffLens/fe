@@ -1,4 +1,4 @@
-import logoContainer from "@/assets/logo_container.svg";
+import LogoContainer from "@/assets/logos/logo_container";
 import MailIcon from "@/assets/icons/ic_mail";
 
 type Transparency = "on" | "off";
@@ -29,7 +29,7 @@ export default function Footer({ transparency = "off" }: FooterProps) {
   const mailIconClass = mailIconClasses[transparency];
   return (
     <div className={`${baseClasses} ${transparencyClass}`}>
-      <img src={logoContainer} alt="DiffLens" className="w-[128px] h-[26px]" />
+      <LogoContainer width={128} height={26} />
       <div className="flex flex-col items-end gap-[8px]">
         <MailIcon color={mailIconClass} />
         <div className={`text-body5 ${copyrightClass}`}>

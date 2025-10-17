@@ -4,7 +4,7 @@ import StatusSquareIcon from "@/assets/icons/ic_status_square";
 import GroupIcon from "@/assets/icons/ic_group";
 import ExportIcon from "@/assets/icons/ic_export";
 import DocSearchIcon from "@/assets/icons/ic_doc_search";
-import logoText from "@/assets/logo_text.svg";
+import LogoText from "@/assets/logos/logo_text";
 
 export default function Landing() {
   return (
@@ -38,7 +38,7 @@ export default function Landing() {
       <div className="flex flex-col items-center py-[80px] gap-[64px] bg-opacity-700 px-[180px]">
         <div className="text-h2 text-black flex items-center gap-[8px]">
           왜
-          <img src={logoText} alt="logoText" className="w-[177px] h-[46px]" />
+          <LogoText width={177} height={46} />
           일까요?
         </div>
         <div className="flex gap-[16px]">
