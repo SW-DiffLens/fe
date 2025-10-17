@@ -1,12 +1,14 @@
-interface MailIconProps {
-  color?: string;
-}
+import type { IconProps } from "@/types/icon";
 
-export default function MailIcon({ color = "black" }: MailIconProps) {
+export default function MailIcon({
+  color = "black",
+  width = 24,
+  height = 24,
+}: IconProps) {
   return (
     <svg
-      width="24"
-      height="24"
+      width={width}
+      height={height}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

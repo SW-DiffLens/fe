@@ -1,7 +1,7 @@
 import logoContainer from "@/assets/logo_container.svg";
 import Button from "@/components/button";
-import chevronDownIcon from "@/assets/ic_chevron_down.svg";
-import mypageIcon from "@/assets/ic_mypage.svg";
+import ChevronDownIcon from "@/assets/icons/ic_chevron_down";
+import MyPageIcon from "@/assets/icons/ic_mypage";
 
 type IsLoggedIn = "true" | "false";
 type Dashboard = "true" | "false";
@@ -40,18 +40,14 @@ export default function Header({
           <div className="text-subtitle1 text-gray-700 cursor-pointer">
             라이브러리
           </div>
-          <img
-            src={mypageIcon}
-            alt="mypage"
-            className="w-[24px] h-[24px] ml-[8px] cursor-pointer"
-          />
+          <MyPageIcon color="black" width={24} height={24} />
         </div>
       )}
       {isLoggedIn === "true" && dashboard === "true" && (
         <div className="flex items-center gap-[16px]">
           <Button variant="icon" size="large">
             <div>내보내기</div>
-            <img src={chevronDownIcon} alt=">" className="w-[16px] h-[16px]" />
+            <ChevronDownIcon color="black" width={16} height={16} />
           </Button>
         </div>
       )}

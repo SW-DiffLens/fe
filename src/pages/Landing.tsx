@@ -1,9 +1,9 @@
 import Button from "@/components/button";
-import arrowRightIcon from "@/assets/ic_arrow_right.svg";
-import statusSquareIcon from "@/assets/ic_status_square.svg";
-import groupIcon from "@/assets/ic_group.svg";
-import exportIcon from "@/assets/ic_export.svg";
-import docSearchIcon from "@/assets/ic_doc_search.svg";
+import ArrowRightIcon from "@/assets/icons/ic_arrow_right";
+import StatusSquareIcon from "@/assets/icons/ic_status_square";
+import GroupIcon from "@/assets/icons/ic_group";
+import ExportIcon from "@/assets/icons/ic_export";
+import DocSearchIcon from "@/assets/icons/ic_doc_search";
 import logoText from "@/assets/logo_text.svg";
 
 export default function Landing() {
@@ -26,11 +26,7 @@ export default function Landing() {
           <div className="flex gap-[16px]">
             <Button variant="icon" size="medium">
               <div>회원가입</div>
-              <img
-                src={arrowRightIcon}
-                alt="->"
-                className="w-[14px] h-[14px]"
-              />
+              <ArrowRightIcon color="black" width={14} height={14} />
             </Button>
             <Button variant="outlined" size="medium">
               로그인
@@ -47,41 +43,25 @@ export default function Landing() {
         </div>
         <div className="flex gap-[16px]">
           <div className="flex flex-col items-center px-[16px] gap-[16px]">
-            <img
-              src={statusSquareIcon}
-              alt="statusSquare"
-              className="w-[48px] h-[48px]"
-            />
+            <StatusSquareIcon color="black" width={48} height={48} />
             <div className="text-body3 text-gray-900 text-center ">
               패널 데이터 검색/비교 분석 통합 대시보드 플랫폼 구축
             </div>
           </div>
           <div className="flex flex-col items-center px-[16px] gap-[16px]">
-            <img
-              src={groupIcon}
-              alt="statusSquare"
-              className="w-[48px] h-[48px]"
-            />
+            <GroupIcon color="black" width={48} height={48} />
             <div className="text-body3 text-gray-900 text-center">
               AI 기반 유사도 분석을 통한 관련 패널 자동 추천 시스템
             </div>
           </div>
           <div className="flex flex-col items-center px-[16px] gap-[16px]">
-            <img
-              src={exportIcon}
-              alt="statusSquare"
-              className="w-[48px] h-[48px]"
-            />
+            <ExportIcon color="black" width={48} height={48} />
             <div className="text-body3 text-gray-900 text-center">
               사용자별 맞춤형 데이터 내보내기 및 집단 관리 기능
             </div>
           </div>
           <div className="flex flex-col items-center px-[16px] gap-[16px]">
-            <img
-              src={docSearchIcon}
-              alt="statusSquare"
-              className="w-[48px] h-[48px]"
-            />
+            <DocSearchIcon color="black" width={48} height={48} />
             <div className="text-body3 text-gray-900 text-center">
               특정 라이브러리 내 사용자가 놓친 집단 특성 리포트 기능
             </div>
