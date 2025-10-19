@@ -1,8 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
 
-export default function LandingLayout() {
+export default function PricingLayout() {
   return (
     <div
       className="min-h-screen"
@@ -10,7 +8,6 @@ export default function LandingLayout() {
         background: "linear-gradient(135deg, #FBEEFF 0.5%, #D1E4FE 100%)",
       }}
     >
-      <Header isLoggedIn="false" dashboard="false" />
       <main>
         <div className="w-full h-full z-0 relative">
           {/* 피그마 시안대로 blur-[197.3px]로 하면 블러 효과가 너무 강해서 blur-3xl로 변경 */}
@@ -22,7 +19,6 @@ export default function LandingLayout() {
           <Outlet />
         </div>
       </main>
-      <Footer transparency="off" />
     </div>
   );
 }
