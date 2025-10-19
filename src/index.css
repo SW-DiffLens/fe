@@ -231,6 +231,27 @@
   line-height: var(--line-height-body2);
 }
 
+.text-body3 {
+  font-family: var(--font-family-pretendard);
+  font-size: var(--font-size-body3);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body3);
+}
+
+.text-body4 {
+  font-family: var(--font-family-pretendard);
+  font-size: var(--font-size-body4);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body4);
+}
+
+.text-body5 {
+  font-family: var(--font-family-pretendard);
+  font-size: var(--font-size-body5);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body5);
+}
+
 .text-button-large {
   font-family: var(--font-family-pretendard);
   font-size: var(--font-size-button-large);
