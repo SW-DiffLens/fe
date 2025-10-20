@@ -82,8 +82,8 @@ export default function LogoText({ width = 101, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_246_8733"
@@ -93,8 +93,8 @@ export default function LogoText({ width = 101, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_246_8733"
@@ -104,8 +104,8 @@ export default function LogoText({ width = 101, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_246_8733"
@@ -115,8 +115,8 @@ export default function LogoText({ width = 101, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_246_8733"
@@ -126,8 +126,8 @@ export default function LogoText({ width = 101, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_246_8733"
@@ -137,8 +137,8 @@ export default function LogoText({ width = 101, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
         <linearGradient
           id="paint6_linear_246_8733"
@@ -148,8 +148,8 @@ export default function LogoText({ width = 101, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
         <linearGradient
           id="paint7_linear_246_8733"
@@ -159,8 +159,8 @@ export default function LogoText({ width = 101, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
       </defs>
     </svg>

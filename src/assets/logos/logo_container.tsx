@@ -21,7 +21,7 @@ export default function LogoContainer({ width = 129, height = 26 }: IconProps) {
         cy="9.98749"
         r="7.98749"
         fill="url(#paint1_linear_246_8752)"
-        fill-opacity="0.8"
+        fillOpacity="0.8"
       />
       <path
         d="M10.3957 8.74097C14.407 8.74108 17.6592 11.9865 17.672 15.9949C16.5014 16.7991 15.0844 17.2712 13.5568 17.2712C9.54511 17.2711 6.29168 14.0252 6.27945 10.0164C7.45016 9.21202 8.86792 8.74097 10.3957 8.74097Z"
@@ -52,8 +52,8 @@ export default function LogoContainer({ width = 129, height = 26 }: IconProps) {
       <path
         d="M11.9939 11.4696L10.5324 10.6274M11.9939 11.4696L10.5324 12.3118M11.9939 11.4696L13.4554 12.3118M13.4554 13.9962L14.9316 13.1455M13.4554 13.9962L11.9939 14.8384M13.4554 13.9962V12.3118M11.9939 14.8384L13.4315 15.6668M11.9939 14.8384L10.5324 13.9962M10.5324 13.9962V15.6182M10.5324 13.9962V12.3118M10.5324 12.3118L9.08551 13.1455M13.4554 10.5962V12.3118"
         stroke="white"
-        stroke-width="0.275"
-        stroke-linecap="square"
+        strokeWidth="0.275"
+        strokeLinecap="square"
       />
       <path
         d="M61.8409 24V15.813H59.191V14.0332H61.8409V10.6517C61.8409 10.1902 61.9925 9.80791 62.2958 9.50469C62.6122 9.18828 63.0011 9.03008 63.4625 9.03008H68.2481V10.8099H65.8553C65.6839 10.8099 65.5389 10.8692 65.4202 10.9878C65.3016 11.1065 65.2423 11.2515 65.2423 11.4229V14.0332H68.2877V15.813H65.2423V24H61.8409Z"
@@ -128,8 +128,8 @@ export default function LogoContainer({ width = 129, height = 26 }: IconProps) {
           y2="31.3197"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#A697EE" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#A697EE" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_246_8752"
@@ -139,8 +139,8 @@ export default function LogoContainer({ width = 129, height = 26 }: IconProps) {
           y2="20.8208"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#DEDAFA" />
-          <stop offset="1" stop-color="#C5BDF5" />
+          <stop stopColor="#DEDAFA" />
+          <stop offset="1" stopColor="#C5BDF5" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_246_8752"
@@ -150,8 +150,8 @@ export default function LogoContainer({ width = 129, height = 26 }: IconProps) {
           y2="18.6165"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#A697EE" />
-          <stop offset="1" stop-color="#5632A5" />
+          <stop stopColor="#A697EE" />
+          <stop offset="1" stopColor="#5632A5" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_246_8752"
@@ -161,8 +161,8 @@ export default function LogoContainer({ width = 129, height = 26 }: IconProps) {
           y2="18.6165"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#A697EE" />
-          <stop offset="1" stop-color="#5632A5" />
+          <stop stopColor="#A697EE" />
+          <stop offset="1" stopColor="#5632A5" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_246_8752"
@@ -172,8 +172,8 @@ export default function LogoContainer({ width = 129, height = 26 }: IconProps) {
           y2="16.9513"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#DEDAFA" />
-          <stop offset="0.779063" stop-color="#A99BFF" />
+          <stop stopColor="#DEDAFA" />
+          <stop offset="0.779063" stopColor="#A99BFF" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_246_8752"
@@ -183,8 +183,8 @@ export default function LogoContainer({ width = 129, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
         <linearGradient
           id="paint6_linear_246_8752"
@@ -194,8 +194,8 @@ export default function LogoContainer({ width = 129, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
         <linearGradient
           id="paint7_linear_246_8752"
@@ -205,8 +205,8 @@ export default function LogoContainer({ width = 129, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
         <linearGradient
           id="paint8_linear_246_8752"
@@ -216,8 +216,8 @@ export default function LogoContainer({ width = 129, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
         <linearGradient
           id="paint9_linear_246_8752"
@@ -227,8 +227,8 @@ export default function LogoContainer({ width = 129, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
         <linearGradient
           id="paint10_linear_246_8752"
@@ -238,8 +238,8 @@ export default function LogoContainer({ width = 129, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
         <linearGradient
           id="paint11_linear_246_8752"
@@ -249,8 +249,8 @@ export default function LogoContainer({ width = 129, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
         <linearGradient
           id="paint12_linear_246_8752"
@@ -260,8 +260,8 @@ export default function LogoContainer({ width = 129, height = 26 }: IconProps) {
           y2="38.9294"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8569E4" />
-          <stop offset="1" stop-color="#FCCDFF" />
+          <stop stopColor="#8569E4" />
+          <stop offset="1" stopColor="#FCCDFF" />
         </linearGradient>
       </defs>
     </svg>
