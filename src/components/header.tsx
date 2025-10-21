@@ -3,6 +3,8 @@ import Button from "@/components/button";
 import ChevronDownIcon from "@/assets/icons/ic_chevron_down";
 import MyPageIcon from "@/assets/icons/ic_mypage";
 
+import { useNavigate } from "react-router-dom";
+
 type IsLoggedIn = "true" | "false";
 type Dashboard = "true" | "false";
 
@@ -15,15 +17,24 @@ export default function Header({
   isLoggedIn = "false",
   dashboard = "false",
 }: HeaderProps) {
+  const navigate = useNavigate();
   return (
     <div className="flex items-center justify-between px-[80px] py-[16px] bg-opacity-100">
       <LogoContainer width={128} height={26} />
       {isLoggedIn === "false" && (
         <div className="flex items-center gap-[16px]">
-          <Button variant="outlined" size="large">
+          <Button
+            variant="outlined"
+            size="large"
+            onClick={() => navigate("/login")}
+          >
             로그인
           </Button>
-          <Button variant="filled" size="large">
+          <Button
+            variant="filled"
+            size="large"
+            onClick={() => navigate("/signup")}
+          >
             회원가입
           </Button>
         </div>

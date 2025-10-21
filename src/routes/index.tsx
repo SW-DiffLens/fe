@@ -1,8 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import LandingLayout from "../layouts/LandingLayout";
-import PricingLayout from "../layouts/PricingLayout";
+import BasicLayout from "../layouts/BasicLayout";
 import Landing from "../pages/Landing";
 import Pricing from "../pages/Pricing";
+import Signup from "../pages/Signup";
+import Onboarding from "../pages/Onboarding";
+import Login from "../pages/Login";
 
 export const router = createBrowserRouter([
   {
@@ -14,15 +17,38 @@ export const router = createBrowserRouter([
         element: <Landing />,
       },
     ],
-    // 향후 추가될 라우트들
   },
   {
     path: "/pricing",
-    element: <PricingLayout />,
+    element: <BasicLayout />,
     children: [
       {
         index: true,
         element: <Pricing />,
+      },
+    ],
+  },
+  {
+    path: "/signup",
+    element: <BasicLayout />,
+    children: [
+      {
+        index: true,
+        element: <Signup />,
+      },
+      {
+        path: "onboarding",
+        element: <Onboarding />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <BasicLayout />,
+    children: [
+      {
+        index: true,
+        element: <Login />,
       },
     ],
   },
