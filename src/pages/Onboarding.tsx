@@ -1,0 +1,117 @@
+import Button from "@/components/button";
+import LogoText from "@/assets/logos/logo_text";
+import DropdownField from "@/components/onboarding/dropdown-field";
+import { useSearchParams, Navigate, useNavigate } from "react-router-dom";
+import { useCallback, useState } from "react";
+
+export default function Onboarding() {
+  const navigate = useNavigate();
+  const [sp] = useSearchParams();
+  const roleRaw = (sp.get("role") || "").toLowerCase();
+  const isValidRole = roleRaw === "individual" || roleRaw === "business";
+  const roleLabel = roleRaw === "individual" ? "개인" : "비즈니스";
+
+  const [job, setJob] = useState("");
+  const [industry, setIndustry] = useState("");
+  const isNextDisabled = job.length === 0 || industry.length === 0;
+
+  const onFormChange = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      const target = e.target as HTMLElement;
+      if (!(target instanceof HTMLInputElement)) return;
+      const { id, value } = target;
+      if (id === "job") setJob(value);
+      else if (id === "industry") setIndustry(value);
+    },
+
+    []
+  );
+
+  // 유효하지 않은 역할이면 리다이렉트
+  if (!isValidRole) return <Navigate to="/pricing" replace />;
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen py-[218px] px-[380px]">
+      <div className="w-full flex flex-col items-center justify-center py-[80px] px-[80px] gap-[24px] bg-opacity-500 rounded-2xl">
+        {/* 상단 영역 */}
+        <div className="flex flex-col items-center justify-center gap-[8px]">
+          <LogoText width={213} height={60} />
+          <div className="text-body3 text-primary-900">
+            {roleLabel} 플랜으로 회원가입
+          </div>
+          <div className="flex items-center justify-center gap-[11px]">
+            <div className="w-[80px] h-[4px] bg-gray-300 rounded-sm" />
+            <div className="w-[80px] h-[4px] bg-primary-500 rounded-sm" />
+          </div>
+        </div>
+        {/* 폼 영역 */}
+        <form
+          className="flex flex-col items-center justify-center gap-[32px] w-full"
+          onChange={onFormChange}
+        >
+          <DropdownField
+            label="직무"
+            placeholder="직무를 선택해주세요"
+            options={[
+              "경영/기획/전략",
+              "마케팅/광고/홍보",
+              "영업/고객관리",
+              "IT/개발/데이터",
+              "디자인/미디어",
+              "생산/제조/품질",
+              "연구/R&D",
+              "교육/컨설팅",
+              "의료/보건/복지",
+              "금융/회계/법률",
+              "서비스/유통",
+              "기타/프리랜서",
+            ]}
+            id="job"
+            value={job}
+            onChange={(value) => setJob(value)}
+          />
+          <DropdownField
+            label="업종"
+            placeholder="업종을 선택해주세요"
+            options={[
+              "IT·인터넷·소프트웨어",
+              "전자·제조·기계",
+              "금융·보험·핀테크",
+              "유통·소비재·식품",
+              "문화·미디어·엔터테인먼트",
+              "의료·제약·바이오",
+              "교육·에듀테크",
+              "공공·비영리·행정",
+              "건설·부동산·인프라",
+              "에너지·환경·화학",
+              "관광·여행·항공",
+              "기타 산업군",
+            ]}
+            id="industry"
+            value={industry}
+            onChange={(value) => setIndustry(value)}
+          />
+          <div className="flex items-center justify-center gap-[32px] w-full mb-[24px]">
+            <Button
+              variant="outlined"
+              size="large"
+              fullWidth
+              onClick={() => navigate(-1)}
+            >
+              이전
+            </Button>
+            <Button
+              variant="filled"
+              size="large"
+              fullWidth
+              disabled={isNextDisabled}
+              onClick={() => navigate("/login")}
+            >
+              다음
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
