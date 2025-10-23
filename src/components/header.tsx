@@ -41,13 +41,13 @@ export default function Header({
       )}
       {isLoggedIn === "true" && dashboard === "false" && (
         <div className="flex items-center gap-[16px]">
-          <div className="text-subtitle1 text-gray-700 cursor-pointer">
+          <div className="text-subtitle1 text-primary-700 cursor-pointer">
             검색
           </div>
-          <div className="text-subtitle1 text-gray-700 cursor-pointer">
+          <div className="text-subtitle1 text-gray-700 cursor-pointer mr-[8px]">
             라이브러리
           </div>
-          <MyPageIcon color="black" width={24} height={24} />
+          <MyPageIcon />
         </div>
       )}
       {isLoggedIn === "true" && dashboard === "true" && (
