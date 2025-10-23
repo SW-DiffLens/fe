@@ -11,18 +11,14 @@ interface ButtonProps {
   disabled?: boolean;
   fullWidth?: boolean;
   type?: "button" | "submit" | "reset";
+  bgColor?: string;
+  textColor?: string;
 }
 
 const sizeClasses = {
   large: "py-[12px] px-[40px] text-button-large",
   medium: "py-[10px] px-[32px] text-button-medium",
   small: "py-[8px] px-[24px] text-button-small",
-};
-
-const variantClasses = {
-  filled: "bg-primary-700 text-white",
-  outlined: "bg-transparent text-gray-800 border border-primary-700",
-  icon: "bg-primary-700 text-white flex items-center gap-[4px]",
 };
 
 export default function Button({
@@ -33,9 +29,16 @@ export default function Button({
   disabled = false,
   fullWidth = false,
   type = "button",
+  bgColor = "primary-700",
+  textColor = "white",
 }: ButtonProps) {
   const baseClasses = "rounded-lg disabled:cursor-not-allowed cursor-pointer";
   const sizeClass = sizeClasses[size];
+  const variantClasses: Record<ButtonVariant, string> = {
+    filled: `bg-${bgColor} text-${textColor}`,
+    outlined: "bg-transparent text-gray-800 border border-primary-700",
+    icon: `bg-${bgColor} text-${textColor} flex items-center gap-[4px]`,
+  };
   const variantClass = variantClasses[variant];
   const fullWidthClass = fullWidth ? "w-full" : "";
   return (
