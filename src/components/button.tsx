@@ -9,6 +9,8 @@ interface ButtonProps {
   size?: ButtonSize;
   onClick?: () => void;
   disabled?: boolean;
+  fullWidth?: boolean;
+  type?: "button" | "submit" | "reset";
 }
 
 const sizeClasses = {
@@ -29,16 +31,19 @@ export default function Button({
   size = "large",
   onClick,
   disabled = false,
+  fullWidth = false,
+  type = "button",
 }: ButtonProps) {
   const baseClasses = "rounded-lg disabled:cursor-not-allowed cursor-pointer";
   const sizeClass = sizeClasses[size];
   const variantClass = variantClasses[variant];
-
+  const fullWidthClass = fullWidth ? "w-full" : "";
   return (
     <button
-      className={`${baseClasses} ${sizeClass} ${variantClass}`}
+      className={`${baseClasses} ${sizeClass} ${variantClass} ${fullWidthClass}`}
       onClick={onClick}
       disabled={disabled}
+      type={type}
     >
       {children}
     </button>

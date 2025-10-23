@@ -2,7 +2,10 @@ import LogoContainer from "@/assets/logos/logo_container";
 import Button from "@/components/button";
 import ListItem from "@/components/pricing/list_item";
 
+import { useNavigate } from "react-router-dom";
+
 export default function Pricing() {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-[107.5px] px-[181px]">
       <div className="w-full flex flex-col items-center justify-center py-[64px] px-[80px] gap-[48px] bg-opacity-500 rounded-2xl">
@@ -34,7 +37,11 @@ export default function Pricing() {
               <ListItem title="라이브러리 최대 10개 저장" />
               <ListItem title="라이브러리 1주일 보관" />
             </div>
-            <Button variant="filled" size="large">
+            <Button
+              variant="filled"
+              size="large"
+              onClick={() => navigate("/signup?role=individual")}
+            >
               시작하기
             </Button>
           </div>
@@ -54,7 +61,11 @@ export default function Pricing() {
               <ListItem title="라이브러리 무제한 저장" />
               <ListItem title="라이브러리 영구 보관" />
             </div>
-            <Button variant="filled" size="large">
+            <Button
+              variant="filled"
+              size="large"
+              onClick={() => navigate("/signup?role=business")}
+            >
               시작하기
             </Button>
           </div>

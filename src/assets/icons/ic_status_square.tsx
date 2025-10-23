@@ -17,28 +17,28 @@ export default function StatusSquareIcon({
       <path
         d="M32 32V16"
         stroke={color}
-        stroke-width="2.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M24 32V22"
         stroke={color}
-        stroke-width="2.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M16 32V26"
         stroke={color}
-        stroke-width="2.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M6 40.8V7.2C6 6.53726 6.53726 6 7.2 6H40.8C41.4628 6 42 6.53726 42 7.2V40.8C42 41.4628 41.4628 42 40.8 42H7.2C6.53726 42 6 41.4628 6 40.8Z"
         stroke={color}
-        stroke-width="2.5"
+        strokeWidth="2.5"
       />
     </svg>
   );

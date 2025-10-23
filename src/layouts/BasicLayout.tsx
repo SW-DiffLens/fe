@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
 
-export default function PricingLayout() {
+export default function BasicLayout() {
   return (
     <div
-      className="min-h-screen"
+      className="min-h-screen overflow-hidden"
       style={{
         background: "linear-gradient(135deg, #FBEEFF 0.5%, #D1E4FE 100%)",
       }}

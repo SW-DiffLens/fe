@@ -6,7 +6,10 @@ import ExportIcon from "@/assets/icons/ic_export";
 import DocSearchIcon from "@/assets/icons/ic_doc_search";
 import LogoText from "@/assets/logos/logo_text";
 
+import { useNavigate } from "react-router-dom";
+
 export default function Landing() {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col">
       <div className="flex gap-[80px] pt-[158px] pb-[120px] bg-opacity-200 px-[180px] grid grid-cols-2">
@@ -24,11 +27,19 @@ export default function Landing() {
             </div>
           </div>
           <div className="flex gap-[16px]">
-            <Button variant="icon" size="medium">
+            <Button
+              variant="icon"
+              size="medium"
+              onClick={() => navigate("/signup")}
+            >
               <div>회원가입</div>
               <ArrowRightIcon color="white" width={14} height={14} />
             </Button>
-            <Button variant="outlined" size="medium">
+            <Button
+              variant="outlined"
+              size="medium"
+              onClick={() => navigate("/login")}
+            >
               로그인
             </Button>
           </div>
@@ -67,7 +78,11 @@ export default function Landing() {
             </div>
           </div>
         </div>
-        <Button variant="filled" size="large">
+        <Button
+          variant="filled"
+          size="large"
+          onClick={() => navigate("/signup")}
+        >
           시작하기
         </Button>
       </div>

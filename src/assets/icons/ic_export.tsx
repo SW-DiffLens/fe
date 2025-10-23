@@ -16,16 +16,16 @@ export default function ExportIcon({
       <path
         d="M40 26V38C40 40.2092 38.2092 42 36 42H12C9.79086 42 8 40.2092 8 38V26"
         stroke={color}
-        stroke-width="2.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M24 6L31 13M24 30V6V30ZM24 6L17 13L24 6Z"
         stroke={color}
-        stroke-width="2.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
