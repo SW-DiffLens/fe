@@ -7,15 +7,18 @@ import { useNavigate } from "react-router-dom";
 
 type IsLoggedIn = "true" | "false";
 type Dashboard = "true" | "false";
+type IsPanelLibrary = "true" | "false";
 
 interface HeaderProps {
   isLoggedIn?: IsLoggedIn;
   dashboard?: Dashboard;
+  isPanelLibrary?: IsPanelLibrary;
 }
 
 export default function Header({
   isLoggedIn = "false",
   dashboard = "false",
+  isPanelLibrary = "false",
 }: HeaderProps) {
   const navigate = useNavigate();
   return (
@@ -50,14 +53,16 @@ export default function Header({
           <MyPageIcon />
         </div>
       )}
-      {isLoggedIn === "true" && dashboard === "true" && (
-        <div className="flex items-center gap-[16px]">
-          <Button variant="icon" size="large">
-            <div>내보내기</div>
-            <ChevronDownIcon color="black" width={16} height={16} />
-          </Button>
-        </div>
-      )}
+      {isLoggedIn === "true" &&
+        dashboard === "true" &&
+        isPanelLibrary === "false" && (
+          <div className="flex justify-center items-center gap-[16px]">
+            <Button variant="icon" size="large">
+              <div>내보내기</div>
+              <ChevronDownIcon color="white" width={16} height={16} />
+            </Button>
+          </div>
+        )}
     </div>
   );
 }

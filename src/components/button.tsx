@@ -35,9 +35,10 @@ export default function Button({
   const baseClasses = "rounded-lg disabled:cursor-not-allowed cursor-pointer";
   const sizeClass = sizeClasses[size];
   const variantClasses: Record<ButtonVariant, string> = {
-    filled: `bg-${bgColor} text-${textColor}`,
-    outlined: "bg-transparent text-gray-800 border border-primary-700",
-    icon: `bg-${bgColor} text-${textColor} flex items-center gap-[4px]`,
+    filled: `bg-${bgColor} text-${textColor} flex items-center justify-center`,
+    outlined:
+      "bg-transparent text-gray-800 border border-primary-700 flex items-center justify-center",
+    icon: `bg-${bgColor} text-${textColor} flex items-center justify-center gap-[4px]`,
   };
   const variantClass = variantClasses[variant];
   const fullWidthClass = fullWidth ? "w-full" : "";
