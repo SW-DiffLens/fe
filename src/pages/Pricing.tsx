@@ -1,6 +1,6 @@
 import LogoContainer from "@/assets/logos/logo_container";
 import Button from "@/components/button";
-import ListItem from "@/components/pricing/list_item";
+import ListItem from "@/components/pricing/list-item";
 
 import { useNavigate } from "react-router-dom";
 

@@ -40,7 +40,7 @@ export default function Chip({
     off: "",
   };
   const variantClasses: Record<ChipVariant, string> = {
-    filled: `bg-primary-300 text-white border border-primary-300`,
+    filled: `bg-primary-300 text-black border border-primary-300`,
     outlined: `bg-transparent text-${textColor} border border-primary-300`,
     selected: `bg-primary-700 text-white border border-primary-700`,
   };
