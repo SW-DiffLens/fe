@@ -2,13 +2,14 @@ import { createBrowserRouter } from "react-router-dom";
 import LandingLayout from "../layouts/LandingLayout";
 import BasicLayout from "../layouts/BasicLayout";
 import HomeLayout from "../layouts/HomeLayout";
+import PanelLayout from "@/layouts/PanelLayout";
 import Landing from "../pages/Landing";
 import Pricing from "../pages/Pricing";
 import Signup from "../pages/Signup";
 import Onboarding from "../pages/Onboarding";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
-
+import PanelLibrary from "@/pages/PanelLibrary";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -61,6 +62,16 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+    ],
+  },
+  {
+    path: "/panel-library",
+    element: <PanelLayout />,
+    children: [
+      {
+        index: true,
+        element: <PanelLibrary />,
       },
     ],
   },
