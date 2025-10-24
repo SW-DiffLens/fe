@@ -59,7 +59,7 @@ export default function DropdownField({
         <ul
           className={`${
             showOptions ? "block" : "hidden"
-          } absolute left-0 w-full bg-white rounded-lg h-[240px] overflow-y-scroll mt-[8px] pt-[8px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] custom-scrollbar z-10`}
+          } absolute left-0 w-full bg-white rounded-lg h-[240px] overflow-y-scroll mt-[8px] py-[8px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] custom-scrollbar z-10`}
         >
           {options.map((option, index) => (
             <li
