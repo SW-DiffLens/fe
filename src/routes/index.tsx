@@ -3,6 +3,7 @@ import LandingLayout from "../layouts/LandingLayout";
 import BasicLayout from "../layouts/BasicLayout";
 import HomeLayout from "../layouts/HomeLayout";
 import PanelLayout from "@/layouts/PanelLayout";
+import DashboardLayout from "@/layouts/DashboardLayout";
 import Landing from "../pages/Landing";
 import Pricing from "../pages/Pricing";
 import Signup from "../pages/Signup";
@@ -10,6 +11,7 @@ import Onboarding from "../pages/Onboarding";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
 import PanelLibrary from "@/pages/PanelLibrary";
+import Dashboard from "@/pages/Dashboard";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -72,6 +74,16 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <PanelLibrary />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
       },
     ],
   },
