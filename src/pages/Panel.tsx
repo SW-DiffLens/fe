@@ -5,7 +5,7 @@ import BriefcaseIcon from "@/assets/icons/ic_briefcase";
 import BusinessIcon from "@/assets/icons/ic_business";
 import MapPinIcon from "@/assets/icons/ic_mappin";
 import MobileIcon from "@/assets/icons/ic_mobile";
-import TextWithIcon from "@/components/panel-library/text-with-icon";
+import TextWithIcon from "@/components/panel/text-with-icon";
 import TagIcon from "@/assets/icons/ic_tag";
 import CarIcon from "@/assets/icons/ic_car";
 import HomeIcon from "@/assets/icons/ic_home";
@@ -16,12 +16,12 @@ import TvIcon from "@/assets/icons/ic_tv";
 import DevicesIcon from "@/assets/icons/ic_devices";
 import SmokeIcon from "@/assets/icons/ic_smoke";
 import BeerIcon from "@/assets/icons/ic_beer";
-import PercentageBar from "@/components/panel-library/percentage-bar";
+import PercentageBar from "@/components/panel/percentage-bar";
 import Chip from "@/components/chip";
-import SurveyContainer from "@/components/panel-library/survey-container";
+import SurveyContainer from "@/components/panel/survey-container";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { panelData } from "@/components/panel-library/panel-data";
+import { panelData } from "@/components/panel/panel-data";
 
 // 데이터 가져오기
 const data = panelData[0];
@@ -132,7 +132,7 @@ const categoryIcons: Record<string, React.ReactNode> = {
   환경의식: <TreeIcon width={20} height={20} />,
 };
 
-export default function PanelLibrary() {
+export default function Panel() {
   const navigate = useNavigate();
   const [mode, setMode] = useState("profile");
 

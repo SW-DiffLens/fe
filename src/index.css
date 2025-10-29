@@ -480,7 +480,7 @@
   background-color: var(--color-error-ctr);
 }
 .bg-error-on-ctr {
-  background-color: var(--color-error-on-ctr);
+  background-color: var(--color-error-onCtr);
 }
 
 .text-error-default {
@@ -493,7 +493,7 @@
   color: var(--color-error-ctr);
 }
 .text-error-on-ctr {
-  color: var(--color-error-on-ctr);
+  color: var(--color-error-onCtr);
 }
 
 .border-error-default {
@@ -506,7 +506,7 @@
   border-color: var(--color-error-ctr);
 }
 .border-error-on-ctr {
-  border-color: var(--color-error-on-ctr);
+  border-color: var(--color-error-onCtr);
 }
 
 /* Success System Utility Classes */
@@ -520,7 +520,7 @@
   background-color: var(--color-success-ctr);
 }
 .bg-success-on-ctr {
-  background-color: var(--color-success-on-ctr);
+  background-color: var(--color-success-onCtr);
 }
 
 .text-success-default {
@@ -533,7 +533,7 @@
   color: var(--color-success-ctr);
 }
 .text-success-on-ctr {
-  color: var(--color-success-on-ctr);
+  color: var(--color-success-onCtr);
 }
 
 .border-success-default {
@@ -546,7 +546,7 @@
   border-color: var(--color-success-ctr);
 }
 .border-success-on-ctr {
-  border-color: var(--color-success-on-ctr);
+  border-color: var(--color-success-onCtr);
 }
 
 /* Chart System Utility Classes */

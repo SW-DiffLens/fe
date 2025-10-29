@@ -10,8 +10,10 @@ import Signup from "../pages/Signup";
 import Onboarding from "../pages/Onboarding";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
-import PanelLibrary from "@/pages/PanelLibrary";
+import Panel from "@/pages/Panel";
 import Dashboard from "@/pages/Dashboard";
+import Library from "@/pages/Library";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -65,15 +67,19 @@ export const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
+      {
+        path: "library",
+        element: <Library />,
+      },
     ],
   },
   {
-    path: "/panel-library",
+    path: "/panel",
     element: <PanelLayout />,
     children: [
       {
         index: true,
-        element: <PanelLibrary />,
+        element: <Panel />,
       },
     ],
   },

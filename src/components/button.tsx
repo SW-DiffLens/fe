@@ -13,6 +13,7 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset";
   bgColor?: string;
   textColor?: string;
+  borderColor?: string;
 }
 
 const sizeClasses = {
@@ -31,13 +32,13 @@ export default function Button({
   type = "button",
   bgColor = "primary-700",
   textColor = "white",
+  borderColor = "primary-700",
 }: ButtonProps) {
   const baseClasses = "rounded-lg disabled:cursor-not-allowed cursor-pointer";
   const sizeClass = sizeClasses[size];
   const variantClasses: Record<ButtonVariant, string> = {
-    filled: `bg-${bgColor} text-${textColor} flex items-center justify-center`,
-    outlined:
-      "bg-transparent text-gray-800 border border-primary-700 flex items-center justify-center",
+    filled: `bg-${bgColor} text-${textColor} flex items-center justify-center gap-[4px]`,
+    outlined: `bg-transparent text-gray-800 border border-${borderColor} flex items-center justify-center gap-[4px]`,
     icon: `bg-${bgColor} text-${textColor} flex items-center justify-center gap-[4px]`,
   };
   const variantClass = variantClasses[variant];
