@@ -12,6 +12,8 @@ import Login from "../pages/Login";
 import Home from "../pages/Home";
 import Panel from "@/pages/Panel";
 import Dashboard from "@/pages/Dashboard";
+import Library from "@/pages/Library";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -64,6 +66,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "library",
+        element: <Library />,
       },
     ],
   },
