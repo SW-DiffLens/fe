@@ -1,7 +1,10 @@
 import Header from "@/components/header";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 export default function HomeLayout() {
+  const location = useLocation();
+  const isLibrary = location.pathname.includes("/library");
+
   return (
     <div
       className="min-h-screen overflow-hidden"
@@ -10,7 +13,11 @@ export default function HomeLayout() {
       }}
     >
       <main>
-        <Header isLoggedIn="true" dashboard="false" />
+        <Header
+          isLoggedIn="true"
+          dashboard="false"
+          isLibrary={isLibrary ? "true" : "false"}
+        />
         <div className="w-full h-full z-0 relative">
           {/* 피그마 시안대로 blur-[197.3px]로 하면 블러 효과가 너무 강해서 blur-3xl로 변경 */}
           <div className="absolute blur-3xl w-[342px] h-[342px] bg-secondary-100 rounded-full top-[124px] left-[624px]" />
