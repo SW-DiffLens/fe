@@ -660,3 +660,313 @@
 .border-chart-gray {
   border-color: var(--color-chart-gray);
 }
+
+/* Primary System Utility Classes */
+.bg-primary-50 {
+  background-color: var(--color-primary-50);
+}
+.bg-primary-100 {
+  background-color: var(--color-primary-100);
+}
+.bg-primary-200 {
+  background-color: var(--color-primary-200);
+}
+.bg-primary-300 {
+  background-color: var(--color-primary-300);
+}
+.bg-primary-400 {
+  background-color: var(--color-primary-400);
+}
+.bg-primary-500 {
+  background-color: var(--color-primary-500);
+}
+.bg-primary-600 {
+  background-color: var(--color-primary-600);
+}
+.bg-primary-700 {
+  background-color: var(--color-primary-700);
+}
+.bg-primary-800 {
+  background-color: var(--color-primary-800);
+}
+.bg-primary-900 {
+  background-color: var(--color-primary-900);
+}
+.bg-primary-950 {
+  background-color: var(--color-primary-950);
+}
+
+.text-primary-50 {
+  color: var(--color-primary-50);
+}
+.text-primary-100 {
+  color: var(--color-primary-100);
+}
+.text-primary-200 {
+  color: var(--color-primary-200);
+}
+.text-primary-300 {
+  color: var(--color-primary-300);
+}
+.text-primary-400 {
+  color: var(--color-primary-400);
+}
+.text-primary-500 {
+  color: var(--color-primary-500);
+}
+.text-primary-600 {
+  color: var(--color-primary-600);
+}
+.text-primary-700 {
+  color: var(--color-primary-700);
+}
+.text-primary-800 {
+  color: var(--color-primary-800);
+}
+.text-primary-900 {
+  color: var(--color-primary-900);
+}
+.text-primary-950 {
+  color: var(--color-primary-950);
+}
+
+.border-primary-50 {
+  border-color: var(--color-primary-50);
+}
+.border-primary-100 {
+  border-color: var(--color-primary-100);
+}
+.border-primary-200 {
+  border-color: var(--color-primary-200);
+}
+.border-primary-300 {
+  border-color: var(--color-primary-300);
+}
+.border-primary-400 {
+  border-color: var(--color-primary-400);
+}
+.border-primary-500 {
+  border-color: var(--color-primary-500);
+}
+.border-primary-600 {
+  border-color: var(--color-primary-600);
+}
+.border-primary-700 {
+  border-color: var(--color-primary-700);
+}
+.border-primary-800 {
+  border-color: var(--color-primary-800);
+}
+.border-primary-900 {
+  border-color: var(--color-primary-900);
+}
+.border-primary-950 {
+  border-color: var(--color-primary-950);
+}
+
+/* Secondary System Utility Classes */
+.bg-secondary-50 {
+  background-color: var(--color-secondary-50);
+}
+.bg-secondary-100 {
+  background-color: var(--color-secondary-100);
+}
+.bg-secondary-200 {
+  background-color: var(--color-secondary-200);
+}
+.bg-secondary-300 {
+  background-color: var(--color-secondary-300);
+}
+.bg-secondary-400 {
+  background-color: var(--color-secondary-400);
+}
+.bg-secondary-500 {
+  background-color: var(--color-secondary-500);
+}
+.bg-secondary-600 {
+  background-color: var(--color-secondary-600);
+}
+.bg-secondary-700 {
+  background-color: var(--color-secondary-700);
+}
+.bg-secondary-800 {
+  background-color: var(--color-secondary-800);
+}
+.bg-secondary-900 {
+  background-color: var(--color-secondary-900);
+}
+.bg-secondary-950 {
+  background-color: var(--color-secondary-950);
+}
+
+.text-secondary-50 {
+  color: var(--color-secondary-50);
+}
+.text-secondary-100 {
+  color: var(--color-secondary-100);
+}
+.text-secondary-200 {
+  color: var(--color-secondary-200);
+}
+.text-secondary-300 {
+  color: var(--color-secondary-300);
+}
+.text-secondary-400 {
+  color: var(--color-secondary-400);
+}
+.text-secondary-500 {
+  color: var(--color-secondary-500);
+}
+.text-secondary-600 {
+  color: var(--color-secondary-600);
+}
+.text-secondary-700 {
+  color: var(--color-secondary-700);
+}
+.text-secondary-800 {
+  color: var(--color-secondary-800);
+}
+.text-secondary-900 {
+  color: var(--color-secondary-900);
+}
+.text-secondary-950 {
+  color: var(--color-secondary-950);
+}
+
+.border-secondary-50 {
+  border-color: var(--color-secondary-50);
+}
+.border-secondary-100 {
+  border-color: var(--color-secondary-100);
+}
+.border-secondary-200 {
+  border-color: var(--color-secondary-200);
+}
+.border-secondary-300 {
+  border-color: var(--color-secondary-300);
+}
+.border-secondary-400 {
+  border-color: var(--color-secondary-400);
+}
+.border-secondary-500 {
+  border-color: var(--color-secondary-500);
+}
+.border-secondary-600 {
+  border-color: var(--color-secondary-600);
+}
+.border-secondary-700 {
+  border-color: var(--color-secondary-700);
+}
+.border-secondary-800 {
+  border-color: var(--color-secondary-800);
+}
+.border-secondary-900 {
+  border-color: var(--color-secondary-900);
+}
+.border-secondary-950 {
+  border-color: var(--color-secondary-950);
+}
+
+/* Tertiary System Utility Classes */
+.bg-tertiary-50 {
+  background-color: var(--color-tertiary-50);
+}
+.bg-tertiary-100 {
+  background-color: var(--color-tertiary-100);
+}
+.bg-tertiary-200 {
+  background-color: var(--color-tertiary-200);
+}
+.bg-tertiary-300 {
+  background-color: var(--color-tertiary-300);
+}
+.bg-tertiary-400 {
+  background-color: var(--color-tertiary-400);
+}
+.bg-tertiary-500 {
+  background-color: var(--color-tertiary-500);
+}
+.bg-tertiary-600 {
+  background-color: var(--color-tertiary-600);
+}
+.bg-tertiary-700 {
+  background-color: var(--color-tertiary-700);
+}
+.bg-tertiary-800 {
+  background-color: var(--color-tertiary-800);
+}
+.bg-tertiary-900 {
+  background-color: var(--color-tertiary-900);
+}
+.bg-tertiary-950 {
+  background-color: var(--color-tertiary-950);
+}
+
+.text-tertiary-50 {
+  color: var(--color-tertiary-50);
+}
+.text-tertiary-100 {
+  color: var(--color-tertiary-100);
+}
+.text-tertiary-200 {
+  color: var(--color-tertiary-200);
+}
+.text-tertiary-300 {
+  color: var(--color-tertiary-300);
+}
+.text-tertiary-400 {
+  color: var(--color-tertiary-400);
+}
+.text-tertiary-500 {
+  color: var(--color-tertiary-500);
+}
+.text-tertiary-600 {
+  color: var(--color-tertiary-600);
+}
+.text-tertiary-700 {
+  color: var(--color-tertiary-700);
+}
+.text-tertiary-800 {
+  color: var(--color-tertiary-800);
+}
+.text-tertiary-900 {
+  color: var(--color-tertiary-900);
+}
+.text-tertiary-950 {
+  color: var(--color-tertiary-950);
+}
+
+.border-tertiary-50 {
+  border-color: var(--color-tertiary-50);
+}
+.border-tertiary-100 {
+  border-color: var(--color-tertiary-100);
+}
+.border-tertiary-200 {
+  border-color: var(--color-tertiary-200);
+}
+.border-tertiary-300 {
+  border-color: var(--color-tertiary-300);
+}
+.border-tertiary-400 {
+  border-color: var(--color-tertiary-400);
+}
+.border-tertiary-500 {
+  border-color: var(--color-tertiary-500);
+}
+.border-tertiary-600 {
+  border-color: var(--color-tertiary-600);
+}
+.border-tertiary-700 {
+  border-color: var(--color-tertiary-700);
+}
+.border-tertiary-800 {
+  border-color: var(--color-tertiary-800);
+}
+.border-tertiary-900 {
+  border-color: var(--color-tertiary-900);
+}
+.border-tertiary-950 {
+  border-color: var(--color-tertiary-950);
+}
+
