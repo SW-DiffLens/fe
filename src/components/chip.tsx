@@ -16,6 +16,7 @@ interface ChipProps {
   type?: "button" | "submit" | "reset";
   bgColor?: string;
   textColor?: string;
+  borderColor?: string;
 }
 
 export default function Chip({
@@ -28,6 +29,8 @@ export default function Chip({
   fullWidth = false,
   type = "button",
   textColor = "black",
+  bgColor = "primary-300",
+  borderColor = "primary-300",
 }: ChipProps) {
   const baseClasses =
     "rounded-xl disabled:cursor-not-allowed cursor-pointer flex items-center text-label py-[4px]";
@@ -40,8 +43,8 @@ export default function Chip({
     off: "",
   };
   const variantClasses: Record<ChipVariant, string> = {
-    filled: `bg-primary-300 text-black border border-primary-300`,
-    outlined: `bg-transparent text-${textColor} border border-primary-300`,
+    filled: `bg-${bgColor} text-${textColor} border border-${borderColor}`,
+    outlined: `bg-transparent text-${textColor} border border-${borderColor}`,
     selected: `bg-primary-700 text-white border border-primary-700`,
   };
   const variantClass = variantClasses[variant];

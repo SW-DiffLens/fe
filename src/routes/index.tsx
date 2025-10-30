@@ -13,6 +13,7 @@ import Home from "../pages/Home";
 import Panel from "@/pages/Panel";
 import Dashboard from "@/pages/Dashboard";
 import Library from "@/pages/Library";
+import Compare from "@/pages/Compare";
 
 export const router = createBrowserRouter([
   {
@@ -69,7 +70,16 @@ export const router = createBrowserRouter([
       },
       {
         path: "library",
-        element: <Library />,
+        children: [
+          {
+            index: true,
+            element: <Library />,
+          },
+          {
+            path: "compare",
+            element: <Compare />,
+          },
+        ],
       },
     ],
   },
