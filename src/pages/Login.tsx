@@ -4,6 +4,8 @@ import InputField from "@/components/signup/input-field";
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import apiClient from "@/api/client";
+
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -27,6 +29,22 @@ export default function Login() {
     if (id === "email") setEmail(value);
     else if (id === "password") setPassword(value);
   }, []);
+
+  const handleLogin = useCallback(async () => {
+    try {
+      const response = await apiClient.post("/auth/login/local", {
+        email,
+        password,
+        loginType: "GENERAL",
+      });
+      console.log(response);
+      localStorage.setItem("access_token", response.data.result.access_token);
+      localStorage.setItem("refresh_token", response.data.result.refresh_token);
+      navigate("/home");
+    } catch (error) {
+      console.error(error);
+    }
+  }, [email, password, navigate]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-[194px] px-[380px]">
@@ -64,6 +82,7 @@ export default function Login() {
             size="large"
             fullWidth
             disabled={isEmailError || isPasswordError}
+            onClick={handleLogin}
           >
             로그인
           </Button>
