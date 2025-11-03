@@ -2,6 +2,7 @@ export const filterSections = [
   {
     id: 1,
     title: "응답자 수",
+    singleSelect: true,
     chips: [
       {
         id: 1,
