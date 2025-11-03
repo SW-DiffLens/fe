@@ -1,30 +1,40 @@
 import Chip from "@/components/chip";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface FilterSectionProps {
   title: string;
   chips: {
     id: number;
+    code: number;
     title: string;
   }[];
-  onSelectionChange?: (selectedCount: number) => void;
-  reset?: boolean;
+  onSelectionChange?: (selectedCodes: number[]) => void;
+  reset?: number;
 }
 
 export default function FilterSection({
   title,
   chips,
   onSelectionChange,
-  reset = false,
+  reset = 0, // 필터 초기화 오류로 인해 숫자형식으로 reset 값이 변경되었을 때 초기화 실행
 }: FilterSectionProps) {
   const [selectedChips, setSelectedChips] = useState<number[]>([]);
+  const prevResetValueRef = useRef<number | undefined>(reset);
+  const onSelectionChangeRef = useRef(onSelectionChange);
+
+  // onSelectionChange를 항상 최신으로 유지
+  useEffect(() => {
+    onSelectionChangeRef.current = onSelectionChange;
+  }, [onSelectionChange]);
 
   useEffect(() => {
-    if (reset) {
+    // reset 값이 변경되었을 때 초기화 실행
+    if (reset !== undefined && reset !== prevResetValueRef.current) {
       setSelectedChips([]);
-      onSelectionChange?.(0);
+      onSelectionChangeRef.current?.([]);
+      prevResetValueRef.current = reset;
     }
-  }, [reset, onSelectionChange]);
+  }, [reset]);
 
   const handleChipClick = (id: number) => {
     let newSelectedChips;
@@ -34,7 +44,12 @@ export default function FilterSection({
       newSelectedChips = [...selectedChips, id];
     }
     setSelectedChips(newSelectedChips);
-    onSelectionChange?.(newSelectedChips.length);
+
+    // 선택된 칩들의 code를 배열로 추출
+    const selectedCodes = chips
+      .filter((chip) => newSelectedChips.includes(chip.id))
+      .map((chip) => chip.code);
+    onSelectionChange?.(selectedCodes);
   };
   return (
     <div className="w-full flex flex-col items-start justify-center gap-[12px]">
