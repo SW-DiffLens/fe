@@ -7,58 +7,93 @@ import PlusIcon from "@/assets/icons/ic_plus";
 import SearchBar from "@/components/search-bar";
 import Pagenation from "@/components/dashboard/pagenation";
 
-import { useState } from "react";
+import type { DashboardResult } from "@/types/dashboard_result";
+import type { DashboardPanel } from "@/types/dashboard_panel";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
-const data = [
-  {
-    id: "w100010279508856",
-    gender: "남성",
-    age: 22,
-    address: "서울",
-    income: "250만원",
-    matchingRate: "98.12%",
-  },
-  {
-    id: "w100010279508856",
-    gender: "남성",
-    age: 22,
-    address: "서울",
-    income: "250만원",
-    matchingRate: "98.12%",
-  },
-  {
-    id: "w100010279508856",
-    gender: "남성",
-    age: 22,
-    address: "서울",
-    income: "250만원",
-    matchingRate: "98.12%",
-  },
-  {
-    id: "w100010279508856",
-    gender: "남성",
-    age: 22,
-    address: "서울",
-    income: "250만원",
-    matchingRate: "98.12%",
-  },
-  {
-    id: "w100010279508856",
-    gender: "남성",
-    age: 22,
-    address: "서울",
-    income: "250만원",
-    matchingRate: "98.12%",
-  },
-];
+import apiClient from "@/api/client";
+
+// const data = [
+//   {
+//     id: "w100010279508856",
+//     gender: "남성",
+//     age: 22,
+//     address: "서울",
+//     income: "250만원",
+//     matchingRate: "98.12%",
+//   },
+//   {
+//     id: "w100010279508856",
+//     gender: "남성",
+//     age: 22,
+//     address: "서울",
+//     income: "250만원",
+//     matchingRate: "98.12%",
+//   },
+//   {
+//     id: "w100010279508856",
+//     gender: "남성",
+//     age: 22,
+//     address: "서울",
+//     income: "250만원",
+//     matchingRate: "98.12%",
+//   },
+//   {
+//     id: "w100010279508856",
+//     gender: "남성",
+//     age: 22,
+//     address: "서울",
+//     income: "250만원",
+//     matchingRate: "98.12%",
+//   },
+//   {
+//     id: "w100010279508856",
+//     gender: "남성",
+//     age: 22,
+//     address: "서울",
+//     income: "250만원",
+//     matchingRate: "98.12%",
+//   },
+// ];
 
 export default function Dashboard() {
+  const location = useLocation();
   const [searchValue, setSearchValue] = useState("");
   const [mode, setMode] = useState("profile");
+  const [data, setData] = useState<DashboardPanel>();
+  const [page, setPage] = useState(1);
+
+  const { result, search_id, question } = location.state as DashboardResult;
 
   const handleMode = (mode: string) => {
     setMode(mode);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await apiClient.get(
+          `/search/${search_id}/each-responses`,
+          {
+            params: {
+              page,
+              size: 5,
+            },
+          }
+        );
+        // result가 배열인지 확인하고, 아니면 빈 배열로 설정
+        const resultData = response.data.result;
+        setData(resultData);
+      } catch (error) {
+        console.error("데이터 로드 실패:", error);
+        setData(undefined);
+      }
+    };
+    fetchData();
+  }, [search_id, page]);
+
+  // console.log(data);
   return (
     <div className="flex flex-col items-center justify-start min-h-screen pt-[40px] px-[80px] pb-[80px] gap-[40px]">
       {/* 상단 영역 */}
@@ -67,7 +102,7 @@ export default function Dashboard() {
         <div className="flex flex-col items-start justify-between w-full bg-opacity-500 rounded-2xl py-[32px] px-[40px] h-full">
           <div className="w-full flex flex-col items-center justify-center gap-[48px]">
             <div className="text-h4 text-gray-950 w-full text-start">
-              20대 남성이 타는 차 브랜드 분포
+              {question}
             </div>
             <img
               src={PieChart}
@@ -78,7 +113,9 @@ export default function Dashboard() {
           <div className="w-full flex flex-col items-start justify-center gap-[16px]">
             <img src={ChartCaption} alt="Chart Caption" className="w-full" />
             <div className="w-full text-center text-caption text-gray-700">
-              표본 수: 100명 / 데이터 수집일: 2024.09.20 / 신뢰도: 95%
+              표본 수: {result.summary.total_respondents}명 / 데이터 수집일:{" "}
+              {result.summary.data_capture_date} / 신뢰도:{" "}
+              {result.summary.confidence_level || "-"}%
             </div>
           </div>
         </div>
@@ -89,7 +126,7 @@ export default function Dashboard() {
               검색 결과 내 재검색
             </div>
             <SearchBar
-              placeholder="20대 남성이 타는 차 브랜드 분포"
+              placeholder={question}
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
             />
@@ -98,15 +135,28 @@ export default function Dashboard() {
             <div className="text-h5 text-gray-950 w-full text-start">
               검색 조건 및 필터
             </div>
-            <div className="text-body3 text-primary-700 w-full text-start bg-primary-100 rounded-lg py-[8px] px-[20px]">
-              응답자수: 100명
-            </div>
-            <div className="text-body3 text-secondary-700 w-full text-start bg-secondary-100 rounded-lg py-[8px] px-[20px]">
-              연령: 20-29세
-            </div>
-            <div className="text-body3 text-tertiary-700 w-full text-start bg-tertiary-100 rounded-lg py-[8px] px-[20px]">
-              성별: 남성
-            </div>
+            {result.applied_filters_summary?.map(
+              (
+                filter: { key: string; display_value: string },
+                index: number
+              ) => {
+                const colorClass =
+                  index % 3 === 0
+                    ? "text-primary-700 bg-primary-100"
+                    : index % 3 === 1
+                    ? "text-secondary-700 bg-secondary-100"
+                    : "text-tertiary-700 bg-tertiary-100";
+
+                return (
+                  <div
+                    key={`${filter.key}-${index}`}
+                    className={`text-body3 ${colorClass} w-full text-start rounded-lg py-[8px] px-[20px]`}
+                  >
+                    {filter.key}: {filter.display_value}
+                  </div>
+                );
+              }
+            )}
             <div className="w-full flex items-center justify-center gap-[8px] py-[12px] px-[20px] bg-gray-200 rounded-lg text-body3 text-gray-950 cursor-pointer">
               <PlusIcon color="black" width={20} height={21} />
               조건 추가
@@ -148,10 +198,10 @@ export default function Dashboard() {
             alt="Line Chart"
             className="w-[480px] h-[300px]"
           />
-          <div className="font-medium text-xl text-tertiary-500 tracking-[-0.03em] cursor-pointer text-center w-full h-full rounded-lg flex items-center justify-center border border-dashed border-tertiary-500">
+          {/* <div className="font-medium text-xl text-tertiary-500 tracking-[-0.03em] cursor-pointer text-center w-full h-full rounded-lg flex items-center justify-center border border-dashed border-tertiary-500">
             +<br />
             정보 추가
-          </div>
+          </div> */}
         </div>
       </div>
       {/* 하단 영역 */}
@@ -171,29 +221,34 @@ export default function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {data?.values.map((item) => (
               <tr
-                key={index}
+                key={item.respondent_id}
                 className="text-body4 text-gray-950 bg-white h-[48px] border border-gray-300"
               >
                 <td className="px-[12px] align-middle">
                   <div className="flex items-center justify-center gap-[8px]">
                     <MyPageIcon width={32} height={32} />
                     <div className="text-subtitle2 text-primary-900">
-                      {item.id}
+                      {item.respondent_id}
                     </div>
                   </div>
                 </td>
                 <td className="px-[12px]">{item.gender}</td>
                 <td className="px-[12px]">{item.age}</td>
-                <td className="px-[12px]">{item.address}</td>
-                <td className="px-[12px]">{item.income}</td>
-                <td className="px-[12px]">{item.matchingRate}</td>
+                <td className="px-[12px]">{item.residence}</td>
+                <td className="px-[12px]">{item.personal_income}</td>
+                <td className="px-[12px]">{item.concordance_rate}%</td>
               </tr>
             ))}
           </tbody>
         </table>
-        <Pagenation />
+        <Pagenation
+          page={page}
+          setPage={setPage}
+          totalPages={data?.page_info?.total_page_count || 1}
+          hasNext={data?.page_info?.has_next || false}
+        />
       </div>
     </div>
   );
