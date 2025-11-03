@@ -1,11 +1,12 @@
 import LogoContainer from "@/assets/logos/logo_container";
 import Button from "@/components/button";
 
-import ChevronDownIcon from "@/assets/icons/ic_chevron_down";
 import MyPageIcon from "@/assets/icons/ic_mypage";
-import MailIcon from "@/assets/icons/ic_mail";
-import FileCsvIcon from "@/assets/icons/ic_file_csv";
-import FilePdfIcon from "@/assets/icons/ic_file_pdf";
+// import MailIcon from "@/assets/icons/ic_mail";
+// import FileCsvIcon from "@/assets/icons/ic_file_csv";
+// import FilePdfIcon from "@/assets/icons/ic_file_pdf";
+
+import Modal from "@/components/modal";
 
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
@@ -100,10 +101,18 @@ export default function Header({
               size="large"
               onClick={() => setIsExportOpen(!isExportOpen)}
             >
-              <div>내보내기</div>
-              <ChevronDownIcon color="white" width={16} height={16} />
+              <div>라이브러리 저장</div>
             </Button>
             {isExportOpen && (
+              <Modal
+                open={isExportOpen}
+                onClose={() => setIsExportOpen(false)}
+                title="라이브러리 저장"
+                description="저장할 라이브러리 이름을 입력해주세요."
+                type="save"
+              />
+            )}
+            {/* {isExportOpen && (
               <ul className="absolute right-0 top-full mt-[12px] inline-block whitespace-nowrap min-w-[180px] bg-white rounded-lg py-[8px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] z-20">
                 <li
                   id="mail"
@@ -130,7 +139,7 @@ export default function Header({
                   .pdf로 다운로드
                 </li>
               </ul>
-            )}
+            )} */}
           </div>
         </div>
       )}
