@@ -20,110 +20,12 @@ import PercentageBar from "@/components/panel/percentage-bar";
 import Chip from "@/components/chip";
 import SurveyContainer from "@/components/panel/survey-container";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { panelData } from "@/components/panel/panel-data";
+import { useState, useEffect, useMemo } from "react";
+import apiClient from "@/api/client";
+import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-// 데이터 가져오기
-const data = panelData[0];
-
-// 패널 프로필
-const panelProfile = {
-  panelId: `패널 ${data.panel_id}`,
-  age: `${data.나이}세`,
-  gender: data.성별,
-  job: data.직업.split(" (")[0], // "전문직 (의사, 간호사...)" -> "전문직"
-  department: data.직무,
-  address: data.거주지역,
-  marriageStatus: data.결혼여부,
-  numberOfChildren: `${data.자녀수}명`,
-  familySize: data.가족수,
-  education: data.최종학력,
-  personalIncome: data.개인소득,
-  familyIncome: data.가구소득,
-};
-
-// 기본 정보
-const basicInfoList = [
-  { title: "나이", value: panelProfile.age },
-  { title: "성별", value: panelProfile.gender },
-  { title: "직업", value: panelProfile.job },
-  { title: "부서", value: panelProfile.department },
-  { title: "거주지역", value: panelProfile.address },
-  { title: "결혼상태", value: panelProfile.marriageStatus },
-  { title: "자녀수", value: panelProfile.numberOfChildren },
-  { title: "가족수", value: panelProfile.familySize },
-  { title: "학력", value: panelProfile.education },
-  { title: "개인소득", value: panelProfile.personalIncome },
-  { title: "가구소득", value: panelProfile.familyIncome },
-];
-
-// 디지털 기기
-const digitalDeviceInfo = [
-  {
-    text: `휴대폰: ${data.휴대폰브랜드}`,
-    icon: <MobileIcon width={20} height={20} />,
-  },
-  {
-    text: `모델: ${data.휴대폰모델}`,
-    icon: <TagIcon width={20} height={20} />,
-  },
-];
-
-// 차량 정보
-const vehicleInfo = [
-  {
-    text: `차량 보유: ${data.차량보유}`,
-    icon: <CarIcon width={20} height={20} />,
-  },
-  {
-    text: `브랜드: ${data.차량브랜드}`,
-    icon: <TagIcon width={20} height={20} />,
-  },
-  {
-    text: `모델: ${data.차량모델}`,
-    icon: <TagIcon width={20} height={20} />,
-  },
-];
-
-// 해시태그 생성
-const hashTags = [
-  `#${data.연령대}`,
-  `#${data.성별}`,
-  `#${data.직업.split(" (")[0]}`, // "전문직 (의사, 간호사...)" -> "전문직"
-  `#${data.직무}`,
-  `#${data.거주지역.split(" ")[0]}`, // "경기 화성시" -> "경기"
-  `#${data.거주지역.split(" ")[1]}`, // "경기 화성시" -> "화성시"
-  `#${data.결혼여부}`,
-];
-
-// 보유 전자제품
-const ownedProducts = data.보유전자제품;
-
-// 생활 습관
-const lifestyleData = [
-  {
-    title: "흡연 경험",
-    chips: data.흡연경험.map((item) => item.split(" (")[0]),
-    icon: <SmokeIcon width={20} height={20} />,
-  },
-  {
-    title: "담배 브랜드",
-    chips: data.담배브랜드,
-    icon: <TagIcon width={20} height={20} />,
-  },
-  {
-    title: "전자 담배",
-    chips: data.전자담배,
-    icon: <SmokeIcon width={20} height={20} />,
-  },
-  {
-    title: "음주 경험",
-    chips: data.음주경험,
-    icon: <BeerIcon width={20} height={20} />,
-  },
-];
-
-// 아이콘 매핑
+// 아이콘 매핑 (변경되지 않는 상수이므로 컴포넌트 외부에 유지)
 const categoryIcons: Record<string, React.ReactNode> = {
   라이프스타일: <HomeIcon width={20} height={20} />,
   건강생활: <GymIcon width={20} height={20} />,
@@ -134,11 +36,219 @@ const categoryIcons: Record<string, React.ReactNode> = {
 
 export default function Panel() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [panelData, setPanelData] = useState<Record<string, unknown> | null>(
+    null
+  );
+  const location = useLocation();
+  const { question = "", concordanceRate = 0 } = (location.state as {
+    question?: string;
+    concordanceRate?: number;
+  }) || { question: "", concordanceRate: 0 };
+  const [panelSummary, setPanelSummary] = useState<string | null>(null);
   const [mode, setMode] = useState("profile");
 
   const handleMode = (mode: string) => {
     setMode(mode);
   };
+
+  // panelData를 기반으로 계산된 값들
+  const panelProfile = useMemo(() => {
+    if (!panelData) return null;
+
+    const job = String(panelData["직업"] || "").split(" (")[0];
+
+    return {
+      panelId: `패널 ${panelData["panel_id"] || id || ""}`,
+      age: panelData["나이"] ? `${panelData["나이"]}세` : "",
+      gender: String(panelData["성별"] || ""),
+      job,
+      department: String(panelData["직무"] || ""),
+      address: String(panelData["거주지역"] || ""),
+      marriageStatus: String(panelData["결혼여부"] || ""),
+      numberOfChildren: panelData["자녀수"] ? `${panelData["자녀수"]}명` : "",
+      familySize: String(panelData["가족수"] || ""),
+      education: String(panelData["최종학력"] || ""),
+      personalIncome: String(panelData["개인소득"] || ""),
+      familyIncome: String(panelData["가구소득"] || ""),
+    };
+  }, [panelData, id]);
+
+  const basicInfoList = useMemo(() => {
+    if (!panelProfile) return [];
+
+    return [
+      { title: "나이", value: panelProfile.age },
+      { title: "성별", value: panelProfile.gender },
+      { title: "직업", value: panelProfile.job },
+      { title: "부서", value: panelProfile.department },
+      { title: "거주지역", value: panelProfile.address },
+      { title: "결혼상태", value: panelProfile.marriageStatus },
+      { title: "자녀수", value: panelProfile.numberOfChildren },
+      { title: "가족수", value: panelProfile.familySize },
+      { title: "학력", value: panelProfile.education },
+      { title: "개인소득", value: panelProfile.personalIncome },
+      { title: "가구소득", value: panelProfile.familyIncome },
+    ];
+  }, [panelProfile]);
+
+  const digitalDeviceInfo = useMemo(() => {
+    if (!panelData) return [];
+
+    const items = [];
+    const phoneBrand = String(panelData["휴대폰브랜드"] || "");
+    const phoneModel = String(panelData["휴대폰모델"] || "");
+
+    if (phoneBrand) {
+      items.push({
+        text: `휴대폰: ${phoneBrand}`,
+        icon: <MobileIcon width={20} height={20} />,
+      });
+    }
+    if (phoneModel) {
+      items.push({
+        text: `모델: ${phoneModel}`,
+        icon: <TagIcon width={20} height={20} />,
+      });
+    }
+    return items;
+  }, [panelData]);
+
+  const vehicleInfo = useMemo(() => {
+    if (!panelData) return [];
+
+    const items = [];
+    const vehicleOwnership = String(panelData["차량보유"] || "");
+    const vehicleBrand = String(panelData["차량브랜드"] || "");
+    const vehicleModel = String(panelData["차량모델"] || "");
+
+    if (vehicleOwnership) {
+      items.push({
+        text: `차량 보유: ${vehicleOwnership}`,
+        icon: <CarIcon width={20} height={20} />,
+      });
+    }
+    if (vehicleBrand) {
+      items.push({
+        text: `브랜드: ${vehicleBrand}`,
+        icon: <TagIcon width={20} height={20} />,
+      });
+    }
+    if (vehicleModel) {
+      items.push({
+        text: `모델: ${vehicleModel}`,
+        icon: <TagIcon width={20} height={20} />,
+      });
+    }
+    return items;
+  }, [panelData]);
+
+  const hashTags = useMemo(() => {
+    if (!panelData) return [];
+
+    const tags = [];
+    const ageGroup = panelData["연령대"] ? `#${panelData["연령대"]}` : null;
+    const gender = panelData["성별"] ? `#${panelData["성별"]}` : null;
+    const job = String(panelData["직업"] || "").split(" (")[0];
+    const jobTag = job ? `#${job}` : null;
+    const department = panelData["직무"] ? `#${panelData["직무"]}` : null;
+    const address = String(panelData["거주지역"] || "");
+    const addressParts = address.split(" ");
+    const marriageStatus = panelData["결혼여부"]
+      ? `#${panelData["결혼여부"]}`
+      : null;
+
+    if (ageGroup) tags.push(ageGroup);
+    if (gender) tags.push(gender);
+    if (jobTag) tags.push(jobTag);
+    if (department) tags.push(department);
+    if (addressParts[0]) tags.push(`#${addressParts[0]}`);
+    if (addressParts[1]) tags.push(`#${addressParts[1]}`);
+    if (marriageStatus) tags.push(marriageStatus);
+
+    return tags;
+  }, [panelData]);
+
+  const ownedProducts = useMemo(() => {
+    if (!panelData || !panelData["보유전자제품"]) return [];
+    const products = panelData["보유전자제품"];
+    return Array.isArray(products) ? products : [];
+  }, [panelData]);
+
+  const lifestyleData = useMemo(() => {
+    if (!panelData) return [];
+
+    const items = [];
+
+    const smokingExperience = panelData["흡연경험"];
+    if (Array.isArray(smokingExperience) && smokingExperience.length > 0) {
+      items.push({
+        title: "흡연 경험",
+        chips: smokingExperience.map(
+          (item: string) => String(item).split(" (")[0]
+        ),
+        icon: <SmokeIcon width={20} height={20} />,
+      });
+    }
+
+    const cigaretteBrands = panelData["담배브랜드"];
+    if (Array.isArray(cigaretteBrands) && cigaretteBrands.length > 0) {
+      items.push({
+        title: "담배 브랜드",
+        chips: cigaretteBrands.map((item: unknown) => String(item)),
+        icon: <TagIcon width={20} height={20} />,
+      });
+    }
+
+    const eCigarette = panelData["전자담배"];
+    if (Array.isArray(eCigarette) && eCigarette.length > 0) {
+      items.push({
+        title: "전자 담배",
+        chips: eCigarette.map((item: unknown) => String(item)),
+        icon: <SmokeIcon width={20} height={20} />,
+      });
+    }
+
+    const alcoholExperience = panelData["음주경험"];
+    if (Array.isArray(alcoholExperience) && alcoholExperience.length > 0) {
+      items.push({
+        title: "음주 경험",
+        chips: alcoholExperience.map((item: unknown) => String(item)),
+        icon: <BeerIcon width={20} height={20} />,
+      });
+    }
+
+    return items;
+  }, [panelData]);
+
+  useEffect(() => {
+    const fetchPanelData = async () => {
+      const response = await apiClient.get(`/panels/${id}`);
+      const attributes = response.data.result.panel_detail.attributes;
+
+      // key가 "raw_data"인 항목 찾기
+      const rawDataAttr = attributes.find(
+        (attr: { key: string; value: string }) => attr.key === "raw_data"
+      );
+
+      if (rawDataAttr?.value) {
+        try {
+          // JSON 문자열 파싱
+          const parsedData = JSON.parse(rawDataAttr.value);
+          setPanelData(parsedData);
+          console.log(parsedData);
+          setPanelSummary(response.data.result.panel_detail.summary);
+        } catch (error) {
+          // JSON 파싱 실패 시 원본 문자열 저장
+          console.error("JSON 파싱 실패:", error);
+          setPanelData(rawDataAttr.value);
+        }
+      } else {
+        setPanelData(null);
+      }
+    };
+    fetchPanelData();
+  }, [id]);
   return (
     <div className="flex flex-col items-center justify-start min-h-screen pt-[30px] px-[80px] pb-[183px]">
       {/* 이전 페이지로 이동 버튼 */}
@@ -148,7 +258,7 @@ export default function Panel() {
           onClick={() => navigate(-1)}
         >
           <ChevronLeftIcon color="black" width={24} height={24} />
-          40대 기혼 여성 100명
+          {question}
         </button>
       </div>
       {/* 패널 프로필 영역 */}
@@ -167,37 +277,39 @@ export default function Panel() {
             </div>
             <div className="flex flex-col items-start justify-start gap-[8px]">
               <div className="text-h3 text-primary-900">
-                {panelProfile.panelId}
+                {panelProfile?.panelId || "패널 정보 로딩 중..."}
               </div>
               <div className="flex items-center justify-start gap-[16px]">
                 <TextWithIcon
                   icon={<UserIcon width={20} height={20} color="#616161" />}
-                  text={`${panelProfile.age} ${panelProfile.gender}`}
+                  text={`${panelProfile?.age || ""} ${
+                    panelProfile?.gender || ""
+                  }`}
                 />
                 <TextWithIcon
                   icon={
                     <BriefcaseIcon width={20} height={20} color="#616161" />
                   }
-                  text={panelProfile.job}
+                  text={panelProfile?.job || ""}
                 />
                 <TextWithIcon
                   icon={<BusinessIcon width={20} height={20} color="#616161" />}
-                  text={panelProfile.department}
+                  text={panelProfile?.department || ""}
                 />
                 <TextWithIcon
                   icon={<MapPinIcon width={20} height={20} color="#616161" />}
-                  text={panelProfile.address}
+                  text={panelProfile?.address || ""}
                 />
               </div>
             </div>
           </div>
           <div className="flex items-center justify-center py-[8px] px-[12px] gap-[12px]">
-            <div className="text-caption text-primary-700">
-              40대 기혼 여성 100명
-            </div>
+            <div className="text-caption text-primary-700">{question}</div>
             <div className="flex items-center justify-start gap-[4px]">
-              <div className="text-subtitle2 text-black">91.23%</div>
-              <PercentageBar percentage={91.23} />
+              <div className="text-subtitle2 text-black">
+                {concordanceRate}%
+              </div>
+              <PercentageBar percentage={concordanceRate} />
             </div>
           </div>
         </div>
@@ -216,14 +328,7 @@ export default function Panel() {
             패널 프로필 요약
           </div>
           <div className="px-[32px] w-full text-body3 text-gray-900 text-start">
-            40세 경기 화성시에 거주하는 기혼 여성으로, 1명의 자녀를 둔 전문직
-            종사자입니다.
-            <br />
-            대학교를 졸업했으며, 개인소득은 월 500~599만원, 가구소득은 월
-            700~799만원 수준입니다.
-            <br />
-            기아 레이 차량을 보유하고 있으며, TV·공기청정기·커피머신 등 다양한
-            전자제품을 사용하는 중산층 가정의 직장인입니다.
+            {panelSummary}
           </div>
         </div>
       </div>
@@ -241,9 +346,11 @@ export default function Panel() {
           >
             상세 프로필
           </div>
-          {"설문응답" in data &&
-          data.설문응답 &&
-          Object.keys(data.설문응답).length > 0 ? (
+          {panelData &&
+          "설문응답" in panelData &&
+          panelData.설문응답 &&
+          typeof panelData.설문응답 === "object" &&
+          Object.keys(panelData.설문응답).length > 0 ? (
             <div
               className={`text-body5 ${
                 mode === "history"
@@ -297,20 +404,26 @@ export default function Panel() {
               />
             </div>
           </div>
-        ) : "설문응답" in data &&
-          data.설문응답 &&
-          Object.keys(data.설문응답).length > 0 ? (
+        ) : panelData &&
+          "설문응답" in panelData &&
+          panelData.설문응답 &&
+          typeof panelData.설문응답 === "object" &&
+          Object.keys(panelData.설문응답).length > 0 ? (
           <div className="flex flex-col items-start justify-start w-full gap-[20px]">
-            {Object.entries(data.설문응답).map(([category, surveyData]) => (
-              <SurveyContainer
-                key={category}
-                icon={
-                  categoryIcons[category] || <HomeIcon width={20} height={20} />
-                }
-                title={category}
-                data={surveyData}
-              />
-            ))}
+            {Object.entries(panelData.설문응답 as Record<string, unknown>).map(
+              ([category, surveyData]) => (
+                <SurveyContainer
+                  key={category}
+                  icon={
+                    categoryIcons[category] || (
+                      <HomeIcon width={20} height={20} />
+                    )
+                  }
+                  title={category}
+                  data={surveyData as string[] | Record<string, string>}
+                />
+              )
+            )}
           </div>
         ) : null}
       </div>

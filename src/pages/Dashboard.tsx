@@ -10,7 +10,7 @@ import Pagenation from "@/components/dashboard/pagenation";
 import type { DashboardResult } from "@/types/dashboard_result";
 import type { DashboardPanel } from "@/types/dashboard_panel";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import apiClient from "@/api/client";
 
@@ -59,6 +59,7 @@ import apiClient from "@/api/client";
 
 export default function Dashboard() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
   const [mode, setMode] = useState("profile");
   const [data, setData] = useState<DashboardPanel>();
@@ -92,6 +93,15 @@ export default function Dashboard() {
     };
     fetchData();
   }, [search_id, page]);
+
+  const handlePanelClick = (panelId: string, concordanceRate: string) => {
+    navigate(`/panel/${panelId}`, {
+      state: {
+        question,
+        concordanceRate,
+      },
+    });
+  };
 
   // console.log(data);
   return (
@@ -225,6 +235,9 @@ export default function Dashboard() {
               <tr
                 key={item.respondent_id}
                 className="text-body4 text-gray-950 bg-white h-[48px] border border-gray-300"
+                onClick={() =>
+                  handlePanelClick(item.respondent_id, item.concordance_rate)
+                }
               >
                 <td className="px-[12px] align-middle">
                   <div className="flex items-center justify-center gap-[8px]">
