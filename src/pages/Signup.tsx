@@ -2,15 +2,16 @@ import Button from "@/components/button";
 import LogoText from "@/assets/logos/logo_text";
 import InputField from "@/components/signup/input-field";
 
-import { useSearchParams, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useMemo, useState, useCallback } from "react";
 
 export default function Signup() {
   const navigate = useNavigate();
-  const [sp] = useSearchParams();
-  const roleRaw = (sp.get("role") || "").toLowerCase();
-  const isValidRole = roleRaw === "individual" || roleRaw === "business";
-  const roleLabel = roleRaw === "individual" ? "개인" : "비즈니스";
+  // 플랜 선택 영역 주석 처리
+  // const [sp] = useSearchParams();
+  // const roleRaw = (sp.get("role") || "").toLowerCase();
+  // const isValidRole = roleRaw === "individual" || roleRaw === "business";
+  // const roleLabel = roleRaw === "individual" ? "개인" : "비즈니스";
 
   // 입력 상태
   const [name, setName] = useState("");
@@ -48,8 +49,16 @@ export default function Signup() {
     else if (id === "password-confirm") setPassword2(value);
   }, []);
 
-  // 유효하지 않은 역할이면 리다이렉트
-  if (!isValidRole) return <Navigate to="/pricing" replace />;
+  const handleNext = useCallback(() => {
+    // 세션 스토리지에 입력 값 저장
+    sessionStorage.setItem("signup_name", name);
+    sessionStorage.setItem("signup_email", email);
+    sessionStorage.setItem("signup_password", password);
+    navigate("/signup/onboarding");
+  }, [name, email, password, navigate]);
+
+  // 유효하지 않은 역할이면 리다이렉트 (주석 처리)
+  // if (!isValidRole) return <Navigate to="/pricing" replace />;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-[53px] px-[380px]">
@@ -58,7 +67,8 @@ export default function Signup() {
         <div className="flex flex-col items-center justify-center gap-[8px]">
           <LogoText width={213} height={60} />
           <div className="text-body3 text-primary-900">
-            {roleLabel} 플랜으로 회원가입
+            {/* {roleLabel} 플랜으로 회원가입 */}
+            회원가입
           </div>
           <div className="flex items-center justify-center gap-[11px]">
             <div className="w-[80px] h-[4px] bg-primary-500 rounded-sm" />
@@ -129,7 +139,7 @@ export default function Signup() {
               isPassword2Error ||
               isTermsError
             }
-            onClick={() => navigate(`/signup/onboarding?role=${roleRaw}`)}
+            onClick={handleNext}
             type="button"
           >
             다음
