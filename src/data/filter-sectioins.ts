@@ -1,7 +1,7 @@
 export const filterSections = [
   {
     id: 1,
-    title: "연령",
+    title: "응답자 수",
     chips: [
       {
         id: 1,
