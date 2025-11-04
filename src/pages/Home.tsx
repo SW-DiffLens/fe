@@ -236,6 +236,7 @@ export default function Home() {
                     handleSectionSelectionChange(index, selectedCodes)
                   }
                   reset={resetTrigger}
+                  singleSelect={section.singleSelect}
                 />
               ))}
             </div>

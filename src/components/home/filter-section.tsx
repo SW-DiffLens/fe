@@ -10,6 +10,7 @@ interface FilterSectionProps {
   }[];
   onSelectionChange?: (selectedCodes: number[]) => void;
   reset?: number;
+  singleSelect?: boolean;
 }
 
 export default function FilterSection({
@@ -17,6 +18,7 @@ export default function FilterSection({
   chips,
   onSelectionChange,
   reset = 0, // 필터 초기화 오류로 인해 숫자형식으로 reset 값이 변경되었을 때 초기화 실행
+  singleSelect = false,
 }: FilterSectionProps) {
   const [selectedChips, setSelectedChips] = useState<number[]>([]);
   const prevResetValueRef = useRef<number | undefined>(reset);
@@ -37,12 +39,22 @@ export default function FilterSection({
   }, [reset]);
 
   const handleChipClick = (id: number) => {
-    let newSelectedChips;
-    if (selectedChips.includes(id)) {
-      newSelectedChips = selectedChips.filter((chip) => chip !== id);
+    let newSelectedChips: number[];
+
+    if (singleSelect) {
+      if (selectedChips.includes(id)) {
+        newSelectedChips = [];
+      } else {
+        newSelectedChips = [id];
+      }
     } else {
-      newSelectedChips = [...selectedChips, id];
+      if (selectedChips.includes(id)) {
+        newSelectedChips = selectedChips.filter((chip) => chip !== id);
+      } else {
+        newSelectedChips = [...selectedChips, id];
+      }
     }
+
     setSelectedChips(newSelectedChips);
 
     // 선택된 칩들의 code를 배열로 추출
