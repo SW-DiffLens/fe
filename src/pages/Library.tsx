@@ -77,10 +77,13 @@ export default function Library() {
   const [selectedFilters, setSelectedFilters] = useState<
     Record<number, string>
   >(
-    filterOptions.reduce((acc, filter) => {
-      acc[filter.id] = filter.title;
-      return acc;
-    }, {} as Record<number, string>)
+    filterOptions.reduce(
+      (acc, filter) => {
+        acc[filter.id] = filter.title;
+        return acc;
+      },
+      {} as Record<number, string>
+    )
   );
 
   const handleCardSelect = (id: number) => {

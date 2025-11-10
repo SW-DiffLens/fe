@@ -154,8 +154,8 @@ export default function Dashboard() {
                   index % 3 === 0
                     ? "text-primary-700 bg-primary-100"
                     : index % 3 === 1
-                    ? "text-secondary-700 bg-secondary-100"
-                    : "text-tertiary-700 bg-tertiary-100";
+                      ? "text-secondary-700 bg-secondary-100"
+                      : "text-tertiary-700 bg-tertiary-100";
 
                 return (
                   <div
