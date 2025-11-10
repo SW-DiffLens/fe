@@ -22,11 +22,11 @@ export default function Card({
   selectedCards,
 }: CardProps) {
   return (
-    <div className="w-full h-full bg-opacity-500 rounded-2xl px-[40px] py-[32px] flex flex-col items-start justify-start gap-[16px]">
+    <div className="flex h-full w-full flex-col items-start justify-start gap-[16px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
       <input
         type="checkbox"
         id={`card-${id}`}
-        className="w-[16px] h-[16px] rounded-sm border border-gray-900 bg-white"
+        className="h-[16px] w-[16px] rounded-sm border border-gray-900 bg-white"
         onChange={() => {
           if (selectedCards.includes(id)) {
             onDeselect(id);
@@ -35,8 +35,8 @@ export default function Card({
           }
         }}
       />
-      <div className="text-h6 text-gray-950">{title}</div>
-      <div className="text-subtitle2 text-gray-700">{description}</div>
+      <div className="text-gray-950 text-h6">{title}</div>
+      <div className="text-gray-700 text-subtitle2">{description}</div>
       <div className="flex items-center justify-start gap-[8px]">
         {tags.map((tag) => (
           <Chip key={tag} variant="filled" chipType="text">
@@ -45,7 +45,7 @@ export default function Card({
         ))}
       </div>
       <div className="flex flex-col items-start justify-center gap-[4px]">
-        <div className="text-label text-gray-700">적용된 필터</div>
+        <div className="text-gray-700 text-label">적용된 필터</div>
         <div className="flex items-center justify-start gap-[8px]">
           {filters.map((filter) => (
             <Chip key={filter} variant="outlined" chipType="text">

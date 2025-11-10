@@ -6,7 +6,7 @@ export default function PercentageBar({ percentage }: { percentage: number }) {
       {Array.from({ length: 10 }, (_, index) => (
         <div
           key={index}
-          className={`w-[12px] h-[24px] rounded-full ${
+          className={`h-[24px] w-[12px] rounded-full ${
             index < filledBars ? "bg-primary-700" : "bg-gray-400"
           }`}
         />

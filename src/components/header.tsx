@@ -1,15 +1,15 @@
+import MyPageIcon from "@/assets/icons/ic_mypage";
 import LogoContainer from "@/assets/logos/logo_container";
 import Button from "@/components/button";
 
-import MyPageIcon from "@/assets/icons/ic_mypage";
 // import MailIcon from "@/assets/icons/ic_mail";
 // import FileCsvIcon from "@/assets/icons/ic_file_csv";
 // import FilePdfIcon from "@/assets/icons/ic_file_pdf";
 
-import Modal from "@/components/modal";
+import { useEffect, useRef, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
+import Modal from "@/components/modal";
 
 type IsLoggedIn = "true" | "false";
 type Dashboard = "true" | "false";
@@ -50,7 +50,7 @@ export default function Header({
     };
   }, [isExportOpen]);
   return (
-    <div className="flex items-center justify-between px-[80px] py-[16px] bg-opacity-100">
+    <div className="flex items-center justify-between bg-opacity-100 px-[80px] py-[16px]">
       <div onClick={() => navigate("/home")} className="cursor-pointer">
         <LogoContainer width={128} height={26} />
       </div>
@@ -85,7 +85,7 @@ export default function Header({
           <div
             className={`text-subtitle1 ${
               isLibrary === "true" ? "text-primary-700" : "text-gray-700"
-            } cursor-pointer mr-[8px]`}
+            } mr-[8px] cursor-pointer`}
             onClick={() => navigate("/home/library")}
           >
             라이브러리
@@ -94,7 +94,7 @@ export default function Header({
         </div>
       )}
       {isLoggedIn === "true" && dashboard === "true" && isPanel === "false" && (
-        <div className="flex justify-center items-center gap-[16px]">
+        <div className="flex items-center justify-center gap-[16px]">
           <div className="relative" ref={selectRef}>
             <Button
               variant="icon"

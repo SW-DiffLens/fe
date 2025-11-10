@@ -1,9 +1,8 @@
-import Button from "@/components/button";
-import LogoText from "@/assets/logos/logo_text";
-import InputField from "@/components/signup/input-field";
-
+import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMemo, useState, useCallback } from "react";
+import LogoText from "@/assets/logos/logo_text";
+import Button from "@/components/button";
+import InputField from "@/components/signup/input-field";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -61,8 +60,8 @@ export default function Signup() {
   // if (!isValidRole) return <Navigate to="/pricing" replace />;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-[53px] px-[380px]">
-      <div className="w-full flex flex-col items-center justify-center py-[80px] px-[80px] gap-[24px] bg-opacity-500 rounded-2xl">
+    <div className="flex min-h-screen flex-col items-center justify-center px-[380px] py-[53px]">
+      <div className="flex w-full flex-col items-center justify-center gap-[24px] rounded-2xl bg-opacity-500 px-[80px] py-[80px]">
         {/* 상단 영역 */}
         <div className="flex flex-col items-center justify-center gap-[8px]">
           <LogoText width={213} height={60} />
@@ -71,13 +70,13 @@ export default function Signup() {
             회원가입
           </div>
           <div className="flex items-center justify-center gap-[11px]">
-            <div className="w-[80px] h-[4px] bg-primary-500 rounded-sm" />
-            <div className="w-[80px] h-[4px] bg-gray-300 rounded-sm" />
+            <div className="h-[4px] w-[80px] rounded-sm bg-primary-500" />
+            <div className="h-[4px] w-[80px] rounded-sm bg-gray-300" />
           </div>
         </div>
         {/* 폼 영역 */}
         <form
-          className="flex flex-col items-center justify-center gap-[16px] w-full"
+          className="flex w-full flex-col items-center justify-center gap-[16px]"
           onChange={onFormChange}
         >
           <InputField
@@ -116,7 +115,7 @@ export default function Signup() {
             <input
               type="checkbox"
               id="terms"
-              className="w-[16px] h-[16px] rounded-sm border border-gray-900 bg-white"
+              className="h-[16px] w-[16px] rounded-sm border border-gray-900 bg-white"
               checked={terms}
               onChange={(e) => setTerms(e.target.checked)}
             />
@@ -146,13 +145,13 @@ export default function Signup() {
           </Button>
         </form>
         {/* 라인 */}
-        <div className="w-full h-[1px] bg-[#DDE1E6]" />
+        <div className="h-[1px] w-full bg-[#DDE1E6]" />
         {/* 하단 영역 */}
         <div className="w-full text-center text-body5 text-gray-900">
           이미 계정이 있으신가요?{" "}
           <a
             onClick={() => navigate("/login")}
-            className="text-primary-700 underline cursor-pointer"
+            className="cursor-pointer text-primary-700 underline"
           >
             로그인
           </a>

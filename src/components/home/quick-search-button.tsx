@@ -13,12 +13,12 @@ export default function QuickSearchButton({
 }: QuickSearchButtonProps) {
   return (
     <div
-      className="flex flex-col items-start px-[16px] py-[16px] justify-center gap-[12px] rounded-xl bg-opacity-500 border border-white cursor-pointer"
+      className="flex cursor-pointer flex-col items-start justify-center gap-[12px] rounded-xl border border-white bg-opacity-500 px-[16px] py-[16px]"
       onClick={onClick}
     >
       <UserGroupIcon width={24} height={24} />
-      <div className="text-base font-medium">{title}</div>
-      <div className="text-xs text-[#515151]">{subtitle}</div>
+      <div className="font-medium text-base">{title}</div>
+      <div className="text-[#515151] text-xs">{subtitle}</div>
     </div>
   );
 }

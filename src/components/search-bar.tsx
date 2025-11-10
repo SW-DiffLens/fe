@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import SearchIcon from "@/assets/icons/ic_search";
 
 interface SearchBarProps {
@@ -14,13 +14,13 @@ export default function SearchBar({
   onChange,
 }: SearchBarProps) {
   return (
-    <div className="w-full flex items-start justify-between py-[16px] px-[20px] bg-opacity-800 rounded-lg border border-white">
+    <div className="flex w-full items-start justify-between rounded-lg border border-white bg-opacity-800 px-[20px] py-[16px]">
       <input
         type="text"
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="w-full bg-transparent outline-none text-body2 text-gray-950 placeholder:text-gray-700"
+        className="w-full bg-transparent text-body2 text-gray-950 outline-none placeholder:text-gray-700"
       />
       <SearchIcon color="#482A88" width={24} height={24} />
     </div>

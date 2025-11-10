@@ -6,21 +6,21 @@ export default function DistributionBox({
   categories: { name: string; groupA: number; groupB: number }[];
 }) {
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-[12px]">
-      <div className="text-subtitle2 text-gray-700 w-full text-start">
+    <div className="flex w-full flex-col items-center justify-center gap-[12px]">
+      <div className="w-full text-start text-gray-700 text-subtitle2">
         {title}
       </div>
-      <div className="w-full grid grid-cols-2 gap-[40px]">
+      <div className="grid w-full grid-cols-2 gap-[40px]">
         {/* A 그룹 */}
-        <div className="w-full flex flex-col items-center justify-center gap-[16px] py-[30px] px-[22px] bg-[#FDE7FF]/50 rounded-xl border border-white">
+        <div className="flex w-full flex-col items-center justify-center gap-[16px] rounded-xl border border-white bg-[#FDE7FF]/50 px-[22px] py-[30px]">
           {categories.map((category) => (
             <div
               key={`groupA-${category.name}`}
-              className="w-full flex items-center justify-between"
+              className="flex w-full items-center justify-between"
             >
               <div className="text-body5 text-gray-950">{category.name}</div>
               <div className="flex items-center justify-center gap-[12px]">
-                <div className="w-[200px] h-[10px] flex rounded-2xl border border-white overflow-hidden">
+                <div className="flex h-[10px] w-[200px] overflow-hidden rounded-2xl border border-white">
                   <div
                     className="h-full bg-gray-300"
                     style={{ width: `${100 - category.groupA}%` }}
@@ -30,7 +30,7 @@ export default function DistributionBox({
                     style={{ width: `${category.groupA}%` }}
                   />
                 </div>
-                <div className="text-subtitle2 text-secondary-500 w-[38px] text-right">
+                <div className="w-[38px] text-right text-secondary-500 text-subtitle2">
                   {category.groupA}%
                 </div>
               </div>
@@ -38,15 +38,15 @@ export default function DistributionBox({
           ))}
         </div>
         {/* B 그룹 */}
-        <div className="w-full flex flex-col items-center justify-center gap-[16px] py-[30px] px-[22px] bg-[#DAE7FF]/50 rounded-xl border border-white">
+        <div className="flex w-full flex-col items-center justify-center gap-[16px] rounded-xl border border-white bg-[#DAE7FF]/50 px-[22px] py-[30px]">
           {categories.map((category) => (
             <div
               key={`groupB-${category.name}`}
-              className="w-full flex items-center justify-between"
+              className="flex w-full items-center justify-between"
             >
               <div className="text-body5 text-gray-950">{category.name}</div>
               <div className="flex items-center justify-center gap-[12px]">
-                <div className="w-[200px] h-[10px] flex rounded-2xl border border-white overflow-hidden">
+                <div className="flex h-[10px] w-[200px] overflow-hidden rounded-2xl border border-white">
                   <div
                     className="h-full bg-gray-300"
                     style={{ width: `${100 - category.groupB}%` }}
@@ -56,7 +56,7 @@ export default function DistributionBox({
                     style={{ width: `${category.groupB}%` }}
                   />
                 </div>
-                <div className="text-subtitle2 text-tertiary-500 w-[38px] text-right">
+                <div className="w-[38px] text-right text-subtitle2 text-tertiary-500">
                   {category.groupB}%
                 </div>
               </div>

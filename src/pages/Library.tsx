@@ -1,11 +1,11 @@
-import Card from "@/components/library/card";
-import Button from "@/components/button";
-import ChevronDownIcon from "@/assets/icons/ic_chevron_down";
-import BarChartIcon from "@/assets/icons/ic_bar_chart";
-import TrashIcon from "@/assets/icons/ic_trash";
 import { useState } from "react";
-import Modal from "@/components/modal";
+import BarChartIcon from "@/assets/icons/ic_bar_chart";
+import ChevronDownIcon from "@/assets/icons/ic_chevron_down";
+import TrashIcon from "@/assets/icons/ic_trash";
+import Button from "@/components/button";
+import Card from "@/components/library/card";
 import DropdownFilter from "@/components/library/dropdown-filter";
+import Modal from "@/components/modal";
 
 const cards = [
   {
@@ -125,8 +125,8 @@ export default function Library() {
   return (
     <>
       {isModalOpen && <Modal open={isModalOpen} onClose={handleModalClose} />}
-      <div className="flex flex-col items-center justify-start min-h-screen pt-[40px] px-[193px] pb-[80px] gap-[40px]">
-        <div className="flex items-center justify-between w-full">
+      <div className="flex min-h-screen flex-col items-center justify-start gap-[40px] px-[193px] pt-[40px] pb-[80px]">
+        <div className="flex w-full items-center justify-between">
           <div className="flex items-center justify-center gap-[16px]">
             {filterOptions.map((filter) => (
               <div key={filter.id} className="relative">
@@ -185,10 +185,10 @@ export default function Library() {
             </Button>
           </div>
         </div>
-        <div className="flex w-full items-center justify-start px-[76.5px] text-h5 text-gray-950">
+        <div className="flex w-full items-center justify-start px-[76.5px] text-gray-950 text-h5">
           저장된 분석 항목 (6개)
         </div>
-        <div className="w-full grid grid-cols-2 px-[76.5px] gap-x-[32px] gap-y-[40px]">
+        <div className="grid w-full grid-cols-2 gap-x-[32px] gap-y-[40px] px-[76.5px]">
           {cards.map((card) => (
             <Card
               key={card.id}

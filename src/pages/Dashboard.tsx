@@ -1,18 +1,16 @@
-import PieChart from "@/assets/temp/pie_chart.png";
-import BarChart from "@/assets/temp/bar_chart.png";
-import LineChart from "@/assets/temp/line_chart.png";
-import ChartCaption from "@/assets/temp/chart_caption.png";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import apiClient from "@/api/client";
 import MyPageIcon from "@/assets/icons/ic_mypage";
 import PlusIcon from "@/assets/icons/ic_plus";
-import SearchBar from "@/components/search-bar";
+import BarChart from "@/assets/temp/bar_chart.png";
+import ChartCaption from "@/assets/temp/chart_caption.png";
+import LineChart from "@/assets/temp/line_chart.png";
+import PieChart from "@/assets/temp/pie_chart.png";
 import Pagenation from "@/components/dashboard/pagenation";
-
-import type { DashboardResult } from "@/types/dashboard_result";
+import SearchBar from "@/components/search-bar";
 import type { DashboardPanel } from "@/types/dashboard_panel";
-import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-
-import apiClient from "@/api/client";
+import type { DashboardResult } from "@/types/dashboard_result";
 
 // const data = [
 //   {
@@ -105,22 +103,22 @@ export default function Dashboard() {
 
   // console.log(data);
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen pt-[40px] px-[80px] pb-[80px] gap-[40px]">
+    <div className="flex min-h-screen flex-col items-center justify-start gap-[40px] px-[80px] pt-[40px] pb-[80px]">
       {/* 상단 영역 */}
-      <div className="w-full grid grid-cols-[54%_1fr] items-stretch gap-[20px]">
+      <div className="grid w-full grid-cols-[54%_1fr] items-stretch gap-[20px]">
         {/* 왼쪽 */}
-        <div className="flex flex-col items-start justify-between w-full bg-opacity-500 rounded-2xl py-[32px] px-[40px] h-full">
-          <div className="w-full flex flex-col items-center justify-center gap-[48px]">
-            <div className="text-h4 text-gray-950 w-full text-start">
+        <div className="flex h-full w-full flex-col items-start justify-between rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+          <div className="flex w-full flex-col items-center justify-center gap-[48px]">
+            <div className="w-full text-start text-gray-950 text-h4">
               {question}
             </div>
             <img
               src={PieChart}
               alt="Pie Chart"
-              className="w-[190px] h-[190px]"
+              className="h-[190px] w-[190px]"
             />
           </div>
-          <div className="w-full flex flex-col items-start justify-center gap-[16px]">
+          <div className="flex w-full flex-col items-start justify-center gap-[16px]">
             <img src={ChartCaption} alt="Chart Caption" className="w-full" />
             <div className="w-full text-center text-caption text-gray-700">
               표본 수: {result.summary.total_respondents}명 / 데이터 수집일:{" "}
@@ -130,9 +128,9 @@ export default function Dashboard() {
           </div>
         </div>
         {/* 오른쪽 */}
-        <div className="flex flex-col items-start justify-center w-full gap-[28px] h-full">
-          <div className="w-full flex flex-col items-start justify-center bg-opacity-500 rounded-2xl py-[32px] px-[40px] gap-[16px]">
-            <div className="text-h5 text-gray-950 w-full text-start">
+        <div className="flex h-full w-full flex-col items-start justify-center gap-[28px]">
+          <div className="flex w-full flex-col items-start justify-center gap-[16px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+            <div className="w-full text-start text-gray-950 text-h5">
               검색 결과 내 재검색
             </div>
             <SearchBar
@@ -141,8 +139,8 @@ export default function Dashboard() {
               onChange={(e) => setSearchValue(e.target.value)}
             />
           </div>
-          <div className="w-full flex flex-col items-start justify-center bg-opacity-500 rounded-2xl py-[32px] px-[40px] gap-[16px]">
-            <div className="text-h5 text-gray-950 w-full text-start">
+          <div className="flex w-full flex-col items-start justify-center gap-[16px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+            <div className="w-full text-start text-gray-950 text-h5">
               검색 조건 및 필터
             </div>
             {result.applied_filters_summary?.map(
@@ -160,14 +158,14 @@ export default function Dashboard() {
                 return (
                   <div
                     key={`${filter.key}-${index}`}
-                    className={`text-body3 ${colorClass} w-full text-start rounded-lg py-[8px] px-[20px]`}
+                    className={`text-body3 ${colorClass} w-full rounded-lg px-[20px] py-[8px] text-start`}
                   >
                     {filter.key}: {filter.display_value}
                   </div>
                 );
               }
             )}
-            <div className="w-full flex items-center justify-center gap-[8px] py-[12px] px-[20px] bg-gray-200 rounded-lg text-body3 text-gray-950 cursor-pointer">
+            <div className="flex w-full cursor-pointer items-center justify-center gap-[8px] rounded-lg bg-gray-200 px-[20px] py-[12px] text-body3 text-gray-950">
               <PlusIcon color="black" width={20} height={21} />
               조건 추가
             </div>
@@ -175,17 +173,17 @@ export default function Dashboard() {
         </div>
       </div>
       {/* 중간 영역 */}
-      <div className="flex flex-col items-start justify-center gap-[20px] w-full bg-opacity-500 rounded-2xl py-[32px] px-[40px]">
-        <div className="text-h4 text-gray-950 w-full text-start">
+      <div className="flex w-full flex-col items-start justify-center gap-[20px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+        <div className="w-full text-start text-gray-950 text-h4">
           상세 분석 및 교차 탐색
         </div>
-        <div className="flex items-center justify-start w-full gap-[20px] border-b-[0.5px] border-gray-500">
+        <div className="flex w-full items-center justify-start gap-[20px] border-gray-500 border-b-[0.5px]">
           <div
             className={`text-body5 ${
               mode === "profile"
-                ? "text-tertiary-500 border-b border-tertiary-500"
+                ? "border-tertiary-500 border-b text-tertiary-500"
                 : "text-gray-700"
-            } py-[5px] cursor-pointer`}
+            } cursor-pointer py-[5px]`}
             onClick={() => handleMode("profile")}
           >
             응답자 전체 프로필
@@ -193,20 +191,20 @@ export default function Dashboard() {
           <div
             className={`text-body5 ${
               mode === "history"
-                ? "text-tertiary-500 border-b border-tertiary-500"
+                ? "border-tertiary-500 border-b text-tertiary-500"
                 : "text-gray-700"
-            } py-[5px] cursor-pointer`}
+            } cursor-pointer py-[5px]`}
             onClick={() => handleMode("history")}
           >
             교차 분석 도구
           </div>
         </div>
-        <div className="grid grid-cols-[480px_480px_1fr] items-center justify-center w-full gap-[36px]">
-          <img src={BarChart} alt="Bar Chart" className="w-[480px] h-[300px]" />
+        <div className="grid w-full grid-cols-[480px_480px_1fr] items-center justify-center gap-[36px]">
+          <img src={BarChart} alt="Bar Chart" className="h-[300px] w-[480px]" />
           <img
             src={LineChart}
             alt="Line Chart"
-            className="w-[480px] h-[300px]"
+            className="h-[300px] w-[480px]"
           />
           {/* <div className="font-medium text-xl text-tertiary-500 tracking-[-0.03em] cursor-pointer text-center w-full h-full rounded-lg flex items-center justify-center border border-dashed border-tertiary-500">
             +<br />
@@ -215,14 +213,14 @@ export default function Dashboard() {
         </div>
       </div>
       {/* 하단 영역 */}
-      <div className="w-full flex flex-col items-center justify-center gap-[20px] bg-opacity-500 rounded-2xl py-[32px] px-[40px]">
-        <div className="text-h4 text-gray-950 w-full text-start">
+      <div className="flex w-full flex-col items-center justify-center gap-[20px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+        <div className="w-full text-start text-gray-950 text-h4">
           개별 응답 데이터
         </div>
-        <table className="w-full text-left table-fixed">
+        <table className="w-full table-fixed text-left">
           <thead>
-            <tr className="text-subtitle1 text-black bg-primary-200 h-[48px] border border-gray-300">
-              <th className="px-[12px] w-[220px]">응답자ID</th>
+            <tr className="h-[48px] border border-gray-300 bg-primary-200 text-black text-subtitle1">
+              <th className="w-[220px] px-[12px]">응답자ID</th>
               <th className="px-[12px]">성별</th>
               <th className="px-[12px]">나이</th>
               <th className="px-[12px]">거주지</th>
@@ -234,7 +232,7 @@ export default function Dashboard() {
             {data?.values.map((item) => (
               <tr
                 key={item.respondent_id}
-                className="text-body4 text-gray-950 bg-white h-[48px] border border-gray-300"
+                className="h-[48px] border border-gray-300 bg-white text-body4 text-gray-950"
                 onClick={() =>
                   handlePanelClick(item.respondent_id, item.concordance_rate)
                 }
@@ -242,7 +240,7 @@ export default function Dashboard() {
                 <td className="px-[12px] align-middle">
                   <div className="flex items-center justify-center gap-[8px]">
                     <MyPageIcon width={32} height={32} />
-                    <div className="text-subtitle2 text-primary-900">
+                    <div className="text-primary-900 text-subtitle2">
                       {item.respondent_id}
                     </div>
                   </div>

@@ -9,7 +9,7 @@ export default function DropdownFilter({
 }) {
   return (
     <ul
-      className={`absolute right-0 top-full mt-[12px] inline-block whitespace-nowrap min-w-[180px] bg-white rounded-lg py-[8px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] z-20 ${
+      className={`absolute top-full right-0 z-20 mt-[12px] inline-block min-w-[180px] whitespace-nowrap rounded-lg bg-white py-[8px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] ${
         open ? "block" : "hidden"
       }`}
     >
@@ -19,7 +19,7 @@ export default function DropdownFilter({
           onClick={() => {
             setSelectedFilter(option);
           }}
-          className="px-[16px] py-[12px] flex items-center gap-[8px] text-body4 text-gray-950 hover:bg-gray-300 cursor-pointer"
+          className="flex cursor-pointer items-center gap-[8px] px-[16px] py-[12px] text-body4 text-gray-950 hover:bg-gray-300"
         >
           {option}
         </li>

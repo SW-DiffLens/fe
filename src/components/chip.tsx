@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import ClearIcon from "@/assets/icons/ic_clear";
 
 type ChipVariant = "filled" | "outlined" | "selected";

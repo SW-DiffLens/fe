@@ -1,5 +1,5 @@
+import { useEffect, useRef, useState } from "react";
 import Chip from "@/components/chip";
-import { useState, useEffect, useRef } from "react";
 
 interface FilterSectionProps {
   title: string;
@@ -64,9 +64,9 @@ export default function FilterSection({
     onSelectionChange?.(selectedCodes);
   };
   return (
-    <div className="w-full flex flex-col items-start justify-center gap-[12px]">
-      <div className="text-subtitle2 text-gray-950">{title}</div>
-      <div className="w-[460px] flex flex-wrap items-center justify-start gap-[4px]">
+    <div className="flex w-full flex-col items-start justify-center gap-[12px]">
+      <div className="text-gray-950 text-subtitle2">{title}</div>
+      <div className="flex w-[460px] flex-wrap items-center justify-start gap-[4px]">
         {chips.map((chip) => (
           <Chip
             key={chip.id}

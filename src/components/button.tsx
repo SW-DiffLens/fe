@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 
 type ButtonVariant = "filled" | "outlined" | "icon";
 type ButtonSize = "large" | "medium" | "small";
