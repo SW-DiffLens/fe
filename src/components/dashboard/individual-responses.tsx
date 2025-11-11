@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import MyPageIcon from "@/assets/icons/ic_mypage";
 import Pagenation from "@/components/dashboard/pagenation";
+import ResponseTable from "@/components/dashboard/response-table";
 import type { DashboardPanel } from "@/types/dashboard_panel";
 
 interface IndividualResponsesProps {
@@ -43,43 +43,7 @@ export default function IndividualResponses({
           전체보기
         </button>
       </div>
-      <table className="w-full table-fixed text-left">
-        <thead>
-          <tr className="h-12 border border-gray-300 bg-primary-200 text-black text-subtitle1">
-            <th className="w-[220px] px-3">응답자ID</th>
-            <th className="px-3">성별</th>
-            <th className="px-3">나이</th>
-            <th className="px-3">거주지</th>
-            <th className="px-3">월소득</th>
-            <th className="px-3">일치율</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.values.map((item) => (
-            <tr
-              key={item.respondent_id}
-              className="h-12 border border-gray-300 bg-white text-body4 text-gray-950"
-              onClick={() =>
-                onPanelClick(item.respondent_id, item.concordance_rate)
-              }
-            >
-              <td className="px-3 align-middle">
-                <div className="flex items-center justify-center gap-[8px]">
-                  <MyPageIcon width={32} height={32} />
-                  <div className="text-primary-900 text-subtitle2">
-                    {item.respondent_id}
-                  </div>
-                </div>
-              </td>
-              <td className="px-3">{item.gender}</td>
-              <td className="px-3">{item.age}</td>
-              <td className="px-3">{item.residence}</td>
-              <td className="px-3">{item.personal_income}</td>
-              <td className="px-3">{item.concordance_rate}%</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <ResponseTable data={data} onPanelClick={onPanelClick} />
       <Pagenation
         page={page}
         setPage={setPage}

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import apiClient from "@/api/client";
 import ChevronLeftIcon from "@/assets/icons/ic_chevron_left";
-import MyPageIcon from "@/assets/icons/ic_mypage";
 import Pagenation from "@/components/dashboard/pagenation";
+import ResponseTable from "@/components/dashboard/response-table";
 import type { DashboardPanel } from "@/types/dashboard_panel";
 
 export default function AllResponses() {
@@ -68,8 +68,8 @@ export default function AllResponses() {
 
       {/* 검색 질문 */}
       <div className="w-full rounded-2xl bg-opacity-500 px-[40px] py-[24px]">
-        <div className="text-body3 text-gray-700">검색 질문</div>
-        <div className="mt-[8px] text-gray-950 text-h5">{question}</div>
+        <div className="text-body4 text-gray-700">검색 질문</div>
+        <div className="mt-[8px] text-h5 text-primary-700">{question}</div>
       </div>
 
       {/* 데이터 테이블 */}
@@ -79,43 +79,7 @@ export default function AllResponses() {
             전체 응답 데이터 ({data?.page_info?.total_count || 0}명)
           </div>
         </div>
-        <table className="w-full table-fixed text-left">
-          <thead>
-            <tr className="h-12 border border-gray-300 bg-primary-200 text-black text-subtitle1">
-              <th className="w-[220px] px-3">응답자ID</th>
-              <th className="px-3">성별</th>
-              <th className="px-3">나이</th>
-              <th className="px-3">거주지</th>
-              <th className="px-3">월소득</th>
-              <th className="px-3">일치율</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data?.values.map((item) => (
-              <tr
-                key={item.respondent_id}
-                className="h-12 cursor-pointer border border-gray-300 bg-white text-body4 text-gray-950 hover:bg-gray-50"
-                onClick={() =>
-                  handlePanelClick(item.respondent_id, item.concordance_rate)
-                }
-              >
-                <td className="px-3 align-middle">
-                  <div className="flex items-center justify-center gap-[8px]">
-                    <MyPageIcon width={32} height={32} />
-                    <div className="text-primary-900 text-subtitle2">
-                      {item.respondent_id}
-                    </div>
-                  </div>
-                </td>
-                <td className="px-3">{item.gender}</td>
-                <td className="px-3">{item.age}</td>
-                <td className="px-3">{item.residence}</td>
-                <td className="px-3">{item.personal_income}</td>
-                <td className="px-3">{item.concordance_rate}%</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <ResponseTable data={data} onPanelClick={handlePanelClick} />
         <Pagenation
           page={page}
           setPage={setPage}
