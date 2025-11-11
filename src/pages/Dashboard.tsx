@@ -4,10 +4,9 @@ import apiClient from "@/api/client";
 import MyPageIcon from "@/assets/icons/ic_mypage";
 import PlusIcon from "@/assets/icons/ic_plus";
 import BarChart from "@/assets/temp/bar_chart.png";
-import ChartCaption from "@/assets/temp/chart_caption.png";
 import LineChart from "@/assets/temp/line_chart.png";
-import PieChart from "@/assets/temp/pie_chart.png";
 import Pagenation from "@/components/dashboard/pagenation";
+import PieChartComponent from "@/components/dashboard/pie-chart";
 import SearchBar from "@/components/search-bar";
 import type { DashboardPanel } from "@/types/dashboard_panel";
 import type { DashboardResult } from "@/types/dashboard_result";
@@ -112,14 +111,19 @@ export default function Dashboard() {
             <div className="w-full text-start text-gray-950 text-h4">
               {question}
             </div>
-            <img
-              src={PieChart}
-              alt="Pie Chart"
-              className="h-[190px] w-[190px]"
-            />
+            {result.pie && (
+              <PieChartComponent
+                data={result.pie.data_points}
+                title={result.pie.title}
+              />
+            )}
           </div>
           <div className="flex w-full flex-col items-start justify-center gap-[16px]">
-            <img src={ChartCaption} alt="Chart Caption" className="w-full" />
+            {result.pie?.reason && (
+              <div className="w-full rounded-lg bg-gray-50 px-4 py-3 text-start text-body4 text-gray-800">
+                {result.pie.reason}
+              </div>
+            )}
             <div className="w-full text-center text-caption text-gray-700">
               표본 수: {result.summary.total_respondents}명 / 데이터 수집일:{" "}
               {result.summary.data_capture_date} / 신뢰도:{" "}
