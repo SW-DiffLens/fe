@@ -8,6 +8,7 @@ import LineChart from "@/assets/temp/line_chart.png";
 import PieChart from "@/assets/temp/pie_chart.png";
 import IndividualResponses from "@/components/dashboard/individual-responses";
 import SearchBar from "@/components/search-bar";
+import { useDashboard } from "@/contexts/DashboardContext";
 import type { DashboardPanel } from "@/types/dashboard_panel";
 import type { DashboardResult } from "@/types/dashboard_result";
 
@@ -61,6 +62,7 @@ export default function Dashboard() {
   const [mode, setMode] = useState("profile");
   const [data, setData] = useState<DashboardPanel>();
   const [page, setPage] = useState(1);
+  const { setDashboardData } = useDashboard();
 
   const { result, search_id, question } = location.state as DashboardResult;
 
@@ -83,13 +85,18 @@ export default function Dashboard() {
         // result가 배열인지 확인하고, 아니면 빈 배열로 설정
         const resultData = response.data.result;
         setData(resultData);
+
+        // Context에 dashboard 데이터 설정
+        if (resultData?.page_info?.total_count) {
+          setDashboardData(search_id, resultData.page_info.total_count);
+        }
       } catch (error) {
         console.error("데이터 로드 실패:", error);
         setData(undefined);
       }
     };
     fetchData();
-  }, [search_id, page]);
+  }, [search_id, page, setDashboardData]);
 
   const handlePanelClick = (panelId: string, concordanceRate: string) => {
     navigate(`/panel/${panelId}`, {

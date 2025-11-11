@@ -1,3 +1,4 @@
+import DownloadIcon from "@/assets/icons/ic_download";
 import MyPageIcon from "@/assets/icons/ic_mypage";
 import LogoContainer from "@/assets/logos/logo_container";
 import Button from "@/components/button";
@@ -9,7 +10,8 @@ import Button from "@/components/button";
 import { useEffect, useRef, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import Modal from "@/components/modal";
+import { createLibrary } from "@/api/library";
+import LibrarySaveModal from "@/components/library-save-modal";
 
 type IsLoggedIn = "true" | "false";
 type Dashboard = "true" | "false";
@@ -21,6 +23,8 @@ interface HeaderProps {
   dashboard?: Dashboard;
   isPanel?: IsPanel;
   isLibrary?: IsLibrary;
+  searchId?: string;
+  totalCount?: number;
 }
 
 export default function Header({
@@ -28,6 +32,8 @@ export default function Header({
   dashboard = "false",
   isPanel = "false",
   isLibrary = "false",
+  searchId,
+  totalCount = 0,
 }: HeaderProps) {
   const navigate = useNavigate();
   const [isExportOpen, setIsExportOpen] = useState(false);
@@ -49,6 +55,31 @@ export default function Header({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isExportOpen]);
+
+  const handleSaveToLibrary = async (libraryName: string, tags: string[]) => {
+    if (!searchId) {
+      alert("검색 ID가 없습니다.");
+      return;
+    }
+
+    try {
+      const response = await createLibrary({
+        search_history_id: Number(searchId),
+        library_name: libraryName,
+        tags,
+      });
+
+      if (response.is_success) {
+        alert(
+          `라이브러리 "${libraryName}"에 ${response.result.panel_count}개의 패널이 저장되었습니다.`
+        );
+        setIsExportOpen(false);
+      }
+    } catch (error) {
+      console.error("라이브러리 저장 실패:", error);
+      alert("라이브러리 저장에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
   return (
     <div className="flex items-center justify-between bg-opacity-100 px-[80px] py-[16px]">
       <div onClick={() => navigate("/home")} className="cursor-pointer">
@@ -101,17 +132,17 @@ export default function Header({
               size="large"
               onClick={() => setIsExportOpen(!isExportOpen)}
             >
-              <div>라이브러리 저장</div>
+              <div className="flex items-center gap-[8px]">
+                <DownloadIcon width={20} height={20} color="white" />
+                <span>라이브러리 저장</span>
+              </div>
             </Button>
-            {isExportOpen && (
-              <Modal
-                open={isExportOpen}
-                onClose={() => setIsExportOpen(false)}
-                title="라이브러리 저장"
-                description="저장할 라이브러리 이름을 입력해주세요."
-                type="save"
-              />
-            )}
+            <LibrarySaveModal
+              open={isExportOpen}
+              onClose={() => setIsExportOpen(false)}
+              onSave={handleSaveToLibrary}
+              totalCount={totalCount}
+            />
             {/* {isExportOpen && (
               <ul className="absolute right-0 top-full mt-[12px] inline-block whitespace-nowrap min-w-[180px] bg-white rounded-lg py-[8px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] z-20">
                 <li
