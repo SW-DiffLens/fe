@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import PanelLayout from "@/layouts/PanelLayout";
+import AllResponses from "@/pages/AllResponses";
 import Compare from "@/pages/Compare";
 import Dashboard from "@/pages/Dashboard";
 import Library from "@/pages/Library";
@@ -108,6 +109,10 @@ export const router = createBrowserRouter([
       {
         path: ":id",
         element: <Dashboard />,
+      },
+      {
+        path: "all-responses",
+        element: <AllResponses />,
       },
     ],
   },
