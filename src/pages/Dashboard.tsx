@@ -217,6 +217,8 @@ export default function Dashboard() {
         page={page}
         setPage={setPage}
         onPanelClick={handlePanelClick}
+        searchId={search_id}
+        question={question}
       />
     </div>
   );

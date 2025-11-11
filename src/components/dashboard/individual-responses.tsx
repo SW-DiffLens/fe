@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import MyPageIcon from "@/assets/icons/ic_mypage";
 import Pagenation from "@/components/dashboard/pagenation";
 import type { DashboardPanel } from "@/types/dashboard_panel";
@@ -7,6 +8,8 @@ interface IndividualResponsesProps {
   page: number;
   setPage: (page: number) => void;
   onPanelClick: (panelId: string, concordanceRate: string) => void;
+  searchId: string;
+  question: string;
 }
 
 export default function IndividualResponses({
@@ -14,14 +17,28 @@ export default function IndividualResponses({
   page,
   setPage,
   onPanelClick,
+  searchId,
+  question,
 }: IndividualResponsesProps) {
+  const navigate = useNavigate();
+
+  const handleViewAll = () => {
+    navigate("/dashboard/all-responses", {
+      state: {
+        search_id: searchId,
+        question,
+      },
+    });
+  };
+
   return (
     <div className="flex w-full flex-col items-center justify-center gap-[20px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
       <div className="flex w-full items-center justify-between">
         <p className="text-gray-950 text-h4">개별 응답 데이터</p>
         <button
           type="button"
-          className="cursor-pointer text-button-medium text-tertiary-500"
+          onClick={handleViewAll}
+          className="cursor-pointer text-button-medium text-tertiary-500 hover:text-tertiary-600"
         >
           전체보기
         </button>
