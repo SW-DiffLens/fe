@@ -42,14 +42,14 @@ export default function DropdownField({
   }, [value]);
 
   return (
-    <div className="flex flex-col gap-[8px] w-full">
-      <div className="text-body5 text-primary-900 w-full text-left">
+    <div className="flex w-full flex-col gap-[8px]">
+      <div className="w-full text-left text-body5 text-primary-900">
         {label}
       </div>
       <div className="relative" ref={selectRef}>
         <div
           onClick={() => setShowOptions((prev) => !prev)}
-          className={`flex w-full justify-between items-center px-[16px] py-[12px] bg-white border border-gray-500 rounded-lg focus:outline-none text-body4 text-gray-500 cursor-pointer ${
+          className={`flex w-full cursor-pointer items-center justify-between rounded-lg border border-gray-500 bg-white px-[16px] py-[12px] text-body4 text-gray-500 focus:outline-none ${
             currentValue.length === 0 ? "text-gray-500" : "text-gray-950"
           }`}
         >
@@ -59,7 +59,7 @@ export default function DropdownField({
         <ul
           className={`${
             showOptions ? "block" : "hidden"
-          } absolute left-0 w-full bg-white rounded-lg h-[240px] overflow-y-scroll mt-[8px] py-[8px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] custom-scrollbar z-10`}
+          } custom-scrollbar absolute left-0 z-10 mt-[8px] h-[240px] w-full overflow-y-scroll rounded-lg bg-white py-[8px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]`}
         >
           {options.map((option, index) => (
             <li
@@ -70,7 +70,7 @@ export default function DropdownField({
                 onChange(option);
                 setShowOptions(false);
               }}
-              className="w-full px-[16px] py-[12px] text-body4 text-gray-950 hover:bg-gray-300 cursor-pointer"
+              className="w-full cursor-pointer px-[16px] py-[12px] text-body4 text-gray-950 hover:bg-gray-300"
             >
               {option}
             </li>

@@ -1,10 +1,9 @@
-import Button from "@/components/button";
-import LogoText from "@/assets/logos/logo_text";
-import InputField from "@/components/signup/input-field";
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import apiClient from "@/api/client";
+import LogoText from "@/assets/logos/logo_text";
+import Button from "@/components/button";
+import InputField from "@/components/signup/input-field";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -47,8 +46,8 @@ export default function Login() {
   }, [email, password, navigate]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-[194px] px-[380px]">
-      <div className="w-full flex flex-col items-center justify-center py-[80px] px-[80px] gap-[24px] bg-opacity-500 rounded-2xl">
+    <div className="flex min-h-screen flex-col items-center justify-center px-[380px] py-[194px]">
+      <div className="flex w-full flex-col items-center justify-center gap-[24px] rounded-2xl bg-opacity-500 px-[80px] py-[80px]">
         {/* 상단 영역 */}
         <div className="flex flex-col items-center justify-center gap-[8px]">
           <LogoText width={213} height={60} />
@@ -58,7 +57,7 @@ export default function Login() {
         </div>
         {/* 폼 영역 */}
         <form
-          className="flex flex-col items-center justify-center gap-[16px] w-full"
+          className="flex w-full flex-col items-center justify-center gap-[16px]"
           onChange={onFormChange}
         >
           <InputField
@@ -88,13 +87,13 @@ export default function Login() {
           </Button>
         </form>
         {/* 라인 */}
-        <div className="w-full h-[1px] bg-[#DDE1E6]" />
+        <div className="h-[1px] w-full bg-[#DDE1E6]" />
         {/* 하단 영역 */}
         <div className="w-full text-center text-body5 text-gray-900">
           아직 계정이 없으신가요?{" "}
           <a
             onClick={() => navigate("/signup")}
-            className="text-primary-700 underline cursor-pointer"
+            className="cursor-pointer text-primary-700 underline"
           >
             회원가입
           </a>

@@ -1,16 +1,15 @@
-import Button from "@/components/button";
-import FilterSection from "@/components/home/filter-section";
-import { useState, useEffect } from "react";
-import SearchBar from "@/components/search-bar";
-import FilterIcon from "@/assets/icons/ic_filter";
+import type { AxiosError } from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import apiClient from "@/api/client";
 import ChevronDownIcon from "@/assets/icons/ic_chevron_down";
 import ChevronUpIcon from "@/assets/icons/ic_chevron_up";
+import FilterIcon from "@/assets/icons/ic_filter";
+import Button from "@/components/button";
+import FilterSection from "@/components/home/filter-section";
 import QuickSearchButton from "@/components/home/quick-search-button";
-import { AxiosError } from "axios";
-import { useNavigate } from "react-router-dom";
+import SearchBar from "@/components/search-bar";
 import { filterSections } from "@/data/filter-sectioins";
-
-import apiClient from "@/api/client";
 
 interface QuickSearchButton {
   id: number;
@@ -138,17 +137,17 @@ export default function Home() {
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-[124px] px-[272px]">
-      <div className="text-h2 text-primary-950 mb-[63px]">
+    <div className="flex min-h-screen flex-col items-center justify-center px-[272px] py-[124px]">
+      <div className="mb-[63px] text-h2 text-primary-950">
         원하는 패널을 찾아보세요
       </div>
       {/* 검색 영역 */}
-      <div className="w-full flex flex-col items-start justify-center py-[32px] px-[40px] gap-[24px] bg-opacity-500 rounded-2xl mb-[40px]">
-        <div className="flex items-center justify-between w-full">
-          <div className="text-subtitle1 text-gray-950">
+      <div className="mb-[40px] flex w-full flex-col items-start justify-center gap-[24px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+        <div className="flex w-full items-center justify-between">
+          <div className="text-gray-950 text-subtitle1">
             검색어를 입력하세요
           </div>
-          <div className="flex items-center justify-center gap-[20px] w-fit">
+          <div className="flex w-fit items-center justify-center gap-[20px]">
             <div className="flex items-center justify-center gap-[4px]">
               <input
                 type="radio"
@@ -192,7 +191,7 @@ export default function Home() {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
-        <div className="flex items-center justify-between w-full">
+        <div className="flex w-full items-center justify-between">
           <Button
             variant="icon"
             size="medium"
@@ -203,7 +202,7 @@ export default function Home() {
             <FilterIcon color="black" width={14} height={14} />
             상세필터
             {totalSelectedChips > 0 && (
-              <div className="w-[20px] h-[20px] bg-primary-700 rounded-full text-label text-white flex items-center justify-center">
+              <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-primary-700 text-label text-white">
                 {totalSelectedChips}
               </div>
             )}
@@ -215,7 +214,7 @@ export default function Home() {
           </Button>
           {totalSelectedChips > 0 && (
             <button
-              className="text-button-medium text-tertiary-600 cursor-pointer outline-none border-none bg-transparent"
+              className="cursor-pointer border-none bg-transparent text-button-medium text-tertiary-600 outline-none"
               onClick={resetFilter}
             >
               필터 초기화
@@ -225,8 +224,8 @@ export default function Home() {
         {/* 칩 영역 */}
         {isFilterOpen && (
           <div className="w-full">
-            <div className="w-full h-[1px] bg-white mb-[24px]" />
-            <div className="w-full flex flex-col items-start justify-center gap-[16px]">
+            <div className="mb-[24px] h-[1px] w-full bg-white" />
+            <div className="flex w-full flex-col items-start justify-center gap-[16px]">
               {filterSections.map((section, index) => (
                 <FilterSection
                   key={section.id}
@@ -248,9 +247,9 @@ export default function Home() {
         </Button>
       </div>
       {/* 빠른 검색 추천 영역 */}
-      <div className="w-full flex flex-col items-start justify-center py-[32px] px-[40px] gap-[12px] bg-opacity-500 rounded-2xl">
-        <div className="text-subtitle1 text-gray-950">빠른 검색 추천</div>
-        <div className="w-full grid grid-cols-3 gap-[12px]">
+      <div className="flex w-full flex-col items-start justify-center gap-[12px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+        <div className="text-gray-950 text-subtitle1">빠른 검색 추천</div>
+        <div className="grid w-full grid-cols-3 gap-[12px]">
           {quickSearchButtons.map((button) => (
             <QuickSearchButton
               key={button.id}

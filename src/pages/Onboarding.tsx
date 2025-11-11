@@ -1,10 +1,9 @@
-import Button from "@/components/button";
-import LogoText from "@/assets/logos/logo_text";
-import DropdownField from "@/components/onboarding/dropdown-field";
+import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCallback, useState, useMemo } from "react";
-
 import apiClient from "@/api/client";
+import LogoText from "@/assets/logos/logo_text";
+import Button from "@/components/button";
+import DropdownField from "@/components/onboarding/dropdown-field";
 
 export default function Onboarding() {
   const navigate = useNavigate();
@@ -90,8 +89,8 @@ export default function Onboarding() {
   }, [job, industry, navigate, jobMapping, industryMapping]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-[218px] px-[380px]">
-      <div className="w-full flex flex-col items-center justify-center py-[80px] px-[80px] gap-[24px] bg-opacity-500 rounded-2xl">
+    <div className="flex min-h-screen flex-col items-center justify-center px-[380px] py-[218px]">
+      <div className="flex w-full flex-col items-center justify-center gap-[24px] rounded-2xl bg-opacity-500 px-[80px] py-[80px]">
         {/* 상단 영역 */}
         <div className="flex flex-col items-center justify-center gap-[8px]">
           <LogoText width={213} height={60} />
@@ -100,13 +99,13 @@ export default function Onboarding() {
             회원가입
           </div>
           <div className="flex items-center justify-center gap-[11px]">
-            <div className="w-[80px] h-[4px] bg-gray-300 rounded-sm" />
-            <div className="w-[80px] h-[4px] bg-primary-500 rounded-sm" />
+            <div className="h-[4px] w-[80px] rounded-sm bg-gray-300" />
+            <div className="h-[4px] w-[80px] rounded-sm bg-primary-500" />
           </div>
         </div>
         {/* 폼 영역 */}
         <form
-          className="flex flex-col items-center justify-center gap-[32px] w-full"
+          className="flex w-full flex-col items-center justify-center gap-[32px]"
           onChange={onFormChange}
         >
           <DropdownField
@@ -151,7 +150,7 @@ export default function Onboarding() {
             value={industry}
             onChange={(value) => setIndustry(value)}
           />
-          <div className="flex items-center justify-center gap-[32px] w-full mb-[24px]">
+          <div className="mb-[24px] flex w-full items-center justify-center gap-[32px]">
             <Button
               variant="outlined"
               size="large"

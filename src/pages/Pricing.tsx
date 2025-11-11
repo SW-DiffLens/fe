@@ -1,18 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import LogoContainer from "@/assets/logos/logo_container";
 import Button from "@/components/button";
 import ListItem from "@/components/pricing/list-item";
 
-import { useNavigate } from "react-router-dom";
-
 export default function Pricing() {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-[107.5px] px-[181px]">
-      <div className="w-full flex flex-col items-center justify-center py-[64px] px-[80px] gap-[48px] bg-opacity-500 rounded-2xl">
+    <div className="flex min-h-screen flex-col items-center justify-center px-[181px] py-[107.5px]">
+      <div className="flex w-full flex-col items-center justify-center gap-[48px] rounded-2xl bg-opacity-500 px-[80px] py-[64px]">
         {/* 상단 영역 */}
         <div className="flex flex-col items-center justify-center">
           <LogoContainer width={128} height={26} />
-          <div className="text-h2 text-gray-950 mt-[8px] mb-[16px]">
+          <div className="mt-[8px] mb-[16px] text-gray-950 text-h2">
             계정 유형을 고르세요
           </div>
           <div className="text-body4 text-gray-900">
@@ -20,11 +19,11 @@ export default function Pricing() {
           </div>
         </div>
         {/* 하단 영역 */}
-        <div className="w-full grid grid-cols-2 gap-[24px]">
+        <div className="grid w-full grid-cols-2 gap-[24px]">
           {/* 개인 */}
-          <div className="flex flex-col items-center justify-center gap-[32px] py-[48px] px-[24px] border border-white rounded-lg bg-opacity-800">
+          <div className="flex flex-col items-center justify-center gap-[32px] rounded-lg border border-white bg-opacity-800 px-[24px] py-[48px]">
             <div className="flex flex-col items-center justify-center gap-[8px]">
-              <div className="text-h3 text-gray-950">개인</div>
+              <div className="text-gray-950 text-h3">개인</div>
               <div className="text-body3 text-primary-800">
                 개인 프로젝트를 진행 중이라면
               </div>
@@ -46,9 +45,9 @@ export default function Pricing() {
             </Button>
           </div>
           {/* 비즈니스 */}
-          <div className="flex flex-col items-center justify-center gap-[32px] py-[48px] px-[24px] border border-white rounded-lg bg-opacity-800">
+          <div className="flex flex-col items-center justify-center gap-[32px] rounded-lg border border-white bg-opacity-800 px-[24px] py-[48px]">
             <div className="flex flex-col items-center justify-center gap-[8px]">
-              <div className="text-h3 text-gray-950">비즈니스</div>
+              <div className="text-gray-950 text-h3">비즈니스</div>
               <div className="text-body3 text-primary-800">
                 전문가 또는 기업에서 프로젝트를 진행 중이라면
               </div>

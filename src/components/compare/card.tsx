@@ -15,17 +15,15 @@ export default function CompareCard({
 }) {
   return (
     <div
-      className={`flex flex-col items-start justify-start gap-[16px] px-[40px] py-[32px] rounded-2xl border border-white 
-    ${group === "A" ? "bg-[#FDE7FF]/50" : "bg-[#DAE7FF]/50"}`}
+      className={`flex flex-col items-start justify-start gap-[16px] rounded-2xl border border-white px-[40px] py-[32px] ${group === "A" ? "bg-[#FDE7FF]/50" : "bg-[#DAE7FF]/50"}`}
     >
       <div
-        className={`flex items-center justify-center w-[48px] h-[48px] rounded-xl text-h4 text-white
-        ${group === "A" ? "bg-secondary-600" : "bg-tertiary-600"}`}
+        className={`flex h-[48px] w-[48px] items-center justify-center rounded-xl text-h4 text-white ${group === "A" ? "bg-secondary-600" : "bg-tertiary-600"}`}
       >
         {group}
       </div>
-      <div className="text-h6 text-gray-950">{title}</div>
-      <div className="text-subtitle2 text-gray-700">{description}</div>
+      <div className="text-gray-950 text-h6">{title}</div>
+      <div className="text-gray-700 text-subtitle2">{description}</div>
       <div className="flex items-center justify-start gap-[8px]">
         {tags.map((tag) => (
           <Chip
@@ -41,7 +39,7 @@ export default function CompareCard({
         ))}
       </div>
       <div className="flex flex-col items-start justify-center gap-[4px]">
-        <div className="text-label text-gray-700">적용된 필터</div>
+        <div className="text-gray-700 text-label">적용된 필터</div>
         <div className="flex items-center justify-start gap-[8px]">
           {filters.map((filter) => (
             <Chip

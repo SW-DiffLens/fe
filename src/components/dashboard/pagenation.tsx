@@ -72,11 +72,11 @@ export default function Pagenation({
   const canGoPrev = page > 1;
 
   return (
-    <div className="w-full flex items-center justify-center">
+    <div className="flex w-full items-center justify-center">
       {/* 왼쪽 화살표 */}
       <div
-        className={`flex items-center justify-center px-[8px] py-[8px] cursor-pointer ${
-          !canGoPrev ? "opacity-50 cursor-not-allowed" : ""
+        className={`flex cursor-pointer items-center justify-center px-[8px] py-[8px] ${
+          !canGoPrev ? "cursor-not-allowed opacity-50" : ""
         }`}
         onClick={handlePrev}
       >
@@ -90,9 +90,9 @@ export default function Pagenation({
           return (
             <div
               key={`ellipsis-${index}`}
-              className="flex items-center justify-center px-[8px] py-[8px] cursor-default"
+              className="flex cursor-default items-center justify-center px-[8px] py-[8px]"
             >
-              <div className="text-button-medium text-gray-700 px-[8px]">
+              <div className="px-[8px] text-button-medium text-gray-700">
                 ...
               </div>
             </div>
@@ -103,11 +103,11 @@ export default function Pagenation({
         return (
           <div
             key={pageNum}
-            className="flex items-center justify-center px-[8px] py-[8px] cursor-pointer"
+            className="flex cursor-pointer items-center justify-center px-[8px] py-[8px]"
             onClick={() => handlePageChange(pageNum)}
           >
             <div
-              className={`text-button-medium px-[8px] ${
+              className={`px-[8px] text-button-medium ${
                 isActive ? "text-primary-600" : "text-gray-700"
               }`}
             >
@@ -119,8 +119,8 @@ export default function Pagenation({
 
       {/* 오른쪽 화살표 */}
       <div
-        className={`flex items-center justify-center gap-[8px] cursor-pointer ${
-          !hasNext ? "opacity-50 cursor-not-allowed" : ""
+        className={`flex cursor-pointer items-center justify-center gap-[8px] ${
+          !hasNext ? "cursor-not-allowed opacity-50" : ""
         }`}
         onClick={handleNext}
       >

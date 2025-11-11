@@ -1,5 +1,5 @@
-import axios, { AxiosError } from "axios";
 import type { InternalAxiosRequestConfig } from "axios";
+import axios, { type AxiosError } from "axios";
 
 const apiClient = axios.create({
   baseURL: import.meta.env.DEV ? "/api" : "https://api.difflens.site",

@@ -1,19 +1,19 @@
 import { createBrowserRouter } from "react-router-dom";
-import LandingLayout from "../layouts/LandingLayout";
-import BasicLayout from "../layouts/BasicLayout";
-import HomeLayout from "../layouts/HomeLayout";
-import PanelLayout from "@/layouts/PanelLayout";
 import DashboardLayout from "@/layouts/DashboardLayout";
-import Landing from "../pages/Landing";
-import Pricing from "../pages/Pricing";
-import Signup from "../pages/Signup";
-import Onboarding from "../pages/Onboarding";
-import Login from "../pages/Login";
-import Home from "../pages/Home";
-import Panel from "@/pages/Panel";
+import PanelLayout from "@/layouts/PanelLayout";
+import Compare from "@/pages/Compare";
 import Dashboard from "@/pages/Dashboard";
 import Library from "@/pages/Library";
-import Compare from "@/pages/Compare";
+import Panel from "@/pages/Panel";
+import BasicLayout from "../layouts/BasicLayout";
+import HomeLayout from "../layouts/HomeLayout";
+import LandingLayout from "../layouts/LandingLayout";
+import Home from "../pages/Home";
+import Landing from "../pages/Landing";
+import Login from "../pages/Login";
+import Onboarding from "../pages/Onboarding";
+import Pricing from "../pages/Pricing";
+import Signup from "../pages/Signup";
 
 export const router = createBrowserRouter([
   {

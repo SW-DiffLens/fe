@@ -6,11 +6,11 @@ export default function InfoItem({
   value: string;
 }) {
   return (
-    <div className="flex items-center justify-start gap-[20px] w-full py-[16px] px-[20px] border border-white bg-opacity-300 rounded-xl">
-      <div className="text-subtitle2 text-gray-700 w-[160px] text-start">
+    <div className="flex w-full items-center justify-start gap-[20px] rounded-xl border border-white bg-opacity-300 px-[20px] py-[16px]">
+      <div className="w-[160px] text-start text-gray-700 text-subtitle2">
         {title}
       </div>
-      <div className="text-subtitle2 text-gray-950 text-start flex-1 flex flex-wrap">
+      <div className="flex flex-1 flex-wrap text-start text-gray-950 text-subtitle2">
         {value}
       </div>
     </div>

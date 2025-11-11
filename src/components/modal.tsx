@@ -1,7 +1,7 @@
 import { useState } from "react";
+import DownloadIcon from "@/assets/icons/ic_download";
 import TrashIcon from "@/assets/icons/ic_trash";
 import Button from "./button";
-import DownloadIcon from "@/assets/icons/ic_download";
 
 export default function Modal({
   open,
@@ -19,12 +19,12 @@ export default function Modal({
   const [inputValue, setInputValue] = useState("");
   return (
     <div
-      className={`fixed inset-0 bg-black/50 flex items-center justify-center ${
+      className={`fixed inset-0 flex items-center justify-center bg-black/50 ${
         open ? "block" : "hidden"
       }`}
     >
-      <div className="flex flex-col items-center justify-start gap-[20px] bg-white rounded-2xl py-[32px] px-[52px] opacity-100">
-        <div className="flex items-center justify-start gap-[20px] w-full">
+      <div className="flex flex-col items-center justify-start gap-[20px] rounded-2xl bg-white px-[52px] py-[32px] opacity-100">
+        <div className="flex w-full items-center justify-start gap-[20px]">
           <div
             className={`flex items-center justify-center rounded-full bg-${
               type === "delete" ? "error-ctr" : "success-ctr"
@@ -37,12 +37,12 @@ export default function Modal({
             )}
           </div>
           <div>
-            <div className="text-h5 text-black">{title}</div>
+            <div className="text-black text-h5">{title}</div>
             <div className="text-body5 text-gray-800">{description}</div>
           </div>
         </div>
         {type === "save" && (
-          <div className="flex flex-col items-end justify-start gap-[4px] w-full">
+          <div className="flex w-full flex-col items-end justify-start gap-[4px]">
             <input
               type="text"
               value={inputValue}
@@ -52,7 +52,7 @@ export default function Modal({
                 }
               }}
               maxLength={50}
-              className="w-full px-[20px] py-[8px] border border-gray-700 text-body5 rounded-lg placeholder:text-body5 placeholder:text-gray-700 focus:outline-none"
+              className="w-full rounded-lg border border-gray-700 px-[20px] py-[8px] text-body5 placeholder:text-body5 placeholder:text-gray-700 focus:outline-none"
               placeholder="라이브러리 이름"
             />
             <div className="text-caption text-gray-500">
@@ -60,7 +60,7 @@ export default function Modal({
             </div>
           </div>
         )}
-        <div className="flex items-center justify-center gap-[12px] w-[320px]">
+        <div className="flex w-[320px] items-center justify-center gap-[12px]">
           <Button
             variant="outlined"
             size="medium"

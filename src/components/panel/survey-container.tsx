@@ -1,9 +1,9 @@
-import InfoItem from "./info-item";
-import Title from "./title";
+import { useEffect, useRef, useState } from "react";
 import Chip from "@/components/chip";
-import TextWithIcon from "./text-with-icon";
 import BasicInfo from "./basic-info";
-import { useState, useRef, useEffect } from "react";
+import InfoItem from "./info-item";
+import TextWithIcon from "./text-with-icon";
+import Title from "./title";
 
 type SurveyContainerType = "list" | "icon-list" | "chip" | "title-value";
 
@@ -77,7 +77,7 @@ export default function SurveyContainer({
     switch (type) {
       case "list":
         return (
-          <div className="flex flex-col items-start justify-center w-full gap-[12px]">
+          <div className="flex w-full flex-col items-start justify-center gap-[12px]">
             {(data as ListItem[]).map((item, index) => (
               <BasicInfo key={index} title={item.title} value={item.value} />
             ))}
@@ -86,7 +86,7 @@ export default function SurveyContainer({
 
       case "icon-list":
         return (
-          <div className="flex flex-col items-start justify-center w-full gap-[12px]">
+          <div className="flex w-full flex-col items-start justify-center gap-[12px]">
             {(data as IconListItem[]).map((item, index) => (
               <TextWithIcon
                 key={index}
@@ -107,7 +107,7 @@ export default function SurveyContainer({
           "chips" in data[0]
         ) {
           return (
-            <div className="flex flex-col items-start justify-center w-full gap-[32px]">
+            <div className="flex w-full flex-col items-start justify-center gap-[32px]">
               {(data as ChipGroupItem[]).map((group, index) => {
                 const isExpanded = expandedGroups.has(index);
                 const showMore = showMoreButtons.has(index);
@@ -119,7 +119,7 @@ export default function SurveyContainer({
                 return (
                   <div
                     key={index}
-                    className="flex flex-col items-start justify-center gap-[12px] w-full"
+                    className="flex w-full flex-col items-start justify-center gap-[12px]"
                   >
                     <TextWithIcon
                       type="detail"
@@ -132,7 +132,7 @@ export default function SurveyContainer({
                           containerRefs.current.set(index, el);
                         }
                       }}
-                      className="flex items-center justify-start gap-[12px] w-full flex-wrap"
+                      className="flex w-full flex-wrap items-center justify-start gap-[12px]"
                     >
                       {(shouldShowMore ? allChips.slice(0, 6) : allChips).map(
                         (chip, chipIndex) => (
@@ -184,7 +184,7 @@ export default function SurveyContainer({
           const shouldShowMore = !isExpanded && allItems.length > 8;
 
           return (
-            <div className="flex items-center justify-start gap-[12px] w-full flex-wrap">
+            <div className="flex w-full flex-wrap items-center justify-start gap-[12px]">
               {(shouldShowMore ? allItems.slice(0, 8) : allItems).map(
                 (item, index) => (
                   <Chip key={index} variant="outlined" chipType="text">
@@ -217,7 +217,7 @@ export default function SurveyContainer({
       case "title-value":
       default:
         return (
-          <div className="grid grid-cols-2 items-start justify-center w-full gap-x-[20px] gap-y-[16px]">
+          <div className="grid w-full grid-cols-2 items-start justify-center gap-x-[20px] gap-y-[16px]">
             {Object.entries(data as Record<string, string>).map(
               ([key, value]) => (
                 <InfoItem key={key} title={key} value={value} />
@@ -229,7 +229,7 @@ export default function SurveyContainer({
   };
 
   return (
-    <div className="flex flex-col items-start justify-center w-full gap-[20px] py-[32px] px-[40px] rounded-xl bg-opacity-300 border border-white">
+    <div className="flex w-full flex-col items-start justify-center gap-[20px] rounded-xl border border-white bg-opacity-300 px-[40px] py-[32px]">
       <Title title={title} icon={icon} />
       {renderContent()}
     </div>

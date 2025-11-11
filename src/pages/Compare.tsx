@@ -1,11 +1,10 @@
-import ChevronLeftIcon from "@/assets/icons/ic_chevron_left";
-import CompareCard from "@/components/compare/card";
-import CompareBar from "@/components/compare/bar";
-import DistributionBox from "@/components/compare/distribution-box";
-import BasicInfo from "@/components/compare/basic-info";
-import InsightItem from "@/components/compare/insight-item";
-
 import { useNavigate } from "react-router-dom";
+import ChevronLeftIcon from "@/assets/icons/ic_chevron_left";
+import CompareBar from "@/components/compare/bar";
+import BasicInfo from "@/components/compare/basic-info";
+import CompareCard from "@/components/compare/card";
+import DistributionBox from "@/components/compare/distribution-box";
+import InsightItem from "@/components/compare/insight-item";
 
 const data = [
   {
@@ -104,18 +103,18 @@ export default function Compare() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-start justify-start min-h-screen pt-[40px] px-[242px] pb-[88px] gap-[40px]">
+    <div className="flex min-h-screen flex-col items-start justify-start gap-[40px] px-[242px] pt-[40px] pb-[88px]">
       <div
-        className="flex items-center justify-start gap-[8px] cursor-pointer"
+        className="flex cursor-pointer items-center justify-start gap-[8px]"
         onClick={() => navigate("/home/library")}
       >
         <ChevronLeftIcon color="#616161" width={24} height={24} />
-        <div className="text-h5 text-gray-700">라이브러리</div>
+        <div className="text-gray-700 text-h5">라이브러리</div>
       </div>
       {/* 비교분석 대상 영역 */}
-      <div className="w-full flex flex-col items-start justify-start gap-[20px] bg-opacity-500 rounded-2xl py-[32px] px-[40px]">
-        <div className="text-h6 text-gray-950">비교분석 대상</div>
-        <div className="w-full grid grid-cols-2 gap-[40px]">
+      <div className="flex w-full flex-col items-start justify-start gap-[20px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+        <div className="text-gray-950 text-h6">비교분석 대상</div>
+        <div className="grid w-full grid-cols-2 gap-[40px]">
           {data.map((item) => (
             <CompareCard
               key={item.title}
@@ -128,25 +127,25 @@ export default function Compare() {
           ))}
         </div>
       </div>
-      <div className="w-full flex flex-col items-start justify-start gap-[32px] bg-opacity-500 rounded-2xl py-[32px] px-[40px]">
-        <div className="w-full flex items-center justify-between gap-[16px]">
+      <div className="flex w-full flex-col items-start justify-start gap-[32px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+        <div className="flex w-full items-center justify-between gap-[16px]">
           <div className="flex items-center justify-center gap-[12px]">
-            <div className="rounded-full w-[16px] h-[16px] bg-secondary-300" />
-            <div className="text-subtitle1 text-gray-950">A그룹</div>
-            <div className="text-label text-gray-700">
+            <div className="h-[16px] w-[16px] rounded-full bg-secondary-300" />
+            <div className="text-gray-950 text-subtitle1">A그룹</div>
+            <div className="text-gray-700 text-label">
               "20대 남성이 타는 차 브랜드 분포"
             </div>
           </div>
           <div className="flex items-center justify-center gap-[12px]">
-            <div className="text-label text-gray-700">
+            <div className="text-gray-700 text-label">
               "30대 여성 화장품 구매 패턴"
             </div>
-            <div className="text-subtitle1 text-gray-950">B그룹</div>
-            <div className="rounded-full w-[16px] h-[16px] bg-tertiary-300" />
+            <div className="text-gray-950 text-subtitle1">B그룹</div>
+            <div className="h-[16px] w-[16px] rounded-full bg-tertiary-300" />
           </div>
         </div>
         {/* 비교분석 결과 영역 */}
-        <div className="w-full flex flex-col items-start justify-start gap-[20px]">
+        <div className="flex w-full flex-col items-start justify-start gap-[20px]">
           <CompareBar leftPercent={30} rightPercent={70} label="특성1" />
           <CompareBar leftPercent={30} rightPercent={70} label="특성2" />
           <CompareBar leftPercent={30} rightPercent={70} label="특성3" />
@@ -160,9 +159,9 @@ export default function Compare() {
         ))}
       </div>
       {/* 기본 정보 비교 영역 */}
-      <div className="w-full flex flex-col items-start justify-start gap-[20px] bg-opacity-500 rounded-2xl py-[32px] px-[40px]">
-        <div className="text-h6 text-gray-950">기본 정보 비교</div>
-        <div className="w-full grid grid-cols-3 gap-[40px]">
+      <div className="flex w-full flex-col items-start justify-start gap-[20px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+        <div className="text-gray-950 text-h6">기본 정보 비교</div>
+        <div className="grid w-full grid-cols-3 gap-[40px]">
           {basicInfoData.map((item) => (
             <BasicInfo
               key={item.title}
@@ -174,9 +173,9 @@ export default function Compare() {
         </div>
       </div>
       {/* 핵심 인사이트 영역 */}
-      <div className="w-full flex flex-col items-start justify-start gap-[20px] bg-opacity-500 rounded-2xl py-[32px] px-[40px]">
-        <div className="text-h6 text-gray-950">핵심 인사이트</div>
-        <div className="w-full flex flex-col items-center justify-center gap-[44px]">
+      <div className="flex w-full flex-col items-start justify-start gap-[20px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+        <div className="text-gray-950 text-h6">핵심 인사이트</div>
+        <div className="flex w-full flex-col items-center justify-center gap-[44px]">
           <InsightItem
             title="주요 차이점"
             description=" 두 분석은두 분석은두 분석은두 분석은두 분석은두 분석은두 분석은두

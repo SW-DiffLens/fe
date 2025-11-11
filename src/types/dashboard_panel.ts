@@ -8,7 +8,7 @@ export interface DashboardPanel {
       respondent_id: string;
       personal_income: string;
       concordance_rate: string;
-    }
+    },
   ];
   page_info: {
     offset: number;

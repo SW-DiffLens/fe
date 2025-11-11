@@ -1,5 +1,5 @@
-import LogoContainer from "@/assets/logos/logo_container";
 import MailIcon from "@/assets/icons/ic_mail";
+import LogoContainer from "@/assets/logos/logo_container";
 
 type Transparency = "on" | "off";
 

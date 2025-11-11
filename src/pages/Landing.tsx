@@ -1,19 +1,18 @@
-import Button from "@/components/button";
-import ArrowRightIcon from "@/assets/icons/ic_arrow_right";
-import StatusSquareIcon from "@/assets/icons/ic_status_square";
-import GroupIcon from "@/assets/icons/ic_group";
-import ExportIcon from "@/assets/icons/ic_export";
-import DocSearchIcon from "@/assets/icons/ic_doc_search";
-import LogoText from "@/assets/logos/logo_text";
-
 import { useNavigate } from "react-router-dom";
+import ArrowRightIcon from "@/assets/icons/ic_arrow_right";
+import DocSearchIcon from "@/assets/icons/ic_doc_search";
+import ExportIcon from "@/assets/icons/ic_export";
+import GroupIcon from "@/assets/icons/ic_group";
+import StatusSquareIcon from "@/assets/icons/ic_status_square";
+import LogoText from "@/assets/logos/logo_text";
+import Button from "@/components/button";
 
 export default function Landing() {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col">
-      <div className="flex gap-[80px] pt-[158px] pb-[120px] bg-opacity-200 px-[180px] grid grid-cols-2">
-        <div className="flex flex-col py-[32px] gap-[64px]">
+      <div className="flex grid grid-cols-2 gap-[80px] bg-opacity-200 px-[180px] pt-[158px] pb-[120px]">
+        <div className="flex flex-col gap-[64px] py-[32px]">
           <div className="flex flex-col gap-[48px]">
             <div className="text-h2 text-primary-950">
               차별화된 패널 데이터
@@ -44,36 +43,36 @@ export default function Landing() {
             </Button>
           </div>
         </div>
-        <div className="bg-gray-300 rounded-lg w-full h-[425px]" />
+        <div className="h-[425px] w-full rounded-lg bg-gray-300" />
       </div>
-      <div className="flex flex-col items-center py-[80px] gap-[64px] bg-opacity-700 px-[180px]">
-        <div className="text-h2 text-black flex items-center gap-[8px]">
+      <div className="flex flex-col items-center gap-[64px] bg-opacity-700 px-[180px] py-[80px]">
+        <div className="flex items-center gap-[8px] text-black text-h2">
           왜
           <LogoText width={177} height={46} />
           일까요?
         </div>
         <div className="flex gap-[16px]">
-          <div className="flex flex-col items-center px-[16px] gap-[16px]">
+          <div className="flex flex-col items-center gap-[16px] px-[16px]">
             <StatusSquareIcon color="black" width={48} height={48} />
-            <div className="text-body3 text-gray-900 text-center ">
+            <div className="text-center text-body3 text-gray-900">
               패널 데이터 검색/비교 분석 통합 대시보드 플랫폼 구축
             </div>
           </div>
-          <div className="flex flex-col items-center px-[16px] gap-[16px]">
+          <div className="flex flex-col items-center gap-[16px] px-[16px]">
             <GroupIcon color="black" width={48} height={48} />
-            <div className="text-body3 text-gray-900 text-center">
+            <div className="text-center text-body3 text-gray-900">
               AI 기반 유사도 분석을 통한 관련 패널 자동 추천 시스템
             </div>
           </div>
-          <div className="flex flex-col items-center px-[16px] gap-[16px]">
+          <div className="flex flex-col items-center gap-[16px] px-[16px]">
             <ExportIcon color="black" width={48} height={48} />
-            <div className="text-body3 text-gray-900 text-center">
+            <div className="text-center text-body3 text-gray-900">
               사용자별 맞춤형 데이터 내보내기 및 집단 관리 기능
             </div>
           </div>
-          <div className="flex flex-col items-center px-[16px] gap-[16px]">
+          <div className="flex flex-col items-center gap-[16px] px-[16px]">
             <DocSearchIcon color="black" width={48} height={48} />
-            <div className="text-body3 text-gray-900 text-center">
+            <div className="text-center text-body3 text-gray-900">
               특정 라이브러리 내 사용자가 놓친 집단 특성 리포트 기능
             </div>
           </div>
