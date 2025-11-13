@@ -31,7 +31,7 @@ export default function Home() {
   );
   const [resetTrigger, setResetTrigger] = useState(0);
 
-  const [searchType, setSearchType] = useState("FLEXIBLE");
+  const [searchType, setSearchType] = useState("STRICT");
   const handleSearchTypeChange = (type: string) => {
     setSearchType(type);
   };
