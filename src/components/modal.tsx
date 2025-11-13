@@ -1,7 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DownloadIcon from "@/assets/icons/ic_download";
 import TrashIcon from "@/assets/icons/ic_trash";
 import Button from "./button";
+
+interface ModalProps {
+  open: boolean;
+  onClose: () => void;
+  title?: string;
+  description?: string;
+  type?: "delete" | "save";
+  onSave?: (inputValue: string) => void;
+  onDelete?: () => void;
+}
 
 export default function Modal({
   open,
@@ -9,14 +19,27 @@ export default function Modal({
   title = "항목 삭제",
   description = "선택된 항목을 삭제하시겠습니까?",
   type = "delete",
-}: {
-  open: boolean;
-  onClose: () => void;
-  title: string;
-  description: string;
-  type: "delete" | "save";
-}) {
+  onSave,
+  onDelete,
+}: ModalProps) {
   const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    if (!open) {
+      setInputValue("");
+    }
+  }, [open]);
+
+  const handleAction = () => {
+    if (type === "save" && onSave) {
+      onSave(inputValue);
+      onClose();
+    } else if (type === "delete" && onDelete) {
+      onDelete();
+      onClose();
+    }
+  };
+
   return (
     <div
       className={`fixed inset-0 flex items-center justify-center bg-black/50 ${
@@ -76,7 +99,8 @@ export default function Modal({
             fullWidth
             bgColor={type === "delete" ? "error-default" : "success-default"}
             textColor="white"
-            onClick={onClose}
+            onClick={handleAction}
+            disabled={type === "save" && !inputValue.trim()}
           >
             {type === "delete" ? "삭제" : "저장"}
           </Button>
