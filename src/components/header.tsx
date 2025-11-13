@@ -73,7 +73,6 @@ export default function Header({
         alert(
           `라이브러리 "${libraryName}"에 ${response.result.panel_count}개의 패널이 저장되었습니다.`
         );
-        setIsExportOpen(false);
       }
     } catch (error) {
       console.error("라이브러리 저장 실패:", error);

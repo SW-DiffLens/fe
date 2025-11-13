@@ -13,11 +13,10 @@ export default function LibrarySaveModal({
   onSave,
   totalCount = 0,
 }: LibrarySaveModalProps) {
-  const handleConfirm = (libraryName: string) => {
+  const handleSave = (libraryName: string) => {
     if (libraryName.trim()) {
       const tags = [`응답 데이터 ${totalCount}개`];
       onSave(libraryName.trim(), tags);
-      onClose();
     }
   };
 
@@ -28,7 +27,7 @@ export default function LibrarySaveModal({
       title="라이브러리 저장"
       description="저장할 라이브러리 이름을 입력해주세요."
       type="save"
-      onConfirm={handleConfirm}
+      onSave={handleSave}
     />
   );
 }

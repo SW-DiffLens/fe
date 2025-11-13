@@ -104,6 +104,11 @@ export default function Library() {
     setIsModalOpen(false);
   };
 
+  const handleDelete = () => {
+    console.log("삭제할 항목:", selectedCards);
+    setSelectedCards([]);
+  };
+
   const handleFilterToggle = (filterId: number) => {
     setOpenFilters((prev) => ({
       ...prev,
@@ -124,7 +129,16 @@ export default function Library() {
 
   return (
     <>
-      {isModalOpen && <Modal open={isModalOpen} onClose={handleModalClose} />}
+      {isModalOpen && (
+        <Modal
+          open={isModalOpen}
+          onClose={handleModalClose}
+          title="항목 삭제"
+          description="선택된 항목을 삭제하시겠습니까?"
+          type="delete"
+          onDelete={handleDelete}
+        />
+      )}
       <div className="flex min-h-screen flex-col items-center justify-start gap-[40px] px-[193px] pt-[40px] pb-[80px]">
         <div className="flex w-full items-center justify-between">
           <div className="flex items-center justify-center gap-[16px]">
