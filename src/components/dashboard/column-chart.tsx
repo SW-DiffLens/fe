@@ -98,7 +98,7 @@ export default function ColumnChartComponent({
       strokeOpacity: 0,
     });
 
-    series.columns.template.adapters.add("fill", (fill, target) => {
+    series.columns.template.adapters.add("fill", (_fill, target) => {
       const index = series.columns.indexOf(target);
       return am5.color(CHART_COLORS[index % CHART_COLORS.length]);
     });

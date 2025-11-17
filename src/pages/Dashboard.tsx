@@ -128,7 +128,7 @@ export default function Dashboard() {
             <div className="w-full text-start text-gray-950 text-h4">
               {isLibrary ? libraryData?.library_name : question}
             </div>
-            {result.pie && (
+            {result?.pie && (
               <PieChartComponent
                 data={result.pie.data_points}
                 title={result.pie.title}
@@ -251,7 +251,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="grid w-full auto-cols-[480px] grid-flow-col items-start justify-start gap-[36px] overflow-x-auto">
-          {result.charts?.map((chart, index) => {
+          {result?.charts?.map((chart, index) => {
             if (chart.chart_type === "BAR") {
               return (
                 <div key={chart.chart_id || index} className="w-[480px]">
