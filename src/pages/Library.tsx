@@ -66,22 +66,6 @@ export default function Library() {
     setSelectedCards((prev) => prev.filter((card) => card !== id));
   };
 
-  // 비교분석 disabled 처리
-  const isCompareDisabled = selectedCards.length !== 2;
-  const isDeleteDisabled = selectedCards.length < 1;
-
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-  };
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleDelete = () => {
-    console.log("삭제할 항목:", selectedCards);
-    setSelectedCards([]);
-  };
-
   const handleFilterToggle = (filterId: number) => {
     setOpenFilters((prev) => ({
       ...prev,
@@ -98,6 +82,53 @@ export default function Library() {
       ...prev,
       [filterId]: false,
     }));
+  };
+
+  // 필터링 및 정렬된 라이브러리 목록
+  const filteredAndSortedLibraries = libraries
+    .filter((library) => {
+      const period = selectedFilters[1];
+      if (period === "모든 기간") return true;
+
+      const now = new Date();
+      const createdAt = new Date(library.created_at);
+
+      let daysAgo = 0;
+      if (period === "최근 7일") daysAgo = 7;
+      else if (period === "최근 30일") daysAgo = 30;
+      else if (period === "최근 3개월") daysAgo = 90;
+
+      const filterDate = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000);
+      return createdAt >= filterDate;
+    })
+    .sort((a, b) => {
+      const sortType = selectedFilters[2];
+
+      if (sortType === "날짜순") {
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      } else if (sortType === "응답자수 순") {
+        return b.panel_count - a.panel_count;
+      } else if (sortType === "제목순") {
+        return a.library_name.localeCompare(b.library_name);
+      }
+
+      return 0;
+    });
+
+  // 비교분석 disabled 처리
+  const isCompareDisabled = selectedCards.length !== 2;
+  const isDeleteDisabled = selectedCards.length < 1;
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleDelete = () => {
+    console.log("삭제할 항목:", selectedCards);
+    setSelectedCards([]);
   };
 
   return (
@@ -173,19 +204,19 @@ export default function Library() {
           </div>
         </div>
         <div className="flex w-full items-center justify-start px-[76.5px] text-gray-950 text-h5">
-          저장된 분석 항목 ({isLoading ? "..." : libraries.length}개)
+          저장된 분석 항목 ({isLoading ? "..." : filteredAndSortedLibraries.length}개)
         </div>
         {isLoading ? (
           <div className="flex w-full items-center justify-center py-[100px] text-gray-500">
             로딩 중...
           </div>
-        ) : libraries.length === 0 ? (
+        ) : filteredAndSortedLibraries.length === 0 ? (
           <div className="flex w-full items-center justify-center py-[100px] text-gray-500">
-            저장된 라이브러리가 없습니다.
+            {libraries.length === 0 ? "저장된 라이브러리가 없습니다." : "필터 조건에 맞는 라이브러리가 없습니다."}
           </div>
         ) : (
           <div className="grid w-full grid-cols-2 gap-x-[32px] gap-y-[40px] px-[76.5px]">
-            {libraries.map((library) => (
+            {filteredAndSortedLibraries.map((library) => (
               <Card
                 key={library.library_id}
                 id={library.library_id}
