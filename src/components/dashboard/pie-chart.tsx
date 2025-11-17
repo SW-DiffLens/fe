@@ -2,6 +2,7 @@ import * as am5 from "@amcharts/amcharts5";
 import * as am5percent from "@amcharts/amcharts5/percent";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { useLayoutEffect, useRef } from "react";
+import { CHART_COLORS } from "@/constants/chart-colors";
 
 interface DataPoint {
   label: string;
@@ -12,21 +13,6 @@ interface PieChartProps {
   data: DataPoint[];
   title?: string;
 }
-
-const CHART_COLORS = [
-  "#ff6063",
-  "#ffa453",
-  "#ffd633",
-  "#5dd27a",
-  "#33d3c2",
-  "#3dc5f6",
-  "#3094eb",
-  "#8177f7",
-  "#be5def",
-  "#ffa2e2",
-  "#bd997e",
-  "#bebebe",
-];
 
 export default function PieChartComponent({ data, title }: PieChartProps) {
   const chartRef = useRef<HTMLDivElement>(null);
