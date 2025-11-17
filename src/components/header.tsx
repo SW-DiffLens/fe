@@ -32,7 +32,7 @@ export default function Header({
   isPanel = "false",
   isLibrary = "false",
   searchId,
-  totalCount = 0,
+  totalCount: _totalCount = 0,
 }: HeaderProps) {
   const navigate = useNavigate();
   const [isExportOpen, setIsExportOpen] = useState(false);
