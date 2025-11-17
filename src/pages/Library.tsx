@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getLibraries } from "@/api/library";
 import BarChartIcon from "@/assets/icons/ic_bar_chart";
 import ChevronDownIcon from "@/assets/icons/ic_chevron_down";
@@ -23,6 +24,7 @@ const filterOptions = [
 ];
 
 export default function Library() {
+  const navigate = useNavigate();
   const [libraries, setLibraries] = useState<Library[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
@@ -98,14 +100,18 @@ export default function Library() {
       else if (period === "최근 30일") daysAgo = 30;
       else if (period === "최근 3개월") daysAgo = 90;
 
-      const filterDate = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000);
+      const filterDate = new Date(
+        now.getTime() - daysAgo * 24 * 60 * 60 * 1000
+      );
       return createdAt >= filterDate;
     })
     .sort((a, b) => {
       const sortType = selectedFilters[2];
 
       if (sortType === "날짜순") {
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        return (
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
       } else if (sortType === "응답자수 순") {
         return b.panel_count - a.panel_count;
       } else if (sortType === "제목순") {
@@ -129,6 +135,17 @@ export default function Library() {
   const handleDelete = () => {
     console.log("삭제할 항목:", selectedCards);
     setSelectedCards([]);
+  };
+
+  const handleCompare = () => {
+    if (selectedCards.length === 2) {
+      navigate("/home/library/compare", {
+        state: {
+          libraryId1: selectedCards[0],
+          libraryId2: selectedCards[1],
+        },
+      });
+    }
   };
 
   return (
@@ -178,6 +195,7 @@ export default function Library() {
               disabled={isCompareDisabled}
               bgColor={isCompareDisabled ? "gray-300" : "success-ctr"}
               textColor={isCompareDisabled ? "gray-400" : "success-on-ctr"}
+              onClick={handleCompare}
             >
               <BarChartIcon
                 color={isCompareDisabled ? "#BDBDBD" : "#14632B"}
@@ -204,7 +222,8 @@ export default function Library() {
           </div>
         </div>
         <div className="flex w-full items-center justify-start px-[76.5px] text-gray-950 text-h5">
-          저장된 분석 항목 ({isLoading ? "..." : filteredAndSortedLibraries.length}개)
+          저장된 분석 항목 (
+          {isLoading ? "..." : filteredAndSortedLibraries.length}개)
         </div>
         {isLoading ? (
           <div className="flex w-full items-center justify-center py-[100px] text-gray-500">
@@ -212,7 +231,9 @@ export default function Library() {
           </div>
         ) : filteredAndSortedLibraries.length === 0 ? (
           <div className="flex w-full items-center justify-center py-[100px] text-gray-500">
-            {libraries.length === 0 ? "저장된 라이브러리가 없습니다." : "필터 조건에 맞는 라이브러리가 없습니다."}
+            {libraries.length === 0
+              ? "저장된 라이브러리가 없습니다."
+              : "필터 조건에 맞는 라이브러리가 없습니다."}
           </div>
         ) : (
           <div className="grid w-full grid-cols-2 gap-x-[32px] gap-y-[40px] px-[76.5px]">

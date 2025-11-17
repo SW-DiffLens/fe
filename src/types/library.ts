@@ -105,3 +105,67 @@ export interface LibraryDetailApiResponse {
   result: LibraryDetailResponse;
   message: string;
 }
+
+export interface CompareLibrariesRequest {
+  libraryId1: number;
+  libraryId2: number;
+}
+
+export interface GroupInfo {
+  library_id: number;
+  library_name: string;
+  summary: string | null;
+  total_count: number;
+  filters: Array<{
+    key: string;
+    values: string[];
+  }>;
+  color: string;
+}
+
+export interface KeyCharacteristic {
+  characteristic: string;
+  description: string;
+  group1_percentage: number;
+  group2_percentage: number;
+  difference: number;
+}
+
+export interface BasicComparison {
+  male: number;
+  female: number;
+  seoul: number;
+  gyeonggi: number;
+  busan: number;
+  region_etc: number;
+  avg_age: number;
+  avg_family: number;
+  avg_children: number;
+  rate_possessing_car: number;
+  avg_personal_income: number;
+  avg_family_income: number;
+}
+
+export interface Insights {
+  difference: string;
+  common: string;
+  implication: string;
+}
+
+export interface CompareLibrariesResponse {
+  group1: GroupInfo;
+  group2: GroupInfo;
+  key_characteristics: KeyCharacteristic[];
+  basic_comparison: {
+    group1: BasicComparison;
+    group2: BasicComparison;
+  };
+  insights: Insights;
+}
+
+export interface CompareLibrariesApiResponse {
+  is_success: boolean;
+  code: string;
+  result: CompareLibrariesResponse;
+  message: string;
+}

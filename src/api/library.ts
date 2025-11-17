@@ -1,4 +1,6 @@
 import type {
+  CompareLibrariesApiResponse,
+  CompareLibrariesRequest,
   CreateLibraryRequest,
   LibraryApiResponse,
   LibraryDetailApiResponse,
@@ -26,6 +28,17 @@ export const getLibraryById = async (
 ): Promise<LibraryDetailApiResponse> => {
   const response = await apiClient.get<LibraryDetailApiResponse>(
     `/libraries/${libraryId}`
+  );
+  return response.data;
+};
+
+// 라이브러리 비교
+export const compareLibraries = async (
+  data: CompareLibrariesRequest
+): Promise<CompareLibrariesApiResponse> => {
+  const response = await apiClient.post<CompareLibrariesApiResponse>(
+    "/libraries/compare",
+    data
   );
   return response.data;
 };
