@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import {
+  addSearchHistoryToLibrary,
   createLibrary,
   getLibraries,
-  addSearchHistoryToLibrary,
 } from "@/api/library";
 import DownloadIcon from "@/assets/icons/ic_download";
 import Button from "@/components/button";
@@ -130,8 +131,11 @@ export default function SaveLibraryModal({
 
   if (!open) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+  const modalContent = (
+    <div
+      className="fixed inset-0 z-[100] flex w-full items-center justify-center bg-black/50"
+      data-modal="save-library"
+    >
       <div className="flex w-[500px] flex-col items-start justify-start gap-[20px] rounded-2xl bg-white px-[40px] py-[32px]">
         {/* Header */}
         <div className="flex w-full items-center justify-start gap-[16px]">
@@ -139,7 +143,7 @@ export default function SaveLibraryModal({
             <DownloadIcon width={20} height={20} color="#14632B" />
           </div>
           <div>
-            <div className="text-h5 text-black">라이브러리 저장</div>
+            <div className="text-black text-h5">라이브러리 저장</div>
             <div className="text-body5 text-gray-800">
               새 라이브러리를 생성하거나 기존 라이브러리에 추가하세요
             </div>
@@ -263,4 +267,6 @@ export default function SaveLibraryModal({
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }

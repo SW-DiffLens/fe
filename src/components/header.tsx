@@ -40,9 +40,13 @@ export default function Header({
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
+      const target = event.target as HTMLElement;
+      const isModalClick = target.closest('[data-modal="save-library"]');
+
       if (
         selectRef.current &&
-        !selectRef.current.contains(event.target as Node)
+        !selectRef.current.contains(event.target as Node) &&
+        !isModalClick
       ) {
         setIsExportOpen(false);
       }
