@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Button from "@/components/button";
 import Chip from "@/components/chip";
 
@@ -21,6 +22,12 @@ export default function Card({
   onDeselect,
   selectedCards,
 }: CardProps) {
+  const navigate = useNavigate();
+
+  const handleViewClick = () => {
+    navigate(`/dashboard/library/${id}`);
+  };
+
   return (
     <div className="flex h-full w-full flex-col items-start justify-start gap-[16px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
       <input
@@ -45,7 +52,6 @@ export default function Card({
         ))}
       </div>
       <div className="flex flex-col items-start justify-center gap-[4px]">
-        <div className="text-gray-700 text-label">적용된 필터</div>
         <div className="flex items-center justify-start gap-[8px]">
           {filters.map((filter) => (
             <Chip key={filter} variant="outlined" chipType="text">
@@ -54,7 +60,7 @@ export default function Card({
           ))}
         </div>
       </div>
-      <Button variant="filled" size="small" fullWidth>
+      <Button variant="filled" size="small" fullWidth onClick={handleViewClick}>
         보기
       </Button>
     </div>
