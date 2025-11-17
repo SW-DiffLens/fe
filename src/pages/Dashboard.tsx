@@ -3,11 +3,10 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import apiClient from "@/api/client";
 import { getLibraryById } from "@/api/library";
 import PlusIcon from "@/assets/icons/ic_plus";
-import BarChart from "@/assets/temp/bar_chart.png";
-import ChartCaption from "@/assets/temp/chart_caption.png";
-import LineChart from "@/assets/temp/line_chart.png";
-import PieChart from "@/assets/temp/pie_chart.png";
+import ColumnChartComponent from "@/components/dashboard/column-chart";
 import IndividualResponses from "@/components/dashboard/individual-responses";
+import LineChartComponent from "@/components/dashboard/line-chart";
+import PieChartComponent from "@/components/dashboard/pie-chart";
 import SearchBar from "@/components/search-bar";
 import { useDashboard } from "@/contexts/DashboardContext";
 import type { DashboardPanel } from "@/types/dashboard_panel";
@@ -129,14 +128,14 @@ export default function Dashboard() {
             <div className="w-full text-start text-gray-950 text-h4">
               {isLibrary ? libraryData?.library_name : question}
             </div>
-            <img
-              src={PieChart}
-              alt="Pie Chart"
-              className="h-[190px] w-[190px]"
-            />
+            {result?.pie && (
+              <PieChartComponent
+                data={result.pie.data_points}
+                title={result.pie.title}
+              />
+            )}
           </div>
           <div className="flex w-full flex-col items-start justify-center gap-[16px]">
-            <img src={ChartCaption} alt="Chart Caption" className="w-full" />
             <div className="w-full text-center text-caption text-gray-700">
               {isLibrary ? (
                 <>
@@ -251,17 +250,34 @@ export default function Dashboard() {
             교차 분석 도구
           </div>
         </div>
-        <div className="grid w-full grid-cols-[480px_480px_1fr] items-center justify-center gap-[36px]">
-          <img src={BarChart} alt="Bar Chart" className="h-[300px] w-[480px]" />
-          <img
-            src={LineChart}
-            alt="Line Chart"
-            className="h-[300px] w-[480px]"
-          />
-          {/* <div className="font-medium text-xl text-tertiary-500 tracking-[-0.03em] cursor-pointer text-center w-full h-full rounded-lg flex items-center justify-center border border-dashed border-tertiary-500">
-            +<br />
-            정보 추가
-          </div> */}
+        <div className="grid w-full auto-cols-[480px] grid-flow-col items-start justify-start gap-[36px] overflow-x-auto">
+          {result?.charts?.map((chart, index) => {
+            if (chart.chart_type === "BAR") {
+              return (
+                <div key={chart.chart_id || index} className="w-[480px]">
+                  <ColumnChartComponent
+                    data={chart.data_points}
+                    title={chart.title}
+                    xAxisTitle={chart.x_axis || chart.xaxis}
+                    yAxisTitle={chart.y_axis || chart.yaxis}
+                  />
+                </div>
+              );
+            }
+            if (chart.chart_type === "LINE") {
+              return (
+                <div key={chart.chart_id || index} className="w-[480px]">
+                  <LineChartComponent
+                    data={chart.data_points}
+                    title={chart.title}
+                    xAxisTitle={chart.x_axis || chart.xaxis}
+                    yAxisTitle={chart.y_axis || chart.yaxis}
+                  />
+                </div>
+              );
+            }
+            return null;
+          })}
         </div>
       </div>
       {/* 하단 영역 */}
