@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import apiClient from "@/api/client";
+import { getLibraryById } from "@/api/library";
 import PlusIcon from "@/assets/icons/ic_plus";
 import BarChart from "@/assets/temp/bar_chart.png";
 import ChartCaption from "@/assets/temp/chart_caption.png";
@@ -11,6 +12,7 @@ import SearchBar from "@/components/search-bar";
 import { useDashboard } from "@/contexts/DashboardContext";
 import type { DashboardPanel } from "@/types/dashboard_panel";
 import type { DashboardResult } from "@/types/dashboard_result";
+import type { LibraryDetailResponse } from "@/types/library";
 
 // const data = [
 //   {
@@ -58,13 +60,27 @@ import type { DashboardResult } from "@/types/dashboard_result";
 export default function Dashboard() {
   const location = useLocation();
   const navigate = useNavigate();
+  const params = useParams();
   const [searchValue, setSearchValue] = useState("");
   const [mode, setMode] = useState("profile");
   const [data, setData] = useState<DashboardPanel>();
   const [page, setPage] = useState(1);
   const { setDashboardData } = useDashboard();
+  const [libraryData, setLibraryData] = useState<LibraryDetailResponse | null>(
+    null
+  );
 
-  const { result, search_id, question } = location.state as DashboardResult;
+  // URL 경로로 라이브러리인지 검색 결과인지 판단
+  const isLibrary = location.pathname.includes("/library/");
+  const libraryId = isLibrary ? Number(params.id) : null;
+
+  // location.state가 있으면 검색 결과, 없으면 라이브러리
+  const stateData = location.state as DashboardResult | null;
+  const { result, search_id, question } = stateData || {
+    result: null,
+    search_id: null,
+    question: "",
+  };
 
   const handleMode = (mode: string) => {
     setMode(mode);
@@ -73,30 +89,68 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiClient.get(
-          `/search/${search_id}/each-responses`,
-          {
-            params: {
-              page,
-              size: 5,
-            },
-          }
-        );
-        // result가 배열인지 확인하고, 아니면 빈 배열로 설정
-        const resultData = response.data.result;
-        setData(resultData);
+        if (isLibrary && libraryId) {
+          // 라이브러리 데이터 로드
+          const response = await getLibraryById(libraryId);
+          if (response.is_success) {
+            setLibraryData(response.result);
 
-        // Context에 dashboard 데이터 설정
-        if (resultData?.page_info?.total_count) {
-          setDashboardData(search_id, resultData.page_info.total_count);
+            // 라이브러리 패널 데이터를 DashboardPanel 형식으로 변환
+            const panelData = response.result.panels || [];
+            const startIndex = (page - 1) * 5;
+            const endIndex = startIndex + 5;
+            const paginatedPanels = panelData.slice(startIndex, endIndex);
+
+            const transformedData: DashboardPanel = {
+              keys: ["gender"],
+              values: paginatedPanels.map((panel) => ({
+                respondent_id: panel.panel_id,
+                gender: panel.gender,
+                age: String(panel.age),
+                residence: panel.residence || "-",
+                personal_income: "-", // 라이브러리 데이터에는 소득 정보가 없음
+                concordance_rate: "-", // 라이브러리에는 일치율이 없음
+              })) as any,
+              page_info: {
+                offset: (page - 1) * 5,
+                limit: 5,
+                current_page: page,
+                current_page_count: paginatedPanels.length,
+                total_page_count: Math.ceil(panelData.length / 5),
+                total_count: panelData.length,
+                has_next: endIndex < panelData.length,
+                has_previous: page > 1,
+              },
+            };
+            setData(transformedData);
+          }
+        } else if (search_id) {
+          // 검색 결과 데이터 로드
+          const response = await apiClient.get(
+            `/search/${search_id}/each-responses`,
+            {
+              params: {
+                page,
+                size: 5,
+              },
+            }
+          );
+          const resultData = response.data.result;
+          setData(resultData);
+
+          // Context에 dashboard 데이터 설정
+          if (resultData?.page_info?.total_count) {
+            setDashboardData(search_id, resultData.page_info.total_count);
+          }
         }
       } catch (error) {
         console.error("데이터 로드 실패:", error);
         setData(undefined);
+        setLibraryData(null);
       }
     };
     fetchData();
-  }, [search_id, page, setDashboardData]);
+  }, [search_id, page, setDashboardData, isLibrary, libraryId]);
 
   const handlePanelClick = (panelId: string, concordanceRate: string) => {
     navigate(`/panel/${panelId}`, {
@@ -116,7 +170,7 @@ export default function Dashboard() {
         <div className="flex h-full w-full flex-col items-start justify-between rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
           <div className="flex w-full flex-col items-center justify-center gap-[48px]">
             <div className="w-full text-start text-gray-950 text-h4">
-              {question}
+              {isLibrary ? libraryData?.library_name : question}
             </div>
             <img
               src={PieChart}
@@ -127,54 +181,89 @@ export default function Dashboard() {
           <div className="flex w-full flex-col items-start justify-center gap-[16px]">
             <img src={ChartCaption} alt="Chart Caption" className="w-full" />
             <div className="w-full text-center text-caption text-gray-700">
-              표본 수: {result.summary.total_respondents}명 / 데이터 수집일:{" "}
-              {result.summary.data_capture_date} / 신뢰도:{" "}
-              {result.summary.confidence_level || "-"}%
+              {isLibrary ? (
+                <>
+                  패널 수: {libraryData?.panel_count}명 / 생성일:{" "}
+                  {libraryData?.created_at
+                    ? new Date(libraryData.created_at).toLocaleDateString(
+                        "ko-KR"
+                      )
+                    : "-"}
+                </>
+              ) : (
+                <>
+                  표본 수: {result?.summary?.total_respondents}명 / 데이터
+                  수집일: {result?.summary?.data_capture_date} / 신뢰도:{" "}
+                  {result?.summary?.confidence_level || "-"}%
+                </>
+              )}
             </div>
           </div>
         </div>
         {/* 오른쪽 */}
         <div className="flex h-full w-full flex-col items-start justify-center gap-[28px]">
+          {!isLibrary && (
+            <div className="flex w-full flex-col items-start justify-center gap-[16px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+              <div className="w-full text-start text-gray-950 text-h5">
+                검색 결과 내 재검색
+              </div>
+              <SearchBar
+                placeholder={question}
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+              />
+            </div>
+          )}
           <div className="flex w-full flex-col items-start justify-center gap-[16px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
             <div className="w-full text-start text-gray-950 text-h5">
-              검색 결과 내 재검색
+              {isLibrary ? "라이브러리 태그" : "검색 조건 및 필터"}
             </div>
-            <SearchBar
-              placeholder={question}
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-            />
-          </div>
-          <div className="flex w-full flex-col items-start justify-center gap-[16px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
-            <div className="w-full text-start text-gray-950 text-h5">
-              검색 조건 및 필터
-            </div>
-            {result.applied_filters_summary?.map(
-              (
-                filter: { key: string; display_value: string },
-                index: number
-              ) => {
-                const colorClass =
-                  index % 3 === 0
-                    ? "text-primary-700 bg-primary-100"
-                    : index % 3 === 1
-                      ? "text-secondary-700 bg-secondary-100"
-                      : "text-tertiary-700 bg-tertiary-100";
+            {isLibrary
+              ? libraryData?.tags?.map((tag, index) => {
+                  const colorClass =
+                    index % 3 === 0
+                      ? "text-primary-700 bg-primary-100"
+                      : index % 3 === 1
+                        ? "text-secondary-700 bg-secondary-100"
+                        : "text-tertiary-700 bg-tertiary-100";
 
-                return (
-                  <div
-                    key={`${filter.key}-${index}`}
-                    className={`text-body3 ${colorClass} w-full rounded-lg px-[20px] py-[8px] text-start`}
-                  >
-                    {filter.key}: {filter.display_value}
-                  </div>
-                );
-              }
+                  return (
+                    <div
+                      key={`${tag}-${index}`}
+                      className={`text-body3 ${colorClass} w-full rounded-lg px-[20px] py-[8px] text-start`}
+                    >
+                      {tag}
+                    </div>
+                  );
+                })
+              : result?.applied_filters_summary?.map(
+                  (
+                    filter: { key: string; display_value: string },
+                    index: number
+                  ) => {
+                    const colorClass =
+                      index % 3 === 0
+                        ? "text-primary-700 bg-primary-100"
+                        : index % 3 === 1
+                          ? "text-secondary-700 bg-secondary-100"
+                          : "text-tertiary-700 bg-tertiary-100";
+
+                    return (
+                      <div
+                        key={`${filter.key}-${index}`}
+                        className={`text-body3 ${colorClass} w-full rounded-lg px-[20px] py-[8px] text-start`}
+                      >
+                        {filter.key}: {filter.display_value}
+                      </div>
+                    );
+                  }
+                )}
+            {!isLibrary && (
+              <div className="flex w-full cursor-pointer items-center justify-center gap-[8px] rounded-lg bg-gray-200 px-[20px] py-[12px] text-body3 text-gray-950">
+                <PlusIcon color="black" width={20} height={21} />
+                조건 추가
+              </div>
             )}
-            <div className="flex w-full cursor-pointer items-center justify-center gap-[8px] rounded-lg bg-gray-200 px-[20px] py-[12px] text-body3 text-gray-950">
-              <PlusIcon color="black" width={20} height={21} />
-              조건 추가
-            </div>
           </div>
         </div>
       </div>
@@ -224,8 +313,8 @@ export default function Dashboard() {
         page={page}
         setPage={setPage}
         onPanelClick={handlePanelClick}
-        searchId={search_id}
-        question={question}
+        searchId={isLibrary ? String(libraryId) : search_id || ""}
+        question={isLibrary ? libraryData?.library_name || "" : question}
       />
     </div>
   );

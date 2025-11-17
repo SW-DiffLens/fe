@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Button from "@/components/button";
 import Chip from "@/components/chip";
 
@@ -21,6 +22,12 @@ export default function Card({
   onDeselect,
   selectedCards,
 }: CardProps) {
+  const navigate = useNavigate();
+
+  const handleViewClick = () => {
+    navigate(`/dashboard/library/${id}`);
+  };
+
   return (
     <div className="flex h-full w-full flex-col items-start justify-start gap-[16px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
       <input
@@ -53,7 +60,7 @@ export default function Card({
           ))}
         </div>
       </div>
-      <Button variant="filled" size="small" fullWidth>
+      <Button variant="filled" size="small" fullWidth onClick={handleViewClick}>
         보기
       </Button>
     </div>

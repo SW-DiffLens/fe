@@ -1,6 +1,7 @@
 import type {
   CreateLibraryRequest,
   LibraryApiResponse,
+  LibraryDetailApiResponse,
   LibraryListApiResponse,
 } from "@/types/library";
 import apiClient from "./client";
@@ -16,5 +17,15 @@ export const createLibrary = async (
 // 라이브러리 목록 조회
 export const getLibraries = async (): Promise<LibraryListApiResponse> => {
   const response = await apiClient.get<LibraryListApiResponse>("/libraries");
+  return response.data;
+};
+
+// 특정 라이브러리 상세 조회
+export const getLibraryById = async (
+  libraryId: number
+): Promise<LibraryDetailApiResponse> => {
+  const response = await apiClient.get<LibraryDetailApiResponse>(
+    `/libraries/${libraryId}`
+  );
   return response.data;
 };
