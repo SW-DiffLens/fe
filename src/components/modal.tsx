@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import DownloadIcon from "@/assets/icons/ic_download";
 import TrashIcon from "@/assets/icons/ic_trash";
 import Button from "./button";
@@ -40,12 +41,10 @@ export default function Modal({
     }
   };
 
-  return (
-    <div
-      className={`fixed inset-0 flex items-center justify-center bg-black/50 ${
-        open ? "block" : "hidden"
-      }`}
-    >
+  if (!open) return null;
+
+  const modalContent = (
+    <div className="fixed inset-0 z-[100] flex w-full items-center justify-center bg-black/50">
       <div className="flex flex-col items-center justify-start gap-[20px] rounded-2xl bg-white px-[52px] py-[32px] opacity-100">
         <div className="flex w-full items-center justify-start gap-[20px]">
           <div
@@ -108,4 +107,6 @@ export default function Modal({
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }

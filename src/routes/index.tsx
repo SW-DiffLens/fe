@@ -111,6 +111,10 @@ export const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
+        path: "library/:id",
+        element: <Dashboard />,
+      },
+      {
         path: "all-responses",
         element: <AllResponses />,
       },

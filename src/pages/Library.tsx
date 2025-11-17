@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getLibraries } from "@/api/library";
 import BarChartIcon from "@/assets/icons/ic_bar_chart";
 import ChevronDownIcon from "@/assets/icons/ic_chevron_down";
 import TrashIcon from "@/assets/icons/ic_trash";
@@ -6,51 +8,7 @@ import Button from "@/components/button";
 import Card from "@/components/library/card";
 import DropdownFilter from "@/components/library/dropdown-filter";
 import Modal from "@/components/modal";
-
-const cards = [
-  {
-    id: 1,
-    title: "20대 남성이 타는 차 브랜드 분포",
-    description: "20대 남성 소비자의 자동차 브랜드 선호도 분석",
-    tags: ["100명", "2025.10.26", "인구통계"],
-    filters: ["성별: 남성", "연령: 20-29세", "차량보유: 있음"],
-  },
-  {
-    id: 2,
-    title: "30대 여성 화장품 구매 패턴",
-    description: "30대 여성의 화장품 구매 행동 및 선호 브랜드 분석",
-    tags: ["250명", "2025.10.26", "소비패턴"],
-    filters: ["성별: 여성", "연령: 30-39세"],
-  },
-  {
-    id: 3,
-    title: "20대 남성이 타는 차 브랜드 분포",
-    description: "20대 남성 소비자의 자동차 브랜드 선호도 분석",
-    tags: ["100명", "2025.10.26", "인구통계"],
-    filters: ["성별: 남성", "연령: 20-29세", "차량보유: 있음"],
-  },
-  {
-    id: 4,
-    title: "30대 여성 화장품 구매 패턴",
-    description: "30대 여성의 화장품 구매 행동 및 선호 브랜드 분석",
-    tags: ["250명", "2025.10.26", "소비패턴"],
-    filters: ["성별: 여성", "연령: 30-39세"],
-  },
-  {
-    id: 5,
-    title: "20대 남성이 타는 차 브랜드 분포",
-    description: "20대 남성 소비자의 자동차 브랜드 선호도 분석",
-    tags: ["100명", "2025.10.26", "인구통계"],
-    filters: ["성별: 남성", "연령: 20-29세", "차량보유: 있음"],
-  },
-  {
-    id: 6,
-    title: "30대 여성 화장품 구매 패턴",
-    description: "30대 여성의 화장품 구매 행동 및 선호 브랜드 분석",
-    tags: ["250명", "2025.10.26", "소비패턴"],
-    filters: ["성별: 여성", "연령: 30-39세"],
-  },
-];
+import type { Library } from "@/types/library";
 
 const filterOptions = [
   {
@@ -60,17 +18,15 @@ const filterOptions = [
   },
   {
     id: 2,
-    title: "모든 유형",
-    options: ["모든 유형", "인구통계", "소비패턴", "관심사"],
-  },
-  {
-    id: 3,
     title: "날짜순",
-    options: ["날짜순", "응답자수 순", "제목순", "최근 3개월"],
+    options: ["날짜순", "응답자수 순", "제목순"],
   },
 ];
 
 export default function Library() {
+  const navigate = useNavigate();
+  const [libraries, setLibraries] = useState<Library[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [openFilters, setOpenFilters] = useState<Record<number, boolean>>({});
@@ -86,27 +42,30 @@ export default function Library() {
     )
   );
 
+  // 라이브러리 목록 조회
+  useEffect(() => {
+    const fetchLibraries = async () => {
+      try {
+        setIsLoading(true);
+        const response = await getLibraries();
+        if (response.is_success) {
+          setLibraries(response.result.libraries);
+        }
+      } catch (error) {
+        console.error("Failed to fetch libraries:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchLibraries();
+  }, []);
+
   const handleCardSelect = (id: number) => {
     setSelectedCards((prev) => [...prev, id]);
   };
   const handleCardDeselect = (id: number) => {
     setSelectedCards((prev) => prev.filter((card) => card !== id));
-  };
-
-  // 비교분석 disabled 처리
-  const isCompareDisabled = selectedCards.length !== 2;
-  const isDeleteDisabled = selectedCards.length < 1;
-
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-  };
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleDelete = () => {
-    console.log("삭제할 항목:", selectedCards);
-    setSelectedCards([]);
   };
 
   const handleFilterToggle = (filterId: number) => {
@@ -125,6 +84,68 @@ export default function Library() {
       ...prev,
       [filterId]: false,
     }));
+  };
+
+  // 필터링 및 정렬된 라이브러리 목록
+  const filteredAndSortedLibraries = libraries
+    .filter((library) => {
+      const period = selectedFilters[1];
+      if (period === "모든 기간") return true;
+
+      const now = new Date();
+      const createdAt = new Date(library.created_at);
+
+      let daysAgo = 0;
+      if (period === "최근 7일") daysAgo = 7;
+      else if (period === "최근 30일") daysAgo = 30;
+      else if (period === "최근 3개월") daysAgo = 90;
+
+      const filterDate = new Date(
+        now.getTime() - daysAgo * 24 * 60 * 60 * 1000
+      );
+      return createdAt >= filterDate;
+    })
+    .sort((a, b) => {
+      const sortType = selectedFilters[2];
+
+      if (sortType === "날짜순") {
+        return (
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+      } else if (sortType === "응답자수 순") {
+        return b.panel_count - a.panel_count;
+      } else if (sortType === "제목순") {
+        return a.library_name.localeCompare(b.library_name);
+      }
+
+      return 0;
+    });
+
+  // 비교분석 disabled 처리
+  const isCompareDisabled = selectedCards.length !== 2;
+  const isDeleteDisabled = selectedCards.length < 1;
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleDelete = () => {
+    console.log("삭제할 항목:", selectedCards);
+    setSelectedCards([]);
+  };
+
+  const handleCompare = () => {
+    if (selectedCards.length === 2) {
+      navigate("/home/library/compare", {
+        state: {
+          libraryId1: selectedCards[0],
+          libraryId2: selectedCards[1],
+        },
+      });
+    }
   };
 
   return (
@@ -174,6 +195,7 @@ export default function Library() {
               disabled={isCompareDisabled}
               bgColor={isCompareDisabled ? "gray-300" : "success-ctr"}
               textColor={isCompareDisabled ? "gray-400" : "success-on-ctr"}
+              onClick={handleCompare}
             >
               <BarChartIcon
                 color={isCompareDisabled ? "#BDBDBD" : "#14632B"}
@@ -200,19 +222,38 @@ export default function Library() {
           </div>
         </div>
         <div className="flex w-full items-center justify-start px-[76.5px] text-gray-950 text-h5">
-          저장된 분석 항목 (6개)
+          저장된 분석 항목 (
+          {isLoading ? "..." : filteredAndSortedLibraries.length}개)
         </div>
-        <div className="grid w-full grid-cols-2 gap-x-[32px] gap-y-[40px] px-[76.5px]">
-          {cards.map((card) => (
-            <Card
-              key={card.id}
-              {...card}
-              onSelect={handleCardSelect}
-              onDeselect={handleCardDeselect}
-              selectedCards={selectedCards}
-            />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="flex w-full items-center justify-center py-[100px] text-gray-500">
+            로딩 중...
+          </div>
+        ) : filteredAndSortedLibraries.length === 0 ? (
+          <div className="flex w-full items-center justify-center py-[100px] text-gray-500">
+            {libraries.length === 0
+              ? "저장된 라이브러리가 없습니다."
+              : "필터 조건에 맞는 라이브러리가 없습니다."}
+          </div>
+        ) : (
+          <div className="grid w-full grid-cols-2 gap-x-[32px] gap-y-[40px] px-[76.5px]">
+            {filteredAndSortedLibraries.map((library) => (
+              <Card
+                key={library.library_id}
+                id={library.library_id}
+                title={library.library_name}
+                description={`패널 수: ${library.panel_count}개`}
+                tags={library.tags}
+                filters={[
+                  `생성일: ${new Date(library.created_at).toLocaleDateString("ko-KR", { year: "numeric", month: "2-digit", day: "2-digit" }).replace(/\. /g, "/").replace(".", "")}`,
+                ]}
+                onSelect={handleCardSelect}
+                onDeselect={handleCardDeselect}
+                selectedCards={selectedCards}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
