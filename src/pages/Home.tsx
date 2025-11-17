@@ -74,7 +74,8 @@ export default function Home() {
     try {
       // 모든 섹션의 선택된 code들을 하나의 배열로 합치기
       const allFilterCodes = selectedFilterCodes.flat();
-      const response = await apiClient.post("/search", {
+      const response = await apiClient.post("/search/test", {
+        //const response = await apiClient.post("/search", {
         question: searchValue,
         mode: searchType,
         filters: allFilterCodes,
