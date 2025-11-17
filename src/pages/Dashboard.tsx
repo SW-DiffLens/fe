@@ -14,49 +14,6 @@ import type { DashboardPanel } from "@/types/dashboard_panel";
 import type { DashboardResult } from "@/types/dashboard_result";
 import type { LibraryDetailResponse } from "@/types/library";
 
-// const data = [
-//   {
-//     id: "w100010279508856",
-//     gender: "남성",
-//     age: 22,
-//     address: "서울",
-//     income: "250만원",
-//     matchingRate: "98.12%",
-//   },
-//   {
-//     id: "w100010279508856",
-//     gender: "남성",
-//     age: 22,
-//     address: "서울",
-//     income: "250만원",
-//     matchingRate: "98.12%",
-//   },
-//   {
-//     id: "w100010279508856",
-//     gender: "남성",
-//     age: 22,
-//     address: "서울",
-//     income: "250만원",
-//     matchingRate: "98.12%",
-//   },
-//   {
-//     id: "w100010279508856",
-//     gender: "남성",
-//     age: 22,
-//     address: "서울",
-//     income: "250만원",
-//     matchingRate: "98.12%",
-//   },
-//   {
-//     id: "w100010279508856",
-//     gender: "남성",
-//     age: 22,
-//     address: "서울",
-//     income: "250만원",
-//     matchingRate: "98.12%",
-//   },
-// ];
-
 export default function Dashboard() {
   const location = useLocation();
   const navigate = useNavigate();

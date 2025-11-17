@@ -10,8 +10,7 @@ import Button from "@/components/button";
 import { useEffect, useRef, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { createLibrary } from "@/api/library";
-import LibrarySaveModal from "@/components/library-save-modal";
+import SaveLibraryModal from "@/components/library/save-library-modal";
 
 type IsLoggedIn = "true" | "false";
 type Dashboard = "true" | "false";
@@ -56,28 +55,8 @@ export default function Header({
     };
   }, [isExportOpen]);
 
-  const handleSaveToLibrary = async (libraryName: string, tags: string[]) => {
-    if (!searchId) {
-      alert("검색 ID가 없습니다.");
-      return;
-    }
-
-    try {
-      const response = await createLibrary({
-        search_history_id: Number(searchId),
-        library_name: libraryName,
-        tags,
-      });
-
-      if (response.is_success) {
-        alert(
-          `라이브러리 "${libraryName}"에 ${response.result.panel_count}개의 패널이 저장되었습니다.`
-        );
-      }
-    } catch (error) {
-      console.error("라이브러리 저장 실패:", error);
-      alert("라이브러리 저장에 실패했습니다. 다시 시도해주세요.");
-    }
+  const handleSuccess = () => {
+    setIsExportOpen(false);
   };
   return (
     <div className="flex items-center justify-between bg-opacity-100 px-[80px] py-[16px]">
@@ -136,12 +115,14 @@ export default function Header({
                 <span>라이브러리 저장</span>
               </div>
             </Button>
-            <LibrarySaveModal
-              open={isExportOpen}
-              onClose={() => setIsExportOpen(false)}
-              onSave={handleSaveToLibrary}
-              totalCount={totalCount}
-            />
+            {searchId && (
+              <SaveLibraryModal
+                open={isExportOpen}
+                onClose={() => setIsExportOpen(false)}
+                searchHistoryId={Number(searchId)}
+                onSuccess={handleSuccess}
+              />
+            )}
             {/* {isExportOpen && (
               <ul className="absolute right-0 top-full mt-[12px] inline-block whitespace-nowrap min-w-[180px] bg-white rounded-lg py-[8px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] z-20">
                 <li

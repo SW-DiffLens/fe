@@ -169,3 +169,20 @@ export interface CompareLibrariesApiResponse {
   result: CompareLibrariesResponse;
   message: string;
 }
+
+export interface MergeSearchHistoryResponse {
+  tags: string[];
+  library_id: number;
+  library_name: string;
+  search_history_id: number;
+  panel_count: number;
+  panel_ids: string[];
+  created_at: string;
+}
+
+export interface MergeSearchHistoryApiResponse {
+  is_success: boolean;
+  code: string;
+  result: MergeSearchHistoryResponse;
+  message: string;
+}

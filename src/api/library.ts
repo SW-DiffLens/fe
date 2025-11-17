@@ -5,6 +5,7 @@ import type {
   LibraryApiResponse,
   LibraryDetailApiResponse,
   LibraryListApiResponse,
+  MergeSearchHistoryApiResponse,
 } from "@/types/library";
 import apiClient from "./client";
 
@@ -39,6 +40,17 @@ export const compareLibraries = async (
   const response = await apiClient.post<CompareLibrariesApiResponse>(
     "/libraries/compare",
     data
+  );
+  return response.data;
+};
+
+// 라이브러리에 검색 기록 추가(병합)
+export const addSearchHistoryToLibrary = async (
+  libraryId: number,
+  searchHistoryId: number
+): Promise<MergeSearchHistoryApiResponse> => {
+  const response = await apiClient.put<MergeSearchHistoryApiResponse>(
+    `/libraries/${libraryId}/search-histories/${searchHistoryId}`
   );
   return response.data;
 };
