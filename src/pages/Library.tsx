@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getLibraries } from "@/api/library";
 import BarChartIcon from "@/assets/icons/ic_bar_chart";
 import ChevronDownIcon from "@/assets/icons/ic_chevron_down";
 import TrashIcon from "@/assets/icons/ic_trash";
@@ -6,51 +7,7 @@ import Button from "@/components/button";
 import Card from "@/components/library/card";
 import DropdownFilter from "@/components/library/dropdown-filter";
 import Modal from "@/components/modal";
-
-const cards = [
-  {
-    id: 1,
-    title: "20대 남성이 타는 차 브랜드 분포",
-    description: "20대 남성 소비자의 자동차 브랜드 선호도 분석",
-    tags: ["100명", "2025.10.26", "인구통계"],
-    filters: ["성별: 남성", "연령: 20-29세", "차량보유: 있음"],
-  },
-  {
-    id: 2,
-    title: "30대 여성 화장품 구매 패턴",
-    description: "30대 여성의 화장품 구매 행동 및 선호 브랜드 분석",
-    tags: ["250명", "2025.10.26", "소비패턴"],
-    filters: ["성별: 여성", "연령: 30-39세"],
-  },
-  {
-    id: 3,
-    title: "20대 남성이 타는 차 브랜드 분포",
-    description: "20대 남성 소비자의 자동차 브랜드 선호도 분석",
-    tags: ["100명", "2025.10.26", "인구통계"],
-    filters: ["성별: 남성", "연령: 20-29세", "차량보유: 있음"],
-  },
-  {
-    id: 4,
-    title: "30대 여성 화장품 구매 패턴",
-    description: "30대 여성의 화장품 구매 행동 및 선호 브랜드 분석",
-    tags: ["250명", "2025.10.26", "소비패턴"],
-    filters: ["성별: 여성", "연령: 30-39세"],
-  },
-  {
-    id: 5,
-    title: "20대 남성이 타는 차 브랜드 분포",
-    description: "20대 남성 소비자의 자동차 브랜드 선호도 분석",
-    tags: ["100명", "2025.10.26", "인구통계"],
-    filters: ["성별: 남성", "연령: 20-29세", "차량보유: 있음"],
-  },
-  {
-    id: 6,
-    title: "30대 여성 화장품 구매 패턴",
-    description: "30대 여성의 화장품 구매 행동 및 선호 브랜드 분석",
-    tags: ["250명", "2025.10.26", "소비패턴"],
-    filters: ["성별: 여성", "연령: 30-39세"],
-  },
-];
+import type { Library } from "@/types/library";
 
 const filterOptions = [
   {
@@ -71,6 +28,8 @@ const filterOptions = [
 ];
 
 export default function Library() {
+  const [libraries, setLibraries] = useState<Library[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [openFilters, setOpenFilters] = useState<Record<number, boolean>>({});
@@ -85,6 +44,25 @@ export default function Library() {
       {} as Record<number, string>
     )
   );
+
+  // 라이브러리 목록 조회
+  useEffect(() => {
+    const fetchLibraries = async () => {
+      try {
+        setIsLoading(true);
+        const response = await getLibraries();
+        if (response.is_success) {
+          setLibraries(response.result.libraries);
+        }
+      } catch (error) {
+        console.error("Failed to fetch libraries:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchLibraries();
+  }, []);
 
   const handleCardSelect = (id: number) => {
     setSelectedCards((prev) => [...prev, id]);
@@ -200,19 +178,35 @@ export default function Library() {
           </div>
         </div>
         <div className="flex w-full items-center justify-start px-[76.5px] text-gray-950 text-h5">
-          저장된 분석 항목 (6개)
+          저장된 분석 항목 ({isLoading ? "..." : libraries.length}개)
         </div>
-        <div className="grid w-full grid-cols-2 gap-x-[32px] gap-y-[40px] px-[76.5px]">
-          {cards.map((card) => (
-            <Card
-              key={card.id}
-              {...card}
-              onSelect={handleCardSelect}
-              onDeselect={handleCardDeselect}
-              selectedCards={selectedCards}
-            />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="flex w-full items-center justify-center py-[100px] text-gray-500">
+            로딩 중...
+          </div>
+        ) : libraries.length === 0 ? (
+          <div className="flex w-full items-center justify-center py-[100px] text-gray-500">
+            저장된 라이브러리가 없습니다.
+          </div>
+        ) : (
+          <div className="grid w-full grid-cols-2 gap-x-[32px] gap-y-[40px] px-[76.5px]">
+            {libraries.map((library) => (
+              <Card
+                key={library.library_id}
+                id={library.library_id}
+                title={library.library_name}
+                description={`패널 수: ${library.panel_count}개`}
+                tags={library.tags}
+                filters={[
+                  `생성일: ${new Date(library.created_at).toLocaleDateString("ko-KR", { year: "numeric", month: "2-digit", day: "2-digit" }).replace(/\. /g, "/").replace(".", "")}`,
+                ]}
+                onSelect={handleCardSelect}
+                onDeselect={handleCardDeselect}
+                selectedCards={selectedCards}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

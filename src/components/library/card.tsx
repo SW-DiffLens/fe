@@ -45,7 +45,6 @@ export default function Card({
         ))}
       </div>
       <div className="flex flex-col items-start justify-center gap-[4px]">
-        <div className="text-gray-700 text-label">적용된 필터</div>
         <div className="flex items-center justify-start gap-[8px]">
           {filters.map((filter) => (
             <Chip key={filter} variant="outlined" chipType="text">
