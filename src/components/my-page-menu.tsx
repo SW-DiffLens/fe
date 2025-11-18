@@ -71,7 +71,7 @@ export default function MyPageMenu({
       <button
         ref={buttonRef}
         type="button"
-        className="cursor-pointer"
+        className="cursor-pointer rounded-lg p-[8px] transition-colors hover:bg-primary-100"
         onClick={() => setIsOpen(!isOpen)}
       >
         <MyPageIcon width={iconSize} height={iconSize} />
@@ -93,10 +93,10 @@ export default function MyPageMenu({
               <div className="mb-[4px] text-body4 text-gray-700">이메일</div>
               <div className="text-body4 text-gray-950">{userEmail}</div>
             </div>
-            <div className="border-gray-200 border-t px-[16px] py-[12px]">
+            <div className="border-gray-200 border-t">
               <button
                 type="button"
-                className="w-full text-left text-body4 text-gray-700 hover:text-primary-700"
+                className="w-full px-[16px] py-[12px] text-left text-body4 text-gray-700 transition-colors hover:bg-gray-100 hover:text-primary-700"
                 onClick={handleLogout}
               >
                 로그아웃
