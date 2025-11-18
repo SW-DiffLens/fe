@@ -39,7 +39,9 @@ export default function ResponseTable({
                 </div>
               </div>
             </td>
-            <td className="px-3">{item.gender}</td>
+            <td className="px-3">
+              {item.gender === "FEMALE" ? "여자" : item.gender === "MALE" ? "남자" : item.gender}
+            </td>
             <td className="px-3">{item.age}</td>
             <td className="px-3">{item.residence}</td>
             <td className="px-3">{item.personal_income}</td>
