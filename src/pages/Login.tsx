@@ -39,6 +39,7 @@ export default function Login() {
       console.log(response);
       localStorage.setItem("access_token", response.data.result.access_token);
       localStorage.setItem("refresh_token", response.data.result.refresh_token);
+      localStorage.setItem("user_email", email);
       navigate("/home");
     } catch (error) {
       console.error(error);
