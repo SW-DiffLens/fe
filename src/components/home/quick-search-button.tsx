@@ -13,7 +13,7 @@ export default function QuickSearchButton({
 }: QuickSearchButtonProps) {
   return (
     <div
-      className="flex cursor-pointer flex-col items-start justify-center gap-[12px] rounded-xl border border-white bg-opacity-500 px-[16px] py-[16px]"
+      className="flex cursor-pointer flex-col items-start justify-center gap-[12px] rounded-xl border border-white bg-white/50 px-[16px] py-[16px] transition-colors duration-200 hover:bg-white/80"
       onClick={onClick}
     >
       <UserGroupIcon width={24} height={24} />
