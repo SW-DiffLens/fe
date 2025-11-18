@@ -26,20 +26,26 @@ export default function ResponseTable({
         {data?.values.map((item) => (
           <tr
             key={item.respondent_id}
-            className="h-12 cursor-pointer border border-gray-300 bg-white text-body4 text-gray-950 hover:bg-gray-50"
+            className="h-12 cursor-pointer border border-gray-300 bg-white text-body4 text-gray-950 transition-colors hover:bg-primary-50"
             onClick={() =>
               onPanelClick(item.respondent_id, item.concordance_rate)
             }
           >
             <td className="px-3 align-middle">
-              <div className="flex items-center justify-center gap-[8px]">
+              <div className="flex items-center justify-start gap-[8px]">
                 <MyPageIcon width={32} height={32} />
                 <div className="text-primary-900 text-subtitle2">
                   {item.respondent_id}
                 </div>
               </div>
             </td>
-            <td className="px-3">{item.gender}</td>
+            <td className="px-3">
+              {item.gender === "FEMALE"
+                ? "여자"
+                : item.gender === "MALE"
+                  ? "남자"
+                  : item.gender}
+            </td>
             <td className="px-3">{item.age}</td>
             <td className="px-3">{item.residence}</td>
             <td className="px-3">{item.personal_income}</td>

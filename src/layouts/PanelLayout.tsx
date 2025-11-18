@@ -19,7 +19,7 @@ export default function PanelLayout() {
         </div>
         <div className="z-10 flex h-full w-full">
           <SideBar />
-          <div className="z-10 w-full">
+          <div className="z-10 ml-[72px] w-full">
             <Header isLoggedIn="true" dashboard="true" isPanel="true" />
             <Outlet />
           </div>
