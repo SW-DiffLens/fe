@@ -23,7 +23,7 @@ export default function SideBar() {
 
   return (
     <div
-      className={`fixed top-0 left-0 z-20 flex h-screen flex-col items-start justify-between overflow-hidden bg-primary-50 px-[16px] py-[20px] transition-all duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 z-20 flex h-screen flex-col items-start justify-between overflow-hidden px-4 py-5 shadow-md transition-all duration-300 ease-in-out ${
         isOpen ? "w-[200px]" : "w-[72px]"
       }`}
     >
