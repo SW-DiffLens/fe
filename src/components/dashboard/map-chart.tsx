@@ -1,7 +1,7 @@
 import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
-import am5geodata_southKoreaLow from "@amcharts/amcharts5-geodata/southKoreaLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
+import am5geodata_southKoreaLow from "@amcharts/amcharts5-geodata/southKoreaLow";
 import { useLayoutEffect, useRef } from "react";
 import type { ChartDataPoint } from "@/types/dashboard_result";
 

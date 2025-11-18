@@ -4,9 +4,13 @@ import apiClient from "@/api/client";
 import { getLibraryById } from "@/api/library";
 import PlusIcon from "@/assets/icons/ic_plus";
 import ColumnChartComponent from "@/components/dashboard/column-chart";
+import DonutChartComponent from "@/components/dashboard/donut-chart";
 import IndividualResponses from "@/components/dashboard/individual-responses";
 import LineChartComponent from "@/components/dashboard/line-chart";
+import MapChartComponent from "@/components/dashboard/map-chart";
 import PieChartComponent from "@/components/dashboard/pie-chart";
+import SemiCirclePieChartComponent from "@/components/dashboard/semi-circle-pie-chart";
+import StackedBarChartComponent from "@/components/dashboard/stacked-bar-chart";
 import SearchBar from "@/components/search-bar";
 import { useDashboard } from "@/contexts/DashboardContext";
 import type { DashboardPanel } from "@/types/dashboard_panel";
@@ -129,12 +133,67 @@ export default function Dashboard() {
               <div className="w-full text-start text-gray-950 text-h4">
                 {isLibrary ? libraryData?.library_name : question}
               </div>
-              {result?.pie && (
-                <PieChartComponent
-                  data={result.pie.data_points}
-                  title={result.pie.title}
-                />
-              )}
+              {result?.main_chart &&
+                (() => {
+                  const chart = result.main_chart;
+                  switch (chart.chart_type) {
+                    case "map":
+                      return (
+                        <MapChartComponent
+                          data={chart.data}
+                          title={chart.title}
+                          reasoning={chart.reasoning}
+                        />
+                      );
+                    case "donut":
+                      return (
+                        <DonutChartComponent
+                          data={chart.data}
+                          title={chart.title}
+                          reasoning={chart.reasoning}
+                        />
+                      );
+                    case "pie":
+                      return (
+                        <PieChartComponent
+                          data={chart.data.map((d) => ({
+                            label: d.category || "",
+                            value: d.value,
+                          }))}
+                          title={chart.title}
+                        />
+                      );
+                    case "semi_circle_pie":
+                      return (
+                        <SemiCirclePieChartComponent
+                          data={chart.data}
+                          title={chart.title}
+                          reasoning={chart.reasoning}
+                        />
+                      );
+                    case "column":
+                    case "bar":
+                      return (
+                        <ColumnChartComponent
+                          data={chart.data.map((d) => ({
+                            label: d.category || "",
+                            value: d.value,
+                          }))}
+                          title={chart.title}
+                        />
+                      );
+                    case "stacked_bar":
+                      return (
+                        <StackedBarChartComponent
+                          data={chart.data}
+                          title={chart.title}
+                          reasoning={chart.reasoning}
+                        />
+                      );
+                    default:
+                      return null;
+                  }
+                })()}
             </div>
             <div className="flex w-full flex-col items-start justify-center gap-[16px]">
               <div className="w-full text-center text-caption text-gray-700">
@@ -252,32 +311,89 @@ export default function Dashboard() {
             </div>
           </div>
           <div className="grid w-full auto-cols-[480px] grid-flow-col items-start justify-start gap-[36px] overflow-x-auto">
-            {result?.charts?.map((chart, index) => {
-              if (chart.chart_type === "BAR") {
-                return (
-                  <div key={chart.chart_id || index} className="w-[480px]">
-                    <ColumnChartComponent
-                      data={chart.data_points}
-                      title={chart.title}
-                      xAxisTitle={chart.x_axis || chart.xaxis}
-                      yAxisTitle={chart.y_axis || chart.yaxis}
-                    />
-                  </div>
-                );
+            {result?.sub_charts?.map((chart, index) => {
+              const key = `${chart.metric}-${index}`;
+              switch (chart.chart_type) {
+                case "map":
+                  return (
+                    <div key={key} className="w-[480px]">
+                      <MapChartComponent
+                        data={chart.data}
+                        title={chart.title}
+                        reasoning={chart.reasoning}
+                      />
+                    </div>
+                  );
+                case "donut":
+                  return (
+                    <div key={key} className="w-[480px]">
+                      <DonutChartComponent
+                        data={chart.data}
+                        title={chart.title}
+                        reasoning={chart.reasoning}
+                      />
+                    </div>
+                  );
+                case "pie":
+                  return (
+                    <div key={key} className="w-[480px]">
+                      <PieChartComponent
+                        data={chart.data.map((d) => ({
+                          label: d.category || "",
+                          value: d.value,
+                        }))}
+                        title={chart.title}
+                      />
+                    </div>
+                  );
+                case "semi_circle_pie":
+                  return (
+                    <div key={key} className="w-[480px]">
+                      <SemiCirclePieChartComponent
+                        data={chart.data}
+                        title={chart.title}
+                        reasoning={chart.reasoning}
+                      />
+                    </div>
+                  );
+                case "column":
+                case "bar":
+                  return (
+                    <div key={key} className="w-[480px]">
+                      <ColumnChartComponent
+                        data={chart.data.map((d) => ({
+                          label: d.category || "",
+                          value: d.value,
+                        }))}
+                        title={chart.title}
+                      />
+                    </div>
+                  );
+                case "stacked_bar":
+                  return (
+                    <div key={key} className="w-[480px]">
+                      <StackedBarChartComponent
+                        data={chart.data}
+                        title={chart.title}
+                        reasoning={chart.reasoning}
+                      />
+                    </div>
+                  );
+                case "line":
+                  return (
+                    <div key={key} className="w-[480px]">
+                      <LineChartComponent
+                        data={chart.data.map((d) => ({
+                          label: d.category || "",
+                          value: d.value,
+                        }))}
+                        title={chart.title}
+                      />
+                    </div>
+                  );
+                default:
+                  return null;
               }
-              if (chart.chart_type === "LINE") {
-                return (
-                  <div key={chart.chart_id || index} className="w-[480px]">
-                    <LineChartComponent
-                      data={chart.data_points}
-                      title={chart.title}
-                      xAxisTitle={chart.x_axis || chart.xaxis}
-                      yAxisTitle={chart.y_axis || chart.yaxis}
-                    />
-                  </div>
-                );
-              }
-              return null;
             })}
           </div>
         </div>

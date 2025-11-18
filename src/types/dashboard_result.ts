@@ -1,3 +1,32 @@
+// Common chart data point structure
+export interface ChartDataPoint {
+  category: string | null;
+  value: number;
+  male: number | null;
+  female: number | null;
+  id: string | null;
+  name: string | null;
+  male_max: number | null;
+  female_max: number | null;
+}
+
+// Chart configuration
+export interface ChartConfig {
+  metric: string;
+  title: string;
+  reasoning: string | null;
+  data: ChartDataPoint[];
+  chart_type:
+    | "map"
+    | "donut"
+    | "pie"
+    | "semi_circle_pie"
+    | "column"
+    | "stacked_bar"
+    | "bar"
+    | "line";
+}
+
 export interface DashboardResult {
   result: {
     summary: {
@@ -6,32 +35,10 @@ export interface DashboardResult {
       data_capture_date: string;
       confidence_level: number;
     };
-    pie: {
-      reason: string;
-      title: string;
-      xaxis: string;
-      yaxis: string;
-      chart_id: string;
-      chart_type: string;
-      x_axis: string;
-      y_axis: string;
-      data_points: { label: string; value: number }[];
-    };
-    charts: [
-      {
-        reason: string;
-        title: string;
-        xaxis: string;
-        yaxis: string;
-        chart_id: string;
-        chart_type: string;
-        x_axis: string;
-        y_axis: string;
-        data_points: { label: string; value: number }[];
-      },
-    ];
-    applied_filters_summary: { key: string; display_value: string }[];
-    search_id: string;
+    search_id: number;
+    applied_filters_summary: any[];
+    main_chart: ChartConfig;
+    sub_charts: ChartConfig[];
   };
   search_id: string;
   question: string;
