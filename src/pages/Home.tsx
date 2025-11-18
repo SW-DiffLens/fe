@@ -74,7 +74,7 @@ export default function Home() {
     try {
       // 모든 섹션의 선택된 code들을 하나의 배열로 합치기
       const allFilterCodes = selectedFilterCodes.flat();
-      const response = await apiClient.post("/search/test", {
+      const response = await apiClient.post("/search", {
         //const response = await apiClient.post("/search", {
         question: searchValue,
         mode: searchType,
@@ -149,7 +149,7 @@ export default function Home() {
             검색어를 입력하세요
           </div>
           <div className="flex w-fit items-center justify-center gap-[20px]">
-            <div className="flex items-center justify-center gap-[4px]">
+            <div className="group relative flex items-center justify-center gap-[4px]">
               <input
                 type="radio"
                 name="search-type"
@@ -160,14 +160,19 @@ export default function Home() {
               />
               <label
                 htmlFor="FLEXIBLE"
-                className={`text-subtitle1 ${
+                className={`cursor-pointer text-subtitle1 ${
                   searchType === "FLEXIBLE" ? "text-black" : "text-gray-600"
                 }`}
               >
                 유연 모드
               </label>
+              <div className="-translate-x-1/2 invisible absolute bottom-full left-1/2 mb-2 w-[280px] rounded-lg bg-gray-900 px-3 py-2 text-center text-caption text-white opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100">
+                필터 조건을 참고하되 의미적 유사성을 우선시하여 더 넓은 범위의
+                결과를 제공합니다.
+                <div className="-translate-x-1/2 absolute top-full left-1/2 border-4 border-transparent border-t-gray-900"></div>
+              </div>
             </div>
-            <div className="flex items-center justify-center gap-[4px]">
+            <div className="group relative flex items-center justify-center gap-[4px]">
               <input
                 type="radio"
                 name="search-type"
@@ -178,12 +183,16 @@ export default function Home() {
               />
               <label
                 htmlFor="STRICT"
-                className={`text-subtitle1 ${
+                className={`cursor-pointer text-subtitle1 ${
                   searchType === "STRICT" ? "text-black" : "text-gray-600"
                 }`}
               >
                 엄격 모드
               </label>
+              <div className="-translate-x-1/2 invisible absolute bottom-full left-1/2 mb-2 w-[280px] rounded-lg bg-gray-900 px-3 py-2 text-center text-caption text-white opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100">
+                사용자가 지정한 필터 조건을 정확히 만족하는 패널만을 검색합니다.
+                <div className="-translate-x-1/2 absolute top-full left-1/2 border-4 border-transparent border-t-gray-900"></div>
+              </div>
             </div>
           </div>
         </div>
