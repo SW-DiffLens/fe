@@ -37,8 +37,7 @@ export default function PanelProfileSection({
           <div
             className="flex items-center justify-center rounded-xl px-[16px] py-[16px]"
             style={{
-              background:
-                "linear-gradient(135deg, #FBEEFF 0.5%, #D1E4FE 100%)",
+              background: "linear-gradient(135deg, #FBEEFF 0.5%, #D1E4FE 100%)",
             }}
           >
             <UserIcon width={48} height={48} />
@@ -82,9 +81,7 @@ export default function PanelProfileSection({
         <div className="flex items-center justify-center gap-[12px] px-[12px] py-[8px]">
           <div className="text-caption text-primary-700">{question}</div>
           <div className="flex items-center justify-start gap-[4px]">
-            <div className="text-black text-subtitle2">
-              {concordanceRate}%
-            </div>
+            <div className="text-black text-subtitle2">{concordanceRate}%</div>
             <PercentageBar percentage={concordanceRate} />
           </div>
         </div>
