@@ -57,8 +57,8 @@ export default function Dashboard() {
 
             // 라이브러리 패널 데이터를 DashboardPanel 형식으로 변환
             const panelData = response.result.panels || [];
-            const startIndex = (page - 1) * 5;
-            const endIndex = startIndex + 5;
+            const startIndex = (page - 1) * 10;
+            const endIndex = startIndex + 10;
             const paginatedPanels = panelData.slice(startIndex, endIndex);
 
             const transformedData: DashboardPanel = {
@@ -72,11 +72,11 @@ export default function Dashboard() {
                 concordance_rate: "-", // 라이브러리에는 일치율이 없음
               })) as any,
               page_info: {
-                offset: (page - 1) * 5,
-                limit: 5,
+                offset: (page - 1) * 10,
+                limit: 10,
                 current_page: page,
                 current_page_count: paginatedPanels.length,
-                total_page_count: Math.ceil(panelData.length / 5),
+                total_page_count: Math.ceil(panelData.length / 10),
                 total_count: panelData.length,
                 has_next: endIndex < panelData.length,
                 has_previous: page > 1,
@@ -91,7 +91,7 @@ export default function Dashboard() {
             {
               params: {
                 page,
-                size: 5,
+                size: 10,
               },
             }
           );
