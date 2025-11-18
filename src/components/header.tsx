@@ -88,17 +88,17 @@ export default function Header({
       {isLoggedIn === "true" && dashboard === "false" && (
         <div className="flex items-center gap-[16px]">
           <div
-            className={`text-subtitle1 ${
+            className={`cursor-pointer rounded-lg px-3 py-2 text-subtitle1 transition-colors duration-200 hover:bg-primary-200 ${
               isLibrary === "false" ? "text-primary-700" : "text-gray-700"
-            } cursor-pointer`}
+            }`}
             onClick={() => navigate("/home")}
           >
             검색
           </div>
           <div
-            className={`text-subtitle1 ${
+            className={`mr-[8px] cursor-pointer rounded-lg px-3 py-2 text-subtitle1 transition-colors duration-200 hover:bg-primary-200 ${
               isLibrary === "true" ? "text-primary-700" : "text-gray-700"
-            } mr-[8px] cursor-pointer`}
+            }`}
             onClick={() => navigate("/home/library")}
           >
             라이브러리

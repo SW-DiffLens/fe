@@ -20,7 +20,7 @@ export default function SearchBar({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="w-full bg-transparent text-body2 text-gray-950 outline-none placeholder:text-gray-700"
+        className="w-full bg-transparent text-body2 text-gray-950 outline-none placeholder:text-gray-600"
       />
       <SearchIcon color="#482A88" width={24} height={24} />
     </div>
