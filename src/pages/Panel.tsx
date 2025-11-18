@@ -252,7 +252,7 @@ export default function Panel() {
       {/* 이전 페이지로 이동 버튼 */}
       <div className="mb-[58px] flex w-full items-center justify-start">
         <button
-          className="flex items-center justify-center gap-[8px] text-black text-h5"
+          className="flex items-center justify-center gap-[8px] rounded-lg bg-transparent px-[16px] py-[12px] text-black text-h5 transition-colors duration-200 hover:bg-primary-100"
           onClick={() => navigate(-1)}
         >
           <ChevronLeftIcon color="black" width={24} height={24} />
@@ -296,7 +296,9 @@ export default function Panel() {
                 )}
                 {panelProfile?.department && (
                   <TextWithIcon
-                    icon={<BusinessIcon width={20} height={20} color="#616161" />}
+                    icon={
+                      <BusinessIcon width={20} height={20} color="#616161" />
+                    }
                     text={panelProfile.department}
                   />
                 )}
