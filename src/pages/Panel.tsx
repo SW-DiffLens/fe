@@ -278,26 +278,34 @@ export default function Panel() {
                 {panelProfile?.panelId || "패널 정보 로딩 중..."}
               </div>
               <div className="flex items-center justify-start gap-[16px]">
-                <TextWithIcon
-                  icon={<UserIcon width={20} height={20} color="#616161" />}
-                  text={`${panelProfile?.age || ""} ${
-                    panelProfile?.gender || ""
-                  }`}
-                />
-                <TextWithIcon
-                  icon={
-                    <BriefcaseIcon width={20} height={20} color="#616161" />
-                  }
-                  text={panelProfile?.job || ""}
-                />
-                <TextWithIcon
-                  icon={<BusinessIcon width={20} height={20} color="#616161" />}
-                  text={panelProfile?.department || ""}
-                />
-                <TextWithIcon
-                  icon={<MapPinIcon width={20} height={20} color="#616161" />}
-                  text={panelProfile?.address || ""}
-                />
+                {(panelProfile?.age || panelProfile?.gender) && (
+                  <TextWithIcon
+                    icon={<UserIcon width={20} height={20} color="#616161" />}
+                    text={`${panelProfile?.age || ""} ${
+                      panelProfile?.gender || ""
+                    }`}
+                  />
+                )}
+                {panelProfile?.job && (
+                  <TextWithIcon
+                    icon={
+                      <BriefcaseIcon width={20} height={20} color="#616161" />
+                    }
+                    text={panelProfile.job}
+                  />
+                )}
+                {panelProfile?.department && (
+                  <TextWithIcon
+                    icon={<BusinessIcon width={20} height={20} color="#616161" />}
+                    text={panelProfile.department}
+                  />
+                )}
+                {panelProfile?.address && (
+                  <TextWithIcon
+                    icon={<MapPinIcon width={20} height={20} color="#616161" />}
+                    text={panelProfile.address}
+                  />
+                )}
               </div>
             </div>
           </div>
