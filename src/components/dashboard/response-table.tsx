@@ -23,14 +23,20 @@ export default function ResponseTable({
         </tr>
       </thead>
       <tbody>
-        {data?.values.map((item) => (
-          <tr
-            key={item.respondent_id}
-            className="h-12 cursor-pointer border border-gray-300 bg-white text-body4 text-gray-950 transition-colors hover:bg-primary-50"
-            onClick={() =>
-              onPanelClick(item.respondent_id, item.concordance_rate)
-            }
-          >
+        {data?.values.map((item) => {
+          const concordancePercent =
+            item.concordance_rate === "-"
+              ? "-"
+              : `${Math.round(Number(item.concordance_rate) * 100)}%`;
+
+          return (
+            <tr
+              key={item.respondent_id}
+              className="h-12 cursor-pointer border border-gray-300 bg-white text-body4 text-gray-950 transition-colors hover:bg-primary-50"
+              onClick={() =>
+                onPanelClick(item.respondent_id, concordancePercent)
+              }
+            >
             <td className="px-3 align-middle">
               <div className="flex items-center justify-start gap-[8px]">
                 <MyPageIcon width={32} height={32} />
@@ -49,9 +55,10 @@ export default function ResponseTable({
             <td className="px-3">{item.age}</td>
             <td className="px-3">{item.residence}</td>
             <td className="px-3">{item.personal_income}</td>
-            <td className="px-3">{item.concordance_rate}%</td>
+            <td className="px-3">{concordancePercent}</td>
           </tr>
-        ))}
+          );
+        })}
       </tbody>
     </table>
   );

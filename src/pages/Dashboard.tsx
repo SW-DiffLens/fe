@@ -286,7 +286,7 @@ export default function Dashboard() {
         {/* 중간 영역 */}
         <div className="flex w-full flex-col items-start justify-center gap-[20px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
           <div className="w-full text-start text-gray-950 text-h4">
-            상세 분석 및 교차 탐색
+            상세 분석
           </div>
           {/* <div className="flex w-full items-center justify-start gap-[20px] border-gray-500 border-b-[0.5px]">
             <div
