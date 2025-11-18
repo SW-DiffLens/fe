@@ -60,101 +60,103 @@ export default function Signup() {
   // if (!isValidRole) return <Navigate to="/pricing" replace />;
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-[380px] py-[53px]">
-      <div className="flex w-full flex-col items-center justify-center gap-[24px] rounded-2xl bg-opacity-500 px-[80px] py-[80px]">
-        {/* 상단 영역 */}
-        <div className="flex flex-col items-center justify-center gap-[8px]">
-          <LogoText width={213} height={60} />
-          <div className="text-body3 text-primary-900">
-            {/* {roleLabel} 플랜으로 회원가입 */}
-            회원가입
+    <div className="flex min-h-screen flex-col items-center justify-center px-6 py-[53px]">
+      <div className="w-full max-w-[680px]">
+        <div className="flex w-full flex-col items-center justify-center gap-[24px] rounded-2xl bg-opacity-500 px-[80px] py-[80px]">
+          {/* 상단 영역 */}
+          <div className="flex flex-col items-center justify-center gap-[8px]">
+            <LogoText width={213} height={60} />
+            <div className="text-body3 text-primary-900">
+              {/* {roleLabel} 플랜으로 회원가입 */}
+              회원가입
+            </div>
+            <div className="flex items-center justify-center gap-[11px]">
+              <div className="h-[4px] w-[80px] rounded-sm bg-primary-500" />
+              <div className="h-[4px] w-[80px] rounded-sm bg-gray-300" />
+            </div>
           </div>
-          <div className="flex items-center justify-center gap-[11px]">
-            <div className="h-[4px] w-[80px] rounded-sm bg-primary-500" />
-            <div className="h-[4px] w-[80px] rounded-sm bg-gray-300" />
-          </div>
-        </div>
-        {/* 폼 영역 */}
-        <form
-          className="flex w-full flex-col items-center justify-center gap-[16px]"
-          onChange={onFormChange}
-        >
-          <InputField
-            label="이름"
-            type="text"
-            placeholder="이름"
-            description="실명을 입력하세요."
-            error={isNameError}
-            id="name"
-          />
-          <InputField
-            label="아이디(이메일)"
-            type="email"
-            placeholder="이메일 주소"
-            description="이메일 주소를 입력하세요."
-            error={isEmailError}
-            id="email"
-          />
-          <InputField
-            label="비밀번호"
-            type="password"
-            placeholder="비밀번호"
-            description="비밀번호 (8~16자 영문 대소문자, 숫자, 특수문자 조합)"
-            error={isPasswordError}
-            id="password"
-          />
-          <InputField
-            label="비밀번호 확인"
-            type="password"
-            placeholder="비밀번호 확인"
-            description="비밀번호를 한 번 더 입력하세요."
-            error={isPassword2Error}
-            id="password-confirm"
-          />
-          <div className="flex items-center justify-center gap-[8px]">
-            <input
-              type="checkbox"
-              id="terms"
-              className="h-[16px] w-[16px] rounded-sm border border-gray-900 bg-white"
-              checked={terms}
-              onChange={(e) => setTerms(e.target.checked)}
+          {/* 폼 영역 */}
+          <form
+            className="flex w-full flex-col items-center justify-center gap-[16px]"
+            onChange={onFormChange}
+          >
+            <InputField
+              label="이름"
+              type="text"
+              placeholder="이름"
+              description="실명을 입력하세요."
+              error={isNameError}
+              id="name"
             />
-            <label htmlFor="terms" className="text-body5 text-primary-900">
-              만 14세 이상이며,{" "}
-              <a href="/terms" className="underline">
-                서비스 이용 약관
-              </a>
-              에 동의합니다. (필수)
-            </label>
+            <InputField
+              label="아이디(이메일)"
+              type="email"
+              placeholder="이메일 주소"
+              description="이메일 주소를 입력하세요."
+              error={isEmailError}
+              id="email"
+            />
+            <InputField
+              label="비밀번호"
+              type="password"
+              placeholder="비밀번호"
+              description="비밀번호 (8~16자 영문 대소문자, 숫자, 특수문자 조합)"
+              error={isPasswordError}
+              id="password"
+            />
+            <InputField
+              label="비밀번호 확인"
+              type="password"
+              placeholder="비밀번호 확인"
+              description="비밀번호를 한 번 더 입력하세요."
+              error={isPassword2Error}
+              id="password-confirm"
+            />
+            <div className="flex items-center justify-center gap-[8px]">
+              <input
+                type="checkbox"
+                id="terms"
+                className="h-[16px] w-[16px] rounded-sm border border-gray-900 bg-white"
+                checked={terms}
+                onChange={(e) => setTerms(e.target.checked)}
+              />
+              <label htmlFor="terms" className="text-body5 text-primary-900">
+                만 14세 이상이며,{" "}
+                <a href="/terms" className="underline">
+                  서비스 이용 약관
+                </a>
+                에 동의합니다. (필수)
+              </label>
+            </div>
+            <Button
+              variant="filled"
+              size="large"
+              fullWidth
+              disabled={
+                isNameError ||
+                isEmailError ||
+                isPasswordError ||
+                isPassword2Error ||
+                isTermsError
+              }
+              onClick={handleNext}
+              type="button"
+            >
+              다음
+            </Button>
+          </form>
+          {/* 라인 */}
+          <div className="h-[1px] w-full bg-[#DDE1E6]" />
+          {/* 하단 영역 */}
+          <div className="w-full text-center text-body5 text-gray-900">
+            이미 계정이 있으신가요?{" "}
+            <a
+              onClick={() => navigate("/login")}
+              className="cursor-pointer text-primary-700 underline"
+            >
+              로그인
+            </a>
           </div>
-          <Button
-            variant="filled"
-            size="large"
-            fullWidth
-            disabled={
-              isNameError ||
-              isEmailError ||
-              isPasswordError ||
-              isPassword2Error ||
-              isTermsError
-            }
-            onClick={handleNext}
-            type="button"
-          >
-            다음
-          </Button>
-        </form>
-        {/* 라인 */}
-        <div className="h-[1px] w-full bg-[#DDE1E6]" />
-        {/* 하단 영역 */}
-        <div className="w-full text-center text-body5 text-gray-900">
-          이미 계정이 있으신가요?{" "}
-          <a
-            onClick={() => navigate("/login")}
-            className="cursor-pointer text-primary-700 underline"
-          >
-            로그인
-          </a>
         </div>
       </div>
     </div>

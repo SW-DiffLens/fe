@@ -75,7 +75,6 @@ export default function Home() {
       // 모든 섹션의 선택된 code들을 하나의 배열로 합치기
       const allFilterCodes = selectedFilterCodes.flat();
       const response = await apiClient.post("/search", {
-        //const response = await apiClient.post("/search", {
         question: searchValue,
         mode: searchType,
         filters: allFilterCodes,
@@ -138,110 +137,104 @@ export default function Home() {
     }
   };
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4 py-[124px] sm:px-8 md:px-16 lg:px-24">
+    <div className="flex min-h-screen flex-col items-center justify-center px-6 py-[124px]">
       <div className="w-full max-w-[896px]">
         <div className="mb-[63px] text-center text-h2 text-primary-950">
           원하는 패널을 찾아보세요
         </div>
         {/* 검색 영역 */}
         <div className="mb-[40px] flex w-full flex-col items-start justify-center gap-[24px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
-        <div className="flex w-full items-center justify-between">
-          <div className="text-gray-950 text-subtitle1">
-            검색어를 입력하세요
-          </div>
-          <div className="flex w-fit items-center justify-center gap-[20px]">
-            <div className="group relative flex items-center justify-center gap-[4px]">
-              <input
-                type="radio"
-                name="search-type"
-                id="FLEXIBLE"
-                value="FLEXIBLE"
-                checked={searchType === "FLEXIBLE"}
-                onChange={(e) => handleSearchTypeChange(e.target.value)}
-              />
-              <label
-                htmlFor="FLEXIBLE"
-                className={`cursor-pointer text-subtitle1 ${
-                  searchType === "FLEXIBLE" ? "text-black" : "text-gray-600"
-                }`}
-              >
-                유연 모드
-              </label>
-              <div className="-translate-x-1/2 invisible absolute bottom-full left-1/2 mb-2 w-[280px] rounded-lg bg-gray-900 px-3 py-2 text-center text-caption text-white opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100">
-                필터 조건을 참고하되 의미적 유사성을 우선시하여 더 넓은 범위의
-                결과를 제공합니다.
-                <div className="-translate-x-1/2 absolute top-full left-1/2 border-4 border-transparent border-t-gray-900"></div>
+          <div className="flex w-full items-center justify-between">
+            <div className="text-gray-950 text-subtitle1">
+              검색어를 입력하세요
+            </div>
+            <div className="flex w-fit items-center justify-center gap-[20px]">
+              <div className="group relative flex items-center justify-center gap-[4px]">
+                <input
+                  type="radio"
+                  name="search-type"
+                  id="FLEXIBLE"
+                  value="FLEXIBLE"
+                  checked={searchType === "FLEXIBLE"}
+                  onChange={(e) => handleSearchTypeChange(e.target.value)}
+                />
+                <label
+                  htmlFor="FLEXIBLE"
+                  className={`cursor-pointer text-subtitle1 ${
+                    searchType === "FLEXIBLE" ? "text-black" : "text-gray-600"
+                  }`}
+                >
+                  유연 모드
+                </label>
+                <div className="-translate-x-1/2 invisible absolute bottom-full left-1/2 mb-2 w-[280px] rounded-lg bg-gray-900 px-3 py-2 text-center text-caption text-white opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100">
+                  필터 조건을 참고하되 의미적 유사성을 우선시하여 더 넓은 범위의
+                  결과를 제공합니다.
+                  <div className="-translate-x-1/2 absolute top-full left-1/2 border-4 border-transparent border-t-gray-900"></div>
+                </div>
+              </div>
+              <div className="group relative flex items-center justify-center gap-[4px]">
+                <input
+                  type="radio"
+                  name="search-type"
+                  id="STRICT"
+                  value="STRICT"
+                  checked={searchType === "STRICT"}
+                  onChange={(e) => handleSearchTypeChange(e.target.value)}
+                />
+                <label
+                  htmlFor="STRICT"
+                  className={`cursor-pointer text-subtitle1 ${
+                    searchType === "STRICT" ? "text-black" : "text-gray-600"
+                  }`}
+                >
+                  엄격 모드
+                </label>
+                <div className="-translate-x-1/2 invisible absolute bottom-full left-1/2 mb-2 w-[280px] rounded-lg bg-gray-900 px-3 py-2 text-center text-caption text-white opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100">
+                  사용자가 지정한 필터 조건을 정확히 만족하는 패널만을
+                  검색합니다.
+                  <div className="-translate-x-1/2 absolute top-full left-1/2 border-4 border-transparent border-t-gray-900"></div>
+                </div>
               </div>
             </div>
-            <div className="group relative flex items-center justify-center gap-[4px]">
-              <input
-                type="radio"
-                name="search-type"
-                id="STRICT"
-                value="STRICT"
-                checked={searchType === "STRICT"}
-                onChange={(e) => handleSearchTypeChange(e.target.value)}
-              />
-              <label
-                htmlFor="STRICT"
-                className={`cursor-pointer text-subtitle1 ${
-                  searchType === "STRICT" ? "text-black" : "text-gray-600"
-                }`}
-              >
-                엄격 모드
-              </label>
-              <div className="-translate-x-1/2 invisible absolute bottom-full left-1/2 mb-2 w-[280px] rounded-lg bg-gray-900 px-3 py-2 text-center text-caption text-white opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100">
-                사용자가 지정한 필터 조건을 정확히 만족하는 패널만을 검색합니다.
-                <div className="-translate-x-1/2 absolute top-full left-1/2 border-4 border-transparent border-t-gray-900"></div>
-              </div>
-            </div>
           </div>
-        </div>
-        <SearchBar
-          placeholder="예시 : 20대 남자 100명"
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
-        <div className="flex w-full items-center justify-between">
-          <Button
-            variant="icon"
-            size="medium"
-            bgColor="white"
-            textColor="black"
-            onClick={() => setIsFilterOpen(!isFilterOpen)}
-          >
-            <FilterIcon color="black" width={14} height={14} />
-            상세필터
-            {totalSelectedChips > 0 && (
-              <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-primary-700 text-label text-white">
-                {totalSelectedChips}
-              </div>
-            )}
-            {isFilterOpen ? (
-              <ChevronUpIcon color="black" width={14} height={14} />
-            ) : (
-              <ChevronDownIcon color="black" width={14} height={14} />
-            )}
-          </Button>
-          {totalSelectedChips > 0 && (
-            <button
-              className="cursor-pointer border-none bg-transparent text-button-medium text-tertiary-600 outline-none"
-              onClick={resetFilter}
+          <SearchBar
+            placeholder="예시 : 20대 남자 100명"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+          <div className="flex w-full items-center justify-between">
+            <Button
+              variant="icon"
+              size="medium"
+              bgColor="white"
+              textColor="black"
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
             >
-              필터 초기화
-            </button>
-          )}
-        </div>
-        {/* 칩 영역 */}
-        <div
-          className={`grid w-full transition-all duration-300 ease-in-out ${
-            isFilterOpen
-              ? "grid-rows-[1fr] opacity-100"
-              : "grid-rows-[0fr] opacity-0"
-          }`}
-        >
-          <div className="overflow-hidden">
-            <div className="w-full pt-[16px]">
+              <FilterIcon color="black" width={14} height={14} />
+              상세필터
+              {totalSelectedChips > 0 && (
+                <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-primary-700 text-label text-white">
+                  {totalSelectedChips}
+                </div>
+              )}
+              {isFilterOpen ? (
+                <ChevronUpIcon color="black" width={14} height={14} />
+              ) : (
+                <ChevronDownIcon color="black" width={14} height={14} />
+              )}
+            </Button>
+            {totalSelectedChips > 0 && (
+              <button
+                className="cursor-pointer border-none bg-transparent text-button-medium text-tertiary-600 outline-none"
+                onClick={resetFilter}
+              >
+                필터 초기화
+              </button>
+            )}
+          </div>
+          {/* 칩 영역 */}
+          {isFilterOpen && (
+            <div className="w-full">
               <div className="mb-[24px] h-[1px] w-full bg-white" />
               <div className="flex w-full flex-col items-start justify-center gap-[16px]">
                 {filterSections.map((section, index) => (
@@ -258,13 +251,17 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          </div>
-        </div>
+          )}
 
-        <Button variant="filled" size="large" fullWidth onClick={handleSearch}>
-          검색하기
-        </Button>
-      </div>
+          <Button
+            variant="filled"
+            size="large"
+            fullWidth
+            onClick={handleSearch}
+          >
+            검색하기
+          </Button>
+        </div>
         {/* 빠른 검색 추천 영역 */}
         <div className="flex w-full flex-col items-start justify-center gap-[12px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
           <div className="text-gray-950 text-subtitle1">빠른 검색 추천</div>

@@ -119,84 +119,64 @@ export default function Dashboard() {
 
   // console.log(data);
   return (
-    <div className="flex min-h-screen flex-col items-center justify-start gap-[40px] px-[80px] pt-[40px] pb-[80px]">
-      {/* 상단 영역 */}
-      <div className="grid w-full grid-cols-[54%_1fr] items-stretch gap-[20px]">
-        {/* 왼쪽 */}
-        <div className="flex h-full w-full flex-col items-start justify-between rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
-          <div className="flex w-full flex-col items-center justify-center gap-[48px]">
-            <div className="w-full text-start text-gray-950 text-h4">
-              {isLibrary ? libraryData?.library_name : question}
-            </div>
-            {result?.pie && (
-              <PieChartComponent
-                data={result.pie.data_points}
-                title={result.pie.title}
-              />
-            )}
-          </div>
-          <div className="flex w-full flex-col items-start justify-center gap-[16px]">
-            <div className="w-full text-center text-caption text-gray-700">
-              {isLibrary ? (
-                <>
-                  패널 수: {libraryData?.panel_count}명 / 생성일:{" "}
-                  {libraryData?.created_at
-                    ? new Date(libraryData.created_at).toLocaleDateString(
-                        "ko-KR"
-                      )
-                    : "-"}
-                </>
-              ) : (
-                <>
-                  표본 수: {result?.summary?.total_respondents}명 / 데이터
-                  수집일: {result?.summary?.data_capture_date} / 신뢰도:{" "}
-                  {result?.summary?.confidence_level || "-"}%
-                </>
+    <div className="flex min-h-screen flex-col items-center justify-start px-6 pt-[40px] pb-[80px]">
+      <div className="flex w-full max-w-[1280px] flex-col gap-[40px]">
+        {/* 상단 영역 */}
+        <div className="grid w-full grid-cols-[54%_1fr] items-stretch gap-[20px]">
+          {/* 왼쪽 */}
+          <div className="flex h-full w-full flex-col items-start justify-between rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+            <div className="flex w-full flex-col items-center justify-center gap-[48px]">
+              <div className="w-full text-start text-gray-950 text-h4">
+                {isLibrary ? libraryData?.library_name : question}
+              </div>
+              {result?.pie && (
+                <PieChartComponent
+                  data={result.pie.data_points}
+                  title={result.pie.title}
+                />
               )}
             </div>
+            <div className="flex w-full flex-col items-start justify-center gap-[16px]">
+              <div className="w-full text-center text-caption text-gray-700">
+                {isLibrary ? (
+                  <>
+                    패널 수: {libraryData?.panel_count}명 / 생성일:{" "}
+                    {libraryData?.created_at
+                      ? new Date(libraryData.created_at).toLocaleDateString(
+                          "ko-KR"
+                        )
+                      : "-"}
+                  </>
+                ) : (
+                  <>
+                    표본 수: {result?.summary?.total_respondents}명 / 데이터
+                    수집일: {result?.summary?.data_capture_date} / 신뢰도:{" "}
+                    {result?.summary?.confidence_level || "-"}%
+                  </>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-        {/* 오른쪽 */}
-        <div className="flex h-full w-full flex-col items-start justify-center gap-[28px]">
-          {!isLibrary && (
+          {/* 오른쪽 */}
+          <div className="flex h-full w-full flex-col items-start justify-center gap-[28px]">
+            {!isLibrary && (
+              <div className="flex w-full flex-col items-start justify-center gap-[16px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+                <div className="w-full text-start text-gray-950 text-h5">
+                  검색 결과 내 재검색
+                </div>
+                <SearchBar
+                  placeholder={question}
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                />
+              </div>
+            )}
             <div className="flex w-full flex-col items-start justify-center gap-[16px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
               <div className="w-full text-start text-gray-950 text-h5">
-                검색 결과 내 재검색
+                {isLibrary ? "라이브러리 태그" : "검색 조건 및 필터"}
               </div>
-              <SearchBar
-                placeholder={question}
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-              />
-            </div>
-          )}
-          <div className="flex w-full flex-col items-start justify-center gap-[16px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
-            <div className="w-full text-start text-gray-950 text-h5">
-              {isLibrary ? "라이브러리 태그" : "검색 조건 및 필터"}
-            </div>
-            {isLibrary
-              ? libraryData?.tags?.map((tag, index) => {
-                  const colorClass =
-                    index % 3 === 0
-                      ? "text-primary-700 bg-primary-100"
-                      : index % 3 === 1
-                        ? "text-secondary-700 bg-secondary-100"
-                        : "text-tertiary-700 bg-tertiary-100";
-
-                  return (
-                    <div
-                      key={`${tag}-${index}`}
-                      className={`text-body3 ${colorClass} w-full rounded-lg px-[20px] py-[8px] text-start`}
-                    >
-                      {tag}
-                    </div>
-                  );
-                })
-              : result?.applied_filters_summary?.map(
-                  (
-                    filter: { key: string; display_value: string },
-                    index: number
-                  ) => {
+              {isLibrary
+                ? libraryData?.tags?.map((tag, index) => {
                     const colorClass =
                       index % 3 === 0
                         ? "text-primary-700 bg-primary-100"
@@ -206,89 +186,111 @@ export default function Dashboard() {
 
                     return (
                       <div
-                        key={`${filter.key}-${index}`}
+                        key={`${tag}-${index}`}
                         className={`text-body3 ${colorClass} w-full rounded-lg px-[20px] py-[8px] text-start`}
                       >
-                        {filter.key}: {filter.display_value}
+                        {tag}
                       </div>
                     );
-                  }
-                )}
-            {!isLibrary && (
-              <div className="flex w-full cursor-pointer items-center justify-center gap-[8px] rounded-lg bg-gray-200 px-[20px] py-[12px] text-body3 text-gray-950">
-                <PlusIcon color="black" width={20} height={21} />
-                조건 추가
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-      {/* 중간 영역 */}
-      <div className="flex w-full flex-col items-start justify-center gap-[20px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
-        <div className="w-full text-start text-gray-950 text-h4">
-          상세 분석 및 교차 탐색
-        </div>
-        <div className="flex w-full items-center justify-start gap-[20px] border-gray-500 border-b-[0.5px]">
-          <div
-            className={`text-body5 ${
-              mode === "profile"
-                ? "border-tertiary-500 border-b text-tertiary-500"
-                : "text-gray-700"
-            } cursor-pointer py-[5px]`}
-            onClick={() => handleMode("profile")}
-          >
-            응답자 전체 프로필
-          </div>
-          <div
-            className={`text-body5 ${
-              mode === "history"
-                ? "border-tertiary-500 border-b text-tertiary-500"
-                : "text-gray-700"
-            } cursor-pointer py-[5px]`}
-            onClick={() => handleMode("history")}
-          >
-            교차 분석 도구
-          </div>
-        </div>
-        <div className="grid w-full auto-cols-[480px] grid-flow-col items-start justify-start gap-[36px] overflow-x-auto">
-          {result?.charts?.map((chart, index) => {
-            if (chart.chart_type === "BAR") {
-              return (
-                <div key={chart.chart_id || index} className="w-[480px]">
-                  <ColumnChartComponent
-                    data={chart.data_points}
-                    title={chart.title}
-                    xAxisTitle={chart.x_axis || chart.xaxis}
-                    yAxisTitle={chart.y_axis || chart.yaxis}
-                  />
+                  })
+                : result?.applied_filters_summary?.map(
+                    (
+                      filter: { key: string; display_value: string },
+                      index: number
+                    ) => {
+                      const colorClass =
+                        index % 3 === 0
+                          ? "text-primary-700 bg-primary-100"
+                          : index % 3 === 1
+                            ? "text-secondary-700 bg-secondary-100"
+                            : "text-tertiary-700 bg-tertiary-100";
+
+                      return (
+                        <div
+                          key={`${filter.key}-${index}`}
+                          className={`text-body3 ${colorClass} w-full rounded-lg px-[20px] py-[8px] text-start`}
+                        >
+                          {filter.key}: {filter.display_value}
+                        </div>
+                      );
+                    }
+                  )}
+              {!isLibrary && (
+                <div className="flex w-full cursor-pointer items-center justify-center gap-[8px] rounded-lg bg-gray-200 px-[20px] py-[12px] text-body3 text-gray-950">
+                  <PlusIcon color="black" width={20} height={21} />
+                  조건 추가
                 </div>
-              );
-            }
-            if (chart.chart_type === "LINE") {
-              return (
-                <div key={chart.chart_id || index} className="w-[480px]">
-                  <LineChartComponent
-                    data={chart.data_points}
-                    title={chart.title}
-                    xAxisTitle={chart.x_axis || chart.xaxis}
-                    yAxisTitle={chart.y_axis || chart.yaxis}
-                  />
-                </div>
-              );
-            }
-            return null;
-          })}
+              )}
+            </div>
+          </div>
         </div>
+        {/* 중간 영역 */}
+        <div className="flex w-full flex-col items-start justify-center gap-[20px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+          <div className="w-full text-start text-gray-950 text-h4">
+            상세 분석 및 교차 탐색
+          </div>
+          <div className="flex w-full items-center justify-start gap-[20px] border-gray-500 border-b-[0.5px]">
+            <div
+              className={`text-body5 ${
+                mode === "profile"
+                  ? "border-tertiary-500 border-b text-tertiary-500"
+                  : "text-gray-700"
+              } cursor-pointer py-[5px]`}
+              onClick={() => handleMode("profile")}
+            >
+              응답자 전체 프로필
+            </div>
+            <div
+              className={`text-body5 ${
+                mode === "history"
+                  ? "border-tertiary-500 border-b text-tertiary-500"
+                  : "text-gray-700"
+              } cursor-pointer py-[5px]`}
+              onClick={() => handleMode("history")}
+            >
+              교차 분석 도구
+            </div>
+          </div>
+          <div className="grid w-full auto-cols-[480px] grid-flow-col items-start justify-start gap-[36px] overflow-x-auto">
+            {result?.charts?.map((chart, index) => {
+              if (chart.chart_type === "BAR") {
+                return (
+                  <div key={chart.chart_id || index} className="w-[480px]">
+                    <ColumnChartComponent
+                      data={chart.data_points}
+                      title={chart.title}
+                      xAxisTitle={chart.x_axis || chart.xaxis}
+                      yAxisTitle={chart.y_axis || chart.yaxis}
+                    />
+                  </div>
+                );
+              }
+              if (chart.chart_type === "LINE") {
+                return (
+                  <div key={chart.chart_id || index} className="w-[480px]">
+                    <LineChartComponent
+                      data={chart.data_points}
+                      title={chart.title}
+                      xAxisTitle={chart.x_axis || chart.xaxis}
+                      yAxisTitle={chart.y_axis || chart.yaxis}
+                    />
+                  </div>
+                );
+              }
+              return null;
+            })}
+          </div>
+        </div>
+        {/* 하단 영역 */}
+        <IndividualResponses
+          data={data}
+          page={page}
+          setPage={setPage}
+          onPanelClick={handlePanelClick}
+          searchId={isLibrary ? String(libraryId) : search_id || ""}
+          question={isLibrary ? libraryData?.library_name || "" : question}
+        />
       </div>
-      {/* 하단 영역 */}
-      <IndividualResponses
-        data={data}
-        page={page}
-        setPage={setPage}
-        onPanelClick={handlePanelClick}
-        searchId={isLibrary ? String(libraryId) : search_id || ""}
-        question={isLibrary ? libraryData?.library_name || "" : question}
-      />
     </div>
   );
 }

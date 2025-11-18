@@ -239,37 +239,39 @@ export default function Panel() {
     fetchPanelData();
   }, [id]);
   return (
-    <div className="flex min-h-screen flex-col items-center justify-start px-[80px] pt-[30px] pb-[183px]">
-      {/* 이전 페이지로 이동 버튼 */}
-      <div className="mb-[58px] flex w-full items-center justify-start">
-        <button
-          className="flex items-center justify-center gap-[8px] rounded-lg bg-transparent px-[16px] py-[12px] text-black text-h5 transition-colors duration-200 hover:bg-primary-100"
-          onClick={() => navigate(-1)}
-        >
-          <ChevronLeftIcon color="black" width={24} height={24} />
-          {question}
-        </button>
+    <div className="flex min-h-screen flex-col items-center justify-start px-6 pt-[30px] pb-[183px]">
+      <div className="w-full max-w-[1280px]">
+        {/* 이전 페이지로 이동 버튼 */}
+        <div className="mb-[58px] flex w-full items-center justify-start">
+          <button
+            className="flex items-center justify-center gap-[8px] rounded-lg bg-transparent px-[16px] py-[12px] text-black text-h5 transition-colors duration-200 hover:bg-primary-100"
+            onClick={() => navigate(-1)}
+          >
+            <ChevronLeftIcon color="black" width={24} height={24} />
+            {question}
+          </button>
+        </div>
+        {/* 패널 프로필 영역 */}
+        <PanelProfileSection
+          panelProfile={panelProfile}
+          hashTags={hashTags}
+          panelSummary={panelSummary}
+          question={question}
+          concordanceRate={concordanceRate}
+        />
+        {/* 상세 프로필 영역 */}
+        <PanelDetailSection
+          mode={mode}
+          handleMode={handleMode}
+          panelData={panelData}
+          basicInfoList={basicInfoList}
+          digitalDeviceInfo={digitalDeviceInfo}
+          vehicleInfo={vehicleInfo}
+          ownedProducts={ownedProducts}
+          lifestyleData={lifestyleData}
+          categoryIcons={categoryIcons}
+        />
       </div>
-      {/* 패널 프로필 영역 */}
-      <PanelProfileSection
-        panelProfile={panelProfile}
-        hashTags={hashTags}
-        panelSummary={panelSummary}
-        question={question}
-        concordanceRate={concordanceRate}
-      />
-      {/* 상세 프로필 영역 */}
-      <PanelDetailSection
-        mode={mode}
-        handleMode={handleMode}
-        panelData={panelData}
-        basicInfoList={basicInfoList}
-        digitalDeviceInfo={digitalDeviceInfo}
-        vehicleInfo={vehicleInfo}
-        ownedProducts={ownedProducts}
-        lifestyleData={lifestyleData}
-        categoryIcons={categoryIcons}
-      />
     </div>
   );
 }

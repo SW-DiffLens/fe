@@ -89,87 +89,89 @@ export default function Onboarding() {
   }, [job, industry, navigate, jobMapping, industryMapping]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-[380px] py-[218px]">
-      <div className="flex w-full flex-col items-center justify-center gap-[24px] rounded-2xl bg-opacity-500 px-[80px] py-[80px]">
-        {/* 상단 영역 */}
-        <div className="flex flex-col items-center justify-center gap-[8px]">
-          <LogoText width={213} height={60} />
-          <div className="text-body3 text-primary-900">
-            {/* {roleLabel} 플랜으로 회원가입 */}
-            회원가입
+    <div className="flex min-h-screen flex-col items-center justify-center px-6 py-[218px]">
+      <div className="w-full max-w-[680px]">
+        <div className="flex w-full flex-col items-center justify-center gap-[24px] rounded-2xl bg-opacity-500 px-[80px] py-[80px]">
+          {/* 상단 영역 */}
+          <div className="flex flex-col items-center justify-center gap-[8px]">
+            <LogoText width={213} height={60} />
+            <div className="text-body3 text-primary-900">
+              {/* {roleLabel} 플랜으로 회원가입 */}
+              회원가입
+            </div>
+            <div className="flex items-center justify-center gap-[11px]">
+              <div className="h-[4px] w-[80px] rounded-sm bg-gray-300" />
+              <div className="h-[4px] w-[80px] rounded-sm bg-primary-500" />
+            </div>
           </div>
-          <div className="flex items-center justify-center gap-[11px]">
-            <div className="h-[4px] w-[80px] rounded-sm bg-gray-300" />
-            <div className="h-[4px] w-[80px] rounded-sm bg-primary-500" />
-          </div>
+          {/* 폼 영역 */}
+          <form
+            className="flex w-full flex-col items-center justify-center gap-[32px]"
+            onChange={onFormChange}
+          >
+            <DropdownField
+              label="직무"
+              placeholder="직무를 선택해주세요"
+              options={[
+                "경영/기획/전략",
+                "마케팅/광고/홍보",
+                "영업/고객관리",
+                "IT/개발/데이터",
+                "디자인/미디어",
+                "생산/제조/품질",
+                "연구/R&D",
+                "교육/컨설팅",
+                "의료/보건/복지",
+                "금융/회계/법률",
+                "서비스/유통",
+                "기타/프리랜서",
+              ]}
+              id="job"
+              value={job}
+              onChange={(value) => setJob(value)}
+            />
+            <DropdownField
+              label="업종"
+              placeholder="업종을 선택해주세요"
+              options={[
+                "IT·인터넷·소프트웨어",
+                "전자·제조·기계",
+                "금융·보험·핀테크",
+                "유통·소비재·식품",
+                "문화·미디어·엔터테인먼트",
+                "의료·제약·바이오",
+                "교육·에듀테크",
+                "공공·비영리·행정",
+                "건설·부동산·인프라",
+                "에너지·환경·화학",
+                "관광·여행·항공",
+                "기타 산업군",
+              ]}
+              id="industry"
+              value={industry}
+              onChange={(value) => setIndustry(value)}
+            />
+            <div className="mb-[24px] flex w-full items-center justify-center gap-[32px]">
+              <Button
+                variant="outlined"
+                size="large"
+                fullWidth
+                onClick={() => navigate(-1)}
+              >
+                이전
+              </Button>
+              <Button
+                variant="filled"
+                size="large"
+                fullWidth
+                disabled={isNextDisabled}
+                onClick={handleNext}
+              >
+                다음
+              </Button>
+            </div>
+          </form>
         </div>
-        {/* 폼 영역 */}
-        <form
-          className="flex w-full flex-col items-center justify-center gap-[32px]"
-          onChange={onFormChange}
-        >
-          <DropdownField
-            label="직무"
-            placeholder="직무를 선택해주세요"
-            options={[
-              "경영/기획/전략",
-              "마케팅/광고/홍보",
-              "영업/고객관리",
-              "IT/개발/데이터",
-              "디자인/미디어",
-              "생산/제조/품질",
-              "연구/R&D",
-              "교육/컨설팅",
-              "의료/보건/복지",
-              "금융/회계/법률",
-              "서비스/유통",
-              "기타/프리랜서",
-            ]}
-            id="job"
-            value={job}
-            onChange={(value) => setJob(value)}
-          />
-          <DropdownField
-            label="업종"
-            placeholder="업종을 선택해주세요"
-            options={[
-              "IT·인터넷·소프트웨어",
-              "전자·제조·기계",
-              "금융·보험·핀테크",
-              "유통·소비재·식품",
-              "문화·미디어·엔터테인먼트",
-              "의료·제약·바이오",
-              "교육·에듀테크",
-              "공공·비영리·행정",
-              "건설·부동산·인프라",
-              "에너지·환경·화학",
-              "관광·여행·항공",
-              "기타 산업군",
-            ]}
-            id="industry"
-            value={industry}
-            onChange={(value) => setIndustry(value)}
-          />
-          <div className="mb-[24px] flex w-full items-center justify-center gap-[32px]">
-            <Button
-              variant="outlined"
-              size="large"
-              fullWidth
-              onClick={() => navigate(-1)}
-            >
-              이전
-            </Button>
-            <Button
-              variant="filled"
-              size="large"
-              fullWidth
-              disabled={isNextDisabled}
-              onClick={handleNext}
-            >
-              다음
-            </Button>
-          </div>
-        </form>
       </div>
     </div>
   );
