@@ -288,7 +288,7 @@ export default function Dashboard() {
           <div className="w-full text-start text-gray-950 text-h4">
             상세 분석 및 교차 탐색
           </div>
-          <div className="flex w-full items-center justify-start gap-[20px] border-gray-500 border-b-[0.5px]">
+          {/* <div className="flex w-full items-center justify-start gap-[20px] border-gray-500 border-b-[0.5px]">
             <div
               className={`text-body5 ${
                 mode === "profile"
@@ -309,7 +309,7 @@ export default function Dashboard() {
             >
               교차 분석 도구
             </div>
-          </div>
+          </div> */}
           <div className="grid w-full auto-cols-[480px] grid-flow-col items-start justify-start gap-[36px] overflow-x-auto">
             {result?.sub_charts?.map((chart, index) => {
               const key = `${chart.metric}-${index}`;
