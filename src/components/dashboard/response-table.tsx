@@ -37,26 +37,26 @@ export default function ResponseTable({
                 onPanelClick(item.respondent_id, concordancePercent)
               }
             >
-            <td className="px-3 align-middle">
-              <div className="flex items-center justify-start gap-[8px]">
-                <MyPageIcon width={32} height={32} />
-                <div className="text-primary-900 text-subtitle2">
-                  {item.respondent_id}
+              <td className="px-3 align-middle">
+                <div className="flex items-center justify-start gap-[8px]">
+                  <MyPageIcon width={32} height={32} />
+                  <div className="text-primary-900 text-subtitle2">
+                    {item.respondent_id}
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td className="px-3">
-              {item.gender === "FEMALE"
-                ? "여자"
-                : item.gender === "MALE"
-                  ? "남자"
-                  : item.gender}
-            </td>
-            <td className="px-3">{item.age}</td>
-            <td className="px-3">{item.residence}</td>
-            <td className="px-3">{item.personal_income}</td>
-            <td className="px-3">{concordancePercent}</td>
-          </tr>
+              </td>
+              <td className="px-3">
+                {item.gender === "FEMALE"
+                  ? "여자"
+                  : item.gender === "MALE"
+                    ? "남자"
+                    : item.gender}
+              </td>
+              <td className="px-3">{item.age}</td>
+              <td className="px-3">{item.residence}</td>
+              <td className="px-3">{item.personal_income}</td>
+              <td className="px-3">{concordancePercent}</td>
+            </tr>
           );
         })}
       </tbody>

@@ -82,12 +82,14 @@ export default function PanelProfileSection({
           <div className="text-caption text-primary-700">{question}</div>
           <div className="flex items-center justify-start gap-[4px]">
             <div className="text-black text-subtitle2">
-              {typeof concordanceRate === 'string' ? concordanceRate : `${concordanceRate}%`}
+              {typeof concordanceRate === "string"
+                ? concordanceRate
+                : `${concordanceRate}%`}
             </div>
             <PercentageBar
               percentage={
-                typeof concordanceRate === 'string'
-                  ? Number.parseInt(concordanceRate.replace('%', ''), 10)
+                typeof concordanceRate === "string"
+                  ? Number.parseInt(concordanceRate.replace("%", ""), 10)
                   : concordanceRate
               }
             />
