@@ -71,7 +71,7 @@ export default function MyPageMenu({
       <button
         ref={buttonRef}
         type="button"
-        className="cursor-pointer rounded-lg p-[8px] transition-colors hover:bg-primary-100"
+        className="cursor-pointer transition-opacity hover:opacity-70"
         onClick={() => setIsOpen(!isOpen)}
       >
         <MyPageIcon width={iconSize} height={iconSize} />
