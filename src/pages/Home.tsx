@@ -138,12 +138,13 @@ export default function Home() {
     }
   };
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-[272px] py-[124px]">
-      <div className="mb-[63px] text-h2 text-primary-950">
-        원하는 패널을 찾아보세요
-      </div>
-      {/* 검색 영역 */}
-      <div className="mb-[40px] flex w-full flex-col items-start justify-center gap-[24px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+    <div className="flex min-h-screen flex-col items-center justify-center px-4 py-[124px] sm:px-8 md:px-16 lg:px-24">
+      <div className="w-full max-w-[896px]">
+        <div className="mb-[63px] text-center text-h2 text-primary-950">
+          원하는 패널을 찾아보세요
+        </div>
+        {/* 검색 영역 */}
+        <div className="mb-[40px] flex w-full flex-col items-start justify-center gap-[24px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
         <div className="flex w-full items-center justify-between">
           <div className="text-gray-950 text-subtitle1">
             검색어를 입력하세요
@@ -256,18 +257,19 @@ export default function Home() {
           검색하기
         </Button>
       </div>
-      {/* 빠른 검색 추천 영역 */}
-      <div className="flex w-full flex-col items-start justify-center gap-[12px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
-        <div className="text-gray-950 text-subtitle1">빠른 검색 추천</div>
-        <div className="grid w-full grid-cols-3 gap-[12px]">
-          {quickSearchButtons.map((button) => (
-            <QuickSearchButton
-              key={button.id}
-              title={button.title}
-              subtitle={button.description}
-              onClick={() => handleQuickSearch(button)}
-            />
-          ))}
+        {/* 빠른 검색 추천 영역 */}
+        <div className="flex w-full flex-col items-start justify-center gap-[12px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
+          <div className="text-gray-950 text-subtitle1">빠른 검색 추천</div>
+          <div className="grid w-full grid-cols-3 gap-[12px]">
+            {quickSearchButtons.map((button) => (
+              <QuickSearchButton
+                key={button.id}
+                title={button.title}
+                subtitle={button.description}
+                onClick={() => handleQuickSearch(button)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
