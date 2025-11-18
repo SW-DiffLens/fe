@@ -1,5 +1,4 @@
 import DownloadIcon from "@/assets/icons/ic_download";
-import MyPageIcon from "@/assets/icons/ic_mypage";
 import LogoContainer from "@/assets/logos/logo_container";
 import Button from "@/components/button";
 
@@ -11,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import SaveLibraryModal from "@/components/library/save-library-modal";
+import MyPageMenu from "@/components/my-page-menu";
 
 type IsLoggedIn = "true" | "false";
 type Dashboard = "true" | "false";
@@ -103,7 +103,7 @@ export default function Header({
           >
             라이브러리
           </div>
-          <MyPageIcon />
+          <MyPageMenu position="header" iconSize={40} />
         </div>
       )}
       {isLoggedIn === "true" && dashboard === "true" && isPanel === "false" && (

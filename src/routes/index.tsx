@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import PanelLayout from "@/layouts/PanelLayout";
 import AllResponses from "@/pages/AllResponses";
@@ -62,61 +63,76 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/home",
-    element: <HomeLayout />,
+    element: <ProtectedRoute />,
     children: [
       {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: "library",
+        path: "/home",
+        element: <HomeLayout />,
         children: [
           {
             index: true,
-            element: <Library />,
+            element: <Home />,
           },
           {
-            path: "compare",
-            element: <Compare />,
+            path: "library",
+            children: [
+              {
+                index: true,
+                element: <Library />,
+              },
+              {
+                path: "compare",
+                element: <Compare />,
+              },
+            ],
           },
         ],
       },
     ],
   },
   {
-    path: "/panel",
-    element: <PanelLayout />,
+    element: <ProtectedRoute />,
     children: [
       {
-        index: true,
-        element: <Panel />,
-      },
-      {
-        path: ":id",
-        element: <Panel />,
+        path: "/panel",
+        element: <PanelLayout />,
+        children: [
+          {
+            index: true,
+            element: <Panel />,
+          },
+          {
+            path: ":id",
+            element: <Panel />,
+          },
+        ],
       },
     ],
   },
   {
-    path: "/dashboard",
-    element: <DashboardLayout />,
+    element: <ProtectedRoute />,
     children: [
       {
-        index: true,
-        element: <Dashboard />,
-      },
-      {
-        path: ":id",
-        element: <Dashboard />,
-      },
-      {
-        path: "library/:id",
-        element: <Dashboard />,
-      },
-      {
-        path: "all-responses",
-        element: <AllResponses />,
+        path: "/dashboard",
+        element: <DashboardLayout />,
+        children: [
+          {
+            index: true,
+            element: <Dashboard />,
+          },
+          {
+            path: ":id",
+            element: <Dashboard />,
+          },
+          {
+            path: "library/:id",
+            element: <Dashboard />,
+          },
+          {
+            path: "all-responses",
+            element: <AllResponses />,
+          },
+        ],
       },
     ],
   },

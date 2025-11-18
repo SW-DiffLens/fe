@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ArchiveIcon from "@/assets/icons/ic_archive";
 import EditIcon from "@/assets/icons/ic_edit";
 import MenuIcon from "@/assets/icons/ic_menu";
-import MyPageIcon from "@/assets/icons/ic_mypage";
+import MyPageMenu from "@/components/my-page-menu";
 
 export default function SideBar() {
   const navigate = useNavigate();
@@ -74,9 +74,7 @@ export default function SideBar() {
           </div>
         </div>
       </div>
-      <div className="flex h-[32px] w-[32px] items-center justify-center">
-        <MyPageIcon width={32} height={32} />
-      </div>
+      <MyPageMenu position="sidebar" iconSize={32} />
     </div>
   );
 }
