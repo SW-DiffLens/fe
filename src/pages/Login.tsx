@@ -47,57 +47,59 @@ export default function Login() {
   }, [email, password, navigate]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-[380px] py-[194px]">
-      <div className="flex w-full flex-col items-center justify-center gap-[24px] rounded-2xl bg-opacity-500 px-[80px] py-[80px]">
-        {/* 상단 영역 */}
-        <div className="flex flex-col items-center justify-center gap-[8px]">
-          <LogoText width={213} height={60} />
-          <div className="text-body3 text-primary-900">
-            계속하려면 로그인 하세요.
+    <div className="flex min-h-screen flex-col items-center justify-center px-6 py-[194px]">
+      <div className="w-full max-w-[680px]">
+        <div className="flex w-full flex-col items-center justify-center gap-[24px] rounded-2xl bg-opacity-500 px-[80px] py-[80px]">
+          {/* 상단 영역 */}
+          <div className="flex flex-col items-center justify-center gap-[8px]">
+            <LogoText width={213} height={60} />
+            <div className="text-body3 text-primary-900">
+              계속하려면 로그인 하세요.
+            </div>
           </div>
-        </div>
-        {/* 폼 영역 */}
-        <form
-          className="flex w-full flex-col items-center justify-center gap-[16px]"
-          onChange={onFormChange}
-        >
-          <InputField
-            label="아이디(이메일)"
-            type="email"
-            placeholder="이메일 주소"
-            description="이메일 주소를 입력하세요."
-            error={isEmailError}
-            id="email"
-          />
-          <InputField
-            label="비밀번호"
-            type="password"
-            placeholder="비밀번호"
-            description="비밀번호는 8자리 이상입니다."
-            error={isPasswordError}
-            id="password"
-          />
-          <Button
-            variant="filled"
-            size="large"
-            fullWidth
-            disabled={isEmailError || isPasswordError}
-            onClick={handleLogin}
+          {/* 폼 영역 */}
+          <form
+            className="flex w-full flex-col items-center justify-center gap-[16px]"
+            onChange={onFormChange}
           >
-            로그인
-          </Button>
-        </form>
-        {/* 라인 */}
-        <div className="h-[1px] w-full bg-[#DDE1E6]" />
-        {/* 하단 영역 */}
-        <div className="w-full text-center text-body5 text-gray-900">
-          아직 계정이 없으신가요?{" "}
-          <a
-            onClick={() => navigate("/signup")}
-            className="cursor-pointer text-primary-700 underline"
-          >
-            회원가입
-          </a>
+            <InputField
+              label="아이디(이메일)"
+              type="email"
+              placeholder="이메일 주소"
+              description="이메일 주소를 입력하세요."
+              error={isEmailError}
+              id="email"
+            />
+            <InputField
+              label="비밀번호"
+              type="password"
+              placeholder="비밀번호"
+              description="비밀번호는 8자리 이상입니다."
+              error={isPasswordError}
+              id="password"
+            />
+            <Button
+              variant="filled"
+              size="large"
+              fullWidth
+              disabled={isEmailError || isPasswordError}
+              onClick={handleLogin}
+            >
+              로그인
+            </Button>
+          </form>
+          {/* 라인 */}
+          <div className="h-[1px] w-full bg-[#DDE1E6]" />
+          {/* 하단 영역 */}
+          <div className="w-full text-center text-body5 text-gray-900">
+            아직 계정이 없으신가요?{" "}
+            <a
+              onClick={() => navigate("/signup")}
+              className="cursor-pointer text-primary-700 underline"
+            >
+              회원가입
+            </a>
+          </div>
         </div>
       </div>
     </div>
