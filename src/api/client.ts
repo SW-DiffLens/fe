@@ -15,6 +15,20 @@ let failedQueue: Array<{
   reject: (reason?: unknown) => void;
 }> = [];
 
+// 전역 로딩 스피너 관리
+let loadingShowCallback: (() => void) | null = null;
+let loadingHideCallback: (() => void) | null = null;
+let loadingTimeoutId: NodeJS.Timeout | null = null;
+const LOADING_DEBOUNCE_MS = 200;
+
+export const setLoadingCallbacks = (
+  showCallback: () => void,
+  hideCallback: () => void
+) => {
+  loadingShowCallback = showCallback;
+  loadingHideCallback = hideCallback;
+};
+
 const processQueue = (
   error: AxiosError | null,
   token: string | null = null
@@ -35,6 +49,13 @@ const publicEndpoints = ["/auth/login/local", "/auth/signup/local"];
 // 요청 인터셉터
 apiClient.interceptors.request.use(
   (config) => {
+    // 로딩 스피너 표시
+    if (loadingShowCallback) {
+      loadingTimeoutId = setTimeout(() => {
+        loadingShowCallback?.();
+      }, LOADING_DEBOUNCE_MS);
+    }
+
     // 공개 엔드포인트인지 확인
     const isPublicEndpoint = publicEndpoints.some((endpoint) =>
       config.url?.includes(endpoint)
@@ -56,6 +77,12 @@ apiClient.interceptors.request.use(
     return config;
   },
   (error) => {
+    // 에러 시에도 로딩 스피너 숨김
+    if (loadingTimeoutId) {
+      clearTimeout(loadingTimeoutId);
+      loadingTimeoutId = null;
+    }
+    loadingHideCallback?.();
     return Promise.reject(error);
   }
 );
@@ -63,9 +90,21 @@ apiClient.interceptors.request.use(
 // 응답 인터셉터 (에러 처리 및 리프레시 토큰 처리)
 apiClient.interceptors.response.use(
   (response) => {
+    // 성공 시 로딩 스피너 숨김
+    if (loadingTimeoutId) {
+      clearTimeout(loadingTimeoutId);
+      loadingTimeoutId = null;
+    }
+    loadingHideCallback?.();
     return response;
   },
   async (error: AxiosError) => {
+    // 에러 시 로딩 스피너 숨김
+    if (loadingTimeoutId) {
+      clearTimeout(loadingTimeoutId);
+      loadingTimeoutId = null;
+    }
+    loadingHideCallback?.();
     const originalRequest = error.config as InternalAxiosRequestConfig & {
       _retry?: boolean;
     };
