@@ -18,8 +18,6 @@ let failedQueue: Array<{
 // 전역 로딩 스피너 관리
 let loadingShowCallback: (() => void) | null = null;
 let loadingHideCallback: (() => void) | null = null;
-let loadingTimeoutId: NodeJS.Timeout | null = null;
-const LOADING_DEBOUNCE_MS = 200;
 
 export const setLoadingCallbacks = (
   showCallback: () => void,
@@ -49,12 +47,7 @@ const publicEndpoints = ["/auth/login/local", "/auth/signup/local"];
 // 요청 인터셉터
 apiClient.interceptors.request.use(
   (config) => {
-    // 로딩 스피너 표시
-    if (loadingShowCallback) {
-      loadingTimeoutId = setTimeout(() => {
-        loadingShowCallback?.();
-      }, LOADING_DEBOUNCE_MS);
-    }
+    loadingShowCallback?.();
 
     // 공개 엔드포인트인지 확인
     const isPublicEndpoint = publicEndpoints.some((endpoint) =>
@@ -78,10 +71,6 @@ apiClient.interceptors.request.use(
   },
   (error) => {
     // 에러 시에도 로딩 스피너 숨김
-    if (loadingTimeoutId) {
-      clearTimeout(loadingTimeoutId);
-      loadingTimeoutId = null;
-    }
     loadingHideCallback?.();
     return Promise.reject(error);
   }
@@ -90,27 +79,18 @@ apiClient.interceptors.request.use(
 // 응답 인터셉터 (에러 처리 및 리프레시 토큰 처리)
 apiClient.interceptors.response.use(
   (response) => {
-    // 성공 시 로딩 스피너 숨김
-    if (loadingTimeoutId) {
-      clearTimeout(loadingTimeoutId);
-      loadingTimeoutId = null;
-    }
+    // 성공
     loadingHideCallback?.();
     return response;
   },
   async (error: AxiosError) => {
-    // 에러 시 로딩 스피너 숨김
-    if (loadingTimeoutId) {
-      clearTimeout(loadingTimeoutId);
-      loadingTimeoutId = null;
-    }
+    // 에러
     loadingHideCallback?.();
     const originalRequest = error.config as InternalAxiosRequestConfig & {
       _retry?: boolean;
     };
 
-    // 401 에러, 리프레시 시도가 아닌 경우 => 리프레시 시도 후 재시도
-    // 공개 엔드포인트는 리프레시 시도하지 않음
+    // 401
     const isPublicEndpoint = publicEndpoints.some((endpoint) =>
       originalRequest.url?.includes(endpoint)
     );
