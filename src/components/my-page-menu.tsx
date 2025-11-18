@@ -17,6 +17,7 @@ export default function MyPageMenu({
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const navigate = useNavigate();
+  const userEmail = localStorage.getItem("user_email") || "user@example.com";
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -40,6 +41,7 @@ export default function MyPageMenu({
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
+    localStorage.removeItem("user_email");
 
     navigate("/");
     setIsOpen(false);
@@ -89,7 +91,7 @@ export default function MyPageMenu({
             </div>
             <div className="px-[16px] py-[12px]">
               <div className="mb-[4px] text-body4 text-gray-700">이메일</div>
-              <div className="text-body4 text-gray-950">user@example.com</div>
+              <div className="text-body4 text-gray-950">{userEmail}</div>
             </div>
             <div className="border-gray-200 border-t px-[16px] py-[12px]">
               <button
