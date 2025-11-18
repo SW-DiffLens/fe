@@ -103,7 +103,7 @@ export default function Header({
           >
             라이브러리
           </div>
-          <MyPageMenu position="header" />
+          <MyPageMenu position="header" iconSize={40} />
         </div>
       )}
       {isLoggedIn === "true" && dashboard === "true" && isPanel === "false" && (
