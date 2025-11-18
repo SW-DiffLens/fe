@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useNavigate } from "react-router-dom";
 import MyPageIcon from "@/assets/icons/ic_mypage";
 
 type MenuPosition = "header" | "sidebar";
@@ -15,6 +16,7 @@ export default function MyPageMenu({
 }: MyPageMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -34,6 +36,14 @@ export default function MyPageMenu({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+
+    navigate("/");
+    setIsOpen(false);
+  };
 
   const getMenuPosition = () => {
     if (!buttonRef.current) return {};
@@ -85,10 +95,7 @@ export default function MyPageMenu({
               <button
                 type="button"
                 className="w-full text-left text-body4 text-gray-700 hover:text-primary-700"
-                onClick={() => {
-                  setIsOpen(false);
-                  // 로그아웃 로직 추가
-                }}
+                onClick={handleLogout}
               >
                 로그아웃
               </button>
