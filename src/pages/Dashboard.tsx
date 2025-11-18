@@ -22,7 +22,6 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const params = useParams();
   const [searchValue, setSearchValue] = useState("");
-  const [mode, setMode] = useState("profile");
   const [data, setData] = useState<DashboardPanel>();
   const [page, setPage] = useState(1);
   const { setDashboardData } = useDashboard();
@@ -40,10 +39,6 @@ export default function Dashboard() {
     result: null,
     search_id: null,
     question: "",
-  };
-
-  const handleMode = (mode: string) => {
-    setMode(mode);
   };
 
   useEffect(() => {
