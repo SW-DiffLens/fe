@@ -233,25 +233,33 @@ export default function Home() {
           )}
         </div>
         {/* 칩 영역 */}
-        {isFilterOpen && (
-          <div className="w-full">
-            <div className="mb-[24px] h-[1px] w-full bg-white" />
-            <div className="flex w-full flex-col items-start justify-center gap-[16px]">
-              {filterSections.map((section, index) => (
-                <FilterSection
-                  key={section.id}
-                  title={section.title}
-                  chips={section.chips}
-                  onSelectionChange={(selectedCodes) =>
-                    handleSectionSelectionChange(index, selectedCodes)
-                  }
-                  reset={resetTrigger}
-                  singleSelect={section.singleSelect}
-                />
-              ))}
+        <div
+          className={`grid w-full transition-all duration-300 ease-in-out ${
+            isFilterOpen
+              ? "grid-rows-[1fr] opacity-100"
+              : "grid-rows-[0fr] opacity-0"
+          }`}
+        >
+          <div className="overflow-hidden">
+            <div className="w-full pt-[16px]">
+              <div className="mb-[24px] h-[1px] w-full bg-white" />
+              <div className="flex w-full flex-col items-start justify-center gap-[16px]">
+                {filterSections.map((section, index) => (
+                  <FilterSection
+                    key={section.id}
+                    title={section.title}
+                    chips={section.chips}
+                    onSelectionChange={(selectedCodes) =>
+                      handleSectionSelectionChange(index, selectedCodes)
+                    }
+                    reset={resetTrigger}
+                    singleSelect={section.singleSelect}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        )}
+        </div>
 
         <Button variant="filled" size="large" fullWidth onClick={handleSearch}>
           검색하기
