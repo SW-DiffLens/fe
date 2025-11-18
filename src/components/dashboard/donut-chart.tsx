@@ -66,13 +66,35 @@ export default function DonutChartComponent({
       stroke: am5.color(0xffffff),
     });
 
-    // Set data
-    const chartData = data.map((item) => ({
-      category: item.category || "Unknown",
-      value: item.value,
-    }));
+    // Process data
+    const MAX_ITEMS = 6;
+    const sortedData = [...data].sort((a, b) => b.value - a.value);
 
-    series.data.setAll(chartData);
+    let processedData: { category: string; value: number }[];
+    if (sortedData.length > MAX_ITEMS) {
+      const topItems = sortedData.slice(0, MAX_ITEMS);
+      const othersSum = sortedData
+        .slice(MAX_ITEMS)
+        .reduce((sum, item) => sum + item.value, 0);
+
+      processedData = [
+        ...topItems.map((item) => ({
+          category: item.category || "Unknown",
+          value: item.value,
+        })),
+        {
+          category: "기타",
+          value: othersSum,
+        },
+      ];
+    } else {
+      processedData = sortedData.map((item) => ({
+        category: item.category || "Unknown",
+        value: item.value,
+      }));
+    }
+
+    series.data.setAll(processedData);
 
     // Add legend
     const legend = chart.children.push(
