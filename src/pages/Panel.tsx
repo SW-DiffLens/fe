@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import apiClient from "@/api/client";
 import BeerIcon from "@/assets/icons/ic_beer";
+import CarIcon from "@/assets/icons/ic_car";
 import CartIcon from "@/assets/icons/ic_cart";
 import ChevronLeftIcon from "@/assets/icons/ic_chevron_left";
 import GymIcon from "@/assets/icons/ic_gym";
