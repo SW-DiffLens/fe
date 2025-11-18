@@ -1,0 +1,101 @@
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import MyPageIcon from "@/assets/icons/ic_mypage";
+
+type MenuPosition = "header" | "sidebar";
+
+interface MyPageMenuProps {
+  position?: MenuPosition;
+  iconSize?: number;
+}
+
+export default function MyPageMenu({
+  position = "header",
+  iconSize = 24,
+}: MyPageMenuProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      const target = event.target as HTMLElement;
+      if (
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node) &&
+        !target.closest('[data-mypage-menu="true"]')
+      ) {
+        setIsOpen(false);
+      }
+    }
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
+  const getMenuPosition = () => {
+    if (!buttonRef.current) return {};
+
+    const rect = buttonRef.current.getBoundingClientRect();
+
+    if (position === "sidebar") {
+      return {
+        left: `${rect.right + 12}px`,
+        bottom: `${window.innerHeight - rect.bottom}px`,
+      };
+    }
+
+    // header position
+    return {
+      right: `${window.innerWidth - rect.right}px`,
+      top: `${rect.bottom + 12}px`,
+    };
+  };
+
+  return (
+    <div className="relative">
+      <button
+        ref={buttonRef}
+        type="button"
+        className="cursor-pointer"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <MyPageIcon width={iconSize} height={iconSize} />
+      </button>
+      {isOpen &&
+        buttonRef.current &&
+        createPortal(
+          <div
+            data-mypage-menu="true"
+            className="fixed z-[9999] w-[200px] rounded-lg bg-white py-[8px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]"
+            style={getMenuPosition()}
+          >
+            <div className="border-gray-200 border-b px-[16px] py-[12px]">
+              <div className="font-semibold text-body3 text-gray-950">
+                사용자 정보
+              </div>
+            </div>
+            <div className="px-[16px] py-[12px]">
+              <div className="mb-[4px] text-body4 text-gray-700">이메일</div>
+              <div className="text-body4 text-gray-950">user@example.com</div>
+            </div>
+            <div className="border-gray-200 border-t px-[16px] py-[12px]">
+              <button
+                type="button"
+                className="w-full text-left text-body4 text-gray-700 hover:text-primary-700"
+                onClick={() => {
+                  setIsOpen(false);
+                  // 로그아웃 로직 추가
+                }}
+              >
+                로그아웃
+              </button>
+            </div>
+          </div>,
+          document.body
+        )}
+    </div>
+  );
+}
