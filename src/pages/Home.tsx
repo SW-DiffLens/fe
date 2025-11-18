@@ -74,11 +74,17 @@ export default function Home() {
     try {
       // 모든 섹션의 선택된 code들을 하나의 배열로 합치기
       const allFilterCodes = selectedFilterCodes.flat();
-      const response = await apiClient.post("/search", {
-        question: searchValue,
-        mode: searchType,
-        filters: allFilterCodes,
-      });
+      const response = await apiClient.post(
+        "/search",
+        {
+          question: searchValue,
+          mode: searchType,
+          filters: allFilterCodes,
+        },
+        {
+          timeout: 60000,
+        }
+      );
       navigate(`/dashboard/${response.data.result.search_id}`, {
         state: {
           result: response.data.result,
@@ -115,11 +121,17 @@ export default function Home() {
           const allFilterCodes = selectedFilterCodes.flat();
           const searchQuery = button.title;
 
-          const response = await apiClient.post("/search", {
-            question: searchQuery,
-            mode: searchType || "FLEXIBLE",
-            filters: allFilterCodes,
-          });
+          const response = await apiClient.post(
+            "/search",
+            {
+              question: searchQuery,
+              mode: searchType || "FLEXIBLE",
+              filters: allFilterCodes,
+            },
+            {
+              timeout: 60000, // 60초로 증가
+            }
+          );
           console.log(response.data);
         } catch (searchError) {
           console.error("자연어 검색 실패:", searchError);

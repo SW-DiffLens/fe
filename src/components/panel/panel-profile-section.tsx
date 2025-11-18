@@ -19,7 +19,7 @@ interface PanelProfileSectionProps {
   hashTags: string[];
   panelSummary: string | null;
   question: string;
-  concordanceRate: number;
+  concordanceRate: number | string;
 }
 
 export default function PanelProfileSection({
@@ -81,8 +81,18 @@ export default function PanelProfileSection({
         <div className="flex items-center justify-center gap-[12px] px-[12px] py-[8px]">
           <div className="text-caption text-primary-700">{question}</div>
           <div className="flex items-center justify-start gap-[4px]">
-            <div className="text-black text-subtitle2">{concordanceRate}%</div>
-            <PercentageBar percentage={concordanceRate} />
+            <div className="text-black text-subtitle2">
+              {typeof concordanceRate === "string"
+                ? concordanceRate
+                : `${concordanceRate}%`}
+            </div>
+            <PercentageBar
+              percentage={
+                typeof concordanceRate === "string"
+                  ? Number.parseInt(concordanceRate.replace("%", ""), 10)
+                  : concordanceRate
+              }
+            />
           </div>
         </div>
       </div>
