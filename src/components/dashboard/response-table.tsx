@@ -26,7 +26,7 @@ export default function ResponseTable({
         {data?.values.map((item) => (
           <tr
             key={item.respondent_id}
-            className="h-12 cursor-pointer border border-gray-300 bg-white text-body4 text-gray-950 hover:bg-gray-50"
+            className="h-12 cursor-pointer border border-gray-300 bg-white text-body4 text-gray-950 transition-colors hover:bg-primary-50"
             onClick={() =>
               onPanelClick(item.respondent_id, item.concordance_rate)
             }
