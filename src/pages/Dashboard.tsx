@@ -156,6 +156,7 @@ export default function Dashboard() {
                             value: d.value,
                           }))}
                           title={chart.title}
+                          reasoning={chart.reasoning}
                         />
                       );
                     case "semi_circle_pie":
@@ -175,6 +176,7 @@ export default function Dashboard() {
                             value: d.value,
                           }))}
                           title={chart.title}
+                          reasoning={chart.reasoning}
                         />
                       );
                     case "stacked_bar":
@@ -338,6 +340,7 @@ export default function Dashboard() {
                           value: d.value,
                         }))}
                         title={chart.title}
+                        reasoning={chart.reasoning}
                       />
                     </div>
                   );
@@ -361,6 +364,7 @@ export default function Dashboard() {
                           value: d.value,
                         }))}
                         title={chart.title}
+                        reasoning={chart.reasoning}
                       />
                     </div>
                   );
@@ -383,6 +387,7 @@ export default function Dashboard() {
                           value: d.value,
                         }))}
                         title={chart.title}
+                        reasoning={chart.reasoning}
                       />
                     </div>
                   );

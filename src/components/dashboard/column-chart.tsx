@@ -2,6 +2,7 @@ import * as am5 from "@amcharts/amcharts5";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import * as am5xy from "@amcharts/amcharts5/xy";
 import { useLayoutEffect, useRef } from "react";
+import ChartReasoningTooltip from "@/components/chart-reasoning-tooltip";
 import { CHART_COLORS } from "@/constants/chart-colors";
 
 interface DataPoint {
@@ -12,6 +13,7 @@ interface DataPoint {
 interface ColumnChartProps {
   data: DataPoint[];
   title?: string;
+  reasoning?: string | null;
   xAxisTitle?: string;
   yAxisTitle?: string;
 }
@@ -19,6 +21,7 @@ interface ColumnChartProps {
 export default function ColumnChartComponent({
   data,
   title,
+  reasoning,
   xAxisTitle,
   yAxisTitle,
 }: ColumnChartProps) {
@@ -148,7 +151,8 @@ export default function ColumnChartComponent({
   }, [data, xAxisTitle, yAxisTitle]);
 
   return (
-    <div className="flex w-full flex-col items-center justify-center">
+    <div className="relative flex w-full flex-col items-center justify-center">
+      {reasoning && <ChartReasoningTooltip reasoning={reasoning} />}
       {title && (
         <h3 className="mb-4 text-center text-gray-950 text-h5">{title}</h3>
       )}

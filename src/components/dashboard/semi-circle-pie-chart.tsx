@@ -2,6 +2,7 @@ import * as am5 from "@amcharts/amcharts5";
 import * as am5percent from "@amcharts/amcharts5/percent";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { useLayoutEffect, useRef } from "react";
+import ChartReasoningTooltip from "@/components/chart-reasoning-tooltip";
 import { CHART_COLORS } from "@/constants/chart-colors";
 import type { ChartDataPoint } from "@/types/dashboard_result";
 
@@ -94,14 +95,10 @@ export default function SemiCirclePieChartComponent({
   }, [data]);
 
   return (
-    <div className="flex w-full flex-col items-center justify-center">
+    <div className="relative flex w-full flex-col items-center justify-center">
+      {reasoning && <ChartReasoningTooltip reasoning={reasoning} />}
       {title && (
         <h3 className="mb-2 text-center text-gray-950 text-h5">{title}</h3>
-      )}
-      {reasoning && (
-        <p className="mb-4 max-w-[90%] text-center text-caption text-gray-600">
-          {reasoning}
-        </p>
       )}
       <div ref={chartRef} style={{ width: "100%", height: "400px" }} />
     </div>

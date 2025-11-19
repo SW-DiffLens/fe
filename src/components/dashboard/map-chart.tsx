@@ -3,6 +3,7 @@ import * as am5map from "@amcharts/amcharts5/map";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import am5geodata_southKoreaLow from "@amcharts/amcharts5-geodata/southKoreaLow";
 import { useLayoutEffect, useRef } from "react";
+import ChartReasoningTooltip from "@/components/chart-reasoning-tooltip";
 import type { ChartDataPoint } from "@/types/dashboard_result";
 
 interface MapChartProps {
@@ -89,14 +90,10 @@ export default function MapChartComponent({
   }, [data]);
 
   return (
-    <div className="flex w-full flex-col items-center justify-center">
+    <div className="relative flex w-full flex-col items-center justify-center">
+      {reasoning && <ChartReasoningTooltip reasoning={reasoning} />}
       {title && (
         <h3 className="mb-2 text-center text-gray-950 text-h5">{title}</h3>
-      )}
-      {reasoning && (
-        <p className="mb-4 max-w-[90%] text-center text-caption text-gray-600">
-          {reasoning}
-        </p>
       )}
       <div ref={chartRef} style={{ width: "100%", height: "500px" }} />
     </div>
