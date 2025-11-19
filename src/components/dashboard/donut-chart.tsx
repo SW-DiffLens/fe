@@ -67,7 +67,7 @@ export default function DonutChartComponent({
     });
 
     // Process data
-    const MAX_ITEMS = 6;
+    const MAX_ITEMS = 5;
     const sortedData = [...data].sort((a, b) => b.value - a.value);
 
     let processedData: { category: string; value: number }[];
