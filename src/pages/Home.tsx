@@ -99,7 +99,13 @@ export default function Home() {
 
   const handleQuickSearch = async (button: QuickSearchButton) => {
     try {
-      const response = await apiClient.post(`/search/recommended/${button.id}`);
+      const response = await apiClient.post(
+        `/search/recommended/${button.id}`,
+        {},
+        {
+          timeout: 60000,
+        }
+      );
       // console.log(response.data);
       navigate(`/dashboard/${response.data.result.search_id}`, {
         state: {
