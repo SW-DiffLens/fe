@@ -39,7 +39,10 @@ export const compareLibraries = async (
 ): Promise<CompareLibrariesApiResponse> => {
   const response = await apiClient.post<CompareLibrariesApiResponse>(
     "/libraries/compare",
-    data
+    data,
+    {
+      timeout: 60000,
+    }
   );
   return response.data;
 };

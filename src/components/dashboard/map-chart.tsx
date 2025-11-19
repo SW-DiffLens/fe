@@ -3,6 +3,7 @@ import * as am5map from "@amcharts/amcharts5/map";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import am5geodata_southKoreaLow from "@amcharts/amcharts5-geodata/southKoreaLow";
 import { useLayoutEffect, useRef } from "react";
+import ChartReasoningTooltip from "@/components/chart-reasoning-tooltip";
 import type { ChartDataPoint } from "@/types/dashboard_result";
 
 interface MapChartProps {
@@ -48,13 +49,13 @@ export default function MapChartComponent({
     polygonSeries.mapPolygons.template.setAll({
       tooltipText: "{name}: {value}",
       interactive: true,
-      fill: am5.color(0xe0e0e0),
+      fill: am5.color(0xf5f4fe),
       strokeWidth: 0.5,
       stroke: am5.color(0xffffff),
     });
 
     polygonSeries.mapPolygons.template.states.create("hover", {
-      fill: am5.color(0x677935),
+      fill: am5.color(0x8569e4),
     });
 
     // Set up heat rules
@@ -62,8 +63,8 @@ export default function MapChartComponent({
       {
         target: polygonSeries.mapPolygons.template,
         dataField: "value",
-        min: am5.color(0xd4e5c3),
-        max: am5.color(0x4a6129),
+        min: am5.color(0xedebfc),
+        max: am5.color(0x764ed9),
         key: "fill",
       },
     ]);
@@ -89,14 +90,10 @@ export default function MapChartComponent({
   }, [data]);
 
   return (
-    <div className="flex w-full flex-col items-center justify-center">
+    <div className="relative flex w-full flex-col items-center justify-center">
+      {reasoning && <ChartReasoningTooltip reasoning={reasoning} />}
       {title && (
         <h3 className="mb-2 text-center text-gray-950 text-h5">{title}</h3>
-      )}
-      {reasoning && (
-        <p className="mb-4 max-w-[90%] text-center text-caption text-gray-600">
-          {reasoning}
-        </p>
       )}
       <div ref={chartRef} style={{ width: "100%", height: "500px" }} />
     </div>

@@ -2,6 +2,7 @@ import * as am5 from "@amcharts/amcharts5";
 import * as am5percent from "@amcharts/amcharts5/percent";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { useLayoutEffect, useRef } from "react";
+import ChartReasoningTooltip from "@/components/chart-reasoning-tooltip";
 import { CHART_COLORS } from "@/constants/chart-colors";
 
 interface DataPoint {
@@ -12,9 +13,14 @@ interface DataPoint {
 interface PieChartProps {
   data: DataPoint[];
   title?: string;
+  reasoning?: string | null;
 }
 
-export default function PieChartComponent({ data, title }: PieChartProps) {
+export default function PieChartComponent({
+  data,
+  title,
+  reasoning,
+}: PieChartProps) {
   const chartRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<am5.Root | null>(null);
 
@@ -65,13 +71,35 @@ export default function PieChartComponent({ data, title }: PieChartProps) {
       stroke: am5.color(0xffffff),
     });
 
-    // Set data
-    const chartData = data.map((item) => ({
-      category: item.label,
-      value: item.value,
-    }));
+    // Process data
+    const MAX_ITEMS = 5;
+    const sortedData = [...data].sort((a, b) => b.value - a.value);
 
-    series.data.setAll(chartData);
+    let processedData: { category: string; value: number }[];
+    if (sortedData.length > MAX_ITEMS) {
+      const topItems = sortedData.slice(0, MAX_ITEMS);
+      const othersSum = sortedData
+        .slice(MAX_ITEMS)
+        .reduce((sum, item) => sum + item.value, 0);
+
+      processedData = [
+        ...topItems.map((item) => ({
+          category: item.label,
+          value: item.value,
+        })),
+        {
+          category: "기타",
+          value: othersSum,
+        },
+      ];
+    } else {
+      processedData = sortedData.map((item) => ({
+        category: item.label,
+        value: item.value,
+      }));
+    }
+
+    series.data.setAll(processedData);
 
     // Add legend
     const legend = chart.children.push(
@@ -93,7 +121,8 @@ export default function PieChartComponent({ data, title }: PieChartProps) {
   }, [data]);
 
   return (
-    <div className="flex w-full flex-col items-center justify-center">
+    <div className="relative flex w-full flex-col items-center justify-center">
+      {reasoning && <ChartReasoningTooltip reasoning={reasoning} />}
       {title && (
         <h3 className="mb-4 text-center text-gray-950 text-h5">{title}</h3>
       )}

@@ -2,6 +2,7 @@ import * as am5 from "@amcharts/amcharts5";
 import * as am5percent from "@amcharts/amcharts5/percent";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { useLayoutEffect, useRef } from "react";
+import ChartReasoningTooltip from "@/components/chart-reasoning-tooltip";
 import { CHART_COLORS } from "@/constants/chart-colors";
 import type { ChartDataPoint } from "@/types/dashboard_result";
 
@@ -54,6 +55,26 @@ export default function DonutChartComponent({
       centerY: 0,
       fontSize: 12,
       fill: am5.color(0x000000),
+      maxWidth: 90,
+      oversizedBehavior: "truncate",
+    });
+
+    // Dynamic label text based on rank
+    series.labels.template.adapters.add("text", (text, target) => {
+      // biome-ignore lint/suspicious/noExplicitAny: amCharts dataItem type is complex
+      const dataItem = target.dataItem as any;
+      if (dataItem) {
+        const index = series.dataItems.indexOf(dataItem);
+        const category = dataItem.get("category") as string;
+
+        // 1, 2, 3위
+        if (index < 3 || category === "기타") {
+          return "{category}\n{valuePercentTotal.formatNumber('0.0')}%";
+        }
+        // 4, 5위
+        return "{category}";
+      }
+      return text;
     });
 
     series.ticks.template.setAll({
@@ -67,7 +88,7 @@ export default function DonutChartComponent({
     });
 
     // Process data
-    const MAX_ITEMS = 6;
+    const MAX_ITEMS = 5;
     const sortedData = [...data].sort((a, b) => b.value - a.value);
 
     let processedData: { category: string; value: number }[];
@@ -116,14 +137,10 @@ export default function DonutChartComponent({
   }, [data]);
 
   return (
-    <div className="flex w-full flex-col items-center justify-center">
+    <div className="relative flex w-full flex-col items-center justify-center">
+      {reasoning && <ChartReasoningTooltip reasoning={reasoning} />}
       {title && (
         <h3 className="mb-2 text-center text-gray-950 text-h5">{title}</h3>
-      )}
-      {reasoning && (
-        <p className="mb-4 max-w-[90%] text-center text-caption text-gray-600">
-          {reasoning}
-        </p>
       )}
       <div ref={chartRef} style={{ width: "100%", height: "400px" }} />
     </div>
