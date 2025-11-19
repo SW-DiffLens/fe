@@ -9,6 +9,7 @@ import Button from "@/components/button";
 import FilterSection from "@/components/home/filter-section";
 import QuickSearchButton from "@/components/home/quick-search-button";
 import SearchBar from "@/components/search-bar";
+import Tooltip from "@/components/tooltip";
 import { filterSections } from "@/data/filter-sectioins";
 
 interface QuickSearchButton {
@@ -167,52 +168,46 @@ export default function Home() {
               검색어를 입력하세요
             </div>
             <div className="flex w-fit items-center justify-center gap-[20px]">
-              <div className="group relative flex items-center justify-center gap-[4px]">
-                <input
-                  type="radio"
-                  name="search-type"
-                  id="FLEXIBLE"
-                  value="FLEXIBLE"
-                  checked={searchType === "FLEXIBLE"}
-                  onChange={(e) => handleSearchTypeChange(e.target.value)}
-                />
-                <label
-                  htmlFor="FLEXIBLE"
-                  className={`cursor-pointer text-subtitle1 ${
-                    searchType === "FLEXIBLE" ? "text-black" : "text-gray-600"
-                  }`}
-                >
-                  유연 모드
-                </label>
-                <div className="-translate-x-1/2 invisible absolute bottom-full left-1/2 mb-2 w-[280px] rounded-lg bg-gray-900 px-3 py-2 text-center text-caption text-white opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100">
-                  필터 조건을 참고하되 의미적 유사성을 우선시하여 더 넓은 범위의
-                  결과를 제공합니다.
-                  <div className="-translate-x-1/2 absolute top-full left-1/2 border-4 border-transparent border-t-gray-900"></div>
+              <Tooltip content="필터 조건을 참고하되 의미적 유사성을 우선시하여 더 넓은 범위의 결과를 제공합니다.">
+                <div className="flex items-center justify-center gap-[4px]">
+                  <input
+                    type="radio"
+                    name="search-type"
+                    id="FLEXIBLE"
+                    value="FLEXIBLE"
+                    checked={searchType === "FLEXIBLE"}
+                    onChange={(e) => handleSearchTypeChange(e.target.value)}
+                  />
+                  <label
+                    htmlFor="FLEXIBLE"
+                    className={`cursor-pointer text-subtitle1 ${
+                      searchType === "FLEXIBLE" ? "text-black" : "text-gray-600"
+                    }`}
+                  >
+                    유연 모드
+                  </label>
                 </div>
-              </div>
-              <div className="group relative flex items-center justify-center gap-[4px]">
-                <input
-                  type="radio"
-                  name="search-type"
-                  id="STRICT"
-                  value="STRICT"
-                  checked={searchType === "STRICT"}
-                  onChange={(e) => handleSearchTypeChange(e.target.value)}
-                />
-                <label
-                  htmlFor="STRICT"
-                  className={`cursor-pointer text-subtitle1 ${
-                    searchType === "STRICT" ? "text-black" : "text-gray-600"
-                  }`}
-                >
-                  엄격 모드
-                </label>
-                <div className="-translate-x-1/2 invisible absolute bottom-full left-1/2 mb-2 w-[280px] rounded-lg bg-gray-900 px-3 py-2 text-center text-caption text-white opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100">
-                  사용자가 지정한 필터 조건을 정확히 만족하는 패널만을
-                  검색합니다.
-                  <div className="-translate-x-1/2 absolute top-full left-1/2 border-4 border-transparent border-t-gray-900"></div>
+              </Tooltip>
+              <Tooltip content="사용자가 지정한 필터 조건을 정확히 만족하는 패널만을 검색합니다.">
+                <div className="flex items-center justify-center gap-[4px]">
+                  <input
+                    type="radio"
+                    name="search-type"
+                    id="STRICT"
+                    value="STRICT"
+                    checked={searchType === "STRICT"}
+                    onChange={(e) => handleSearchTypeChange(e.target.value)}
+                  />
+                  <label
+                    htmlFor="STRICT"
+                    className={`cursor-pointer text-subtitle1 ${
+                      searchType === "STRICT" ? "text-black" : "text-gray-600"
+                    }`}
+                  >
+                    엄격 모드
+                  </label>
                 </div>
-              </div>
+              </Tooltip>
             </div>
           </div>
           <SearchBar
