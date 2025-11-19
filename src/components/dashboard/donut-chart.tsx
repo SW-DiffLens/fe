@@ -55,6 +55,26 @@ export default function DonutChartComponent({
       centerY: 0,
       fontSize: 12,
       fill: am5.color(0x000000),
+      maxWidth: 90,
+      oversizedBehavior: "truncate",
+    });
+
+    // Dynamic label text based on rank
+    series.labels.template.adapters.add("text", (text, target) => {
+      // biome-ignore lint/suspicious/noExplicitAny: amCharts dataItem type is complex
+      const dataItem = target.dataItem as any;
+      if (dataItem) {
+        const index = series.dataItems.indexOf(dataItem);
+        const category = dataItem.get("category") as string;
+
+        // 1, 2, 3위
+        if (index < 3 || category === "기타") {
+          return "{category}\n{valuePercentTotal.formatNumber('0.0')}%";
+        }
+        // 4, 5위
+        return "{category}";
+      }
+      return text;
     });
 
     series.ticks.template.setAll({
