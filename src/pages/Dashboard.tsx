@@ -212,8 +212,8 @@ export default function Dashboard() {
             </div>
           </div>
           {/* 오른쪽 */}
-          <div className="flex h-full w-full flex-col items-start justify-center gap-[28px]">
-            {/* {!isLibrary && (
+          {/* <div className="flex h-full w-full flex-col items-start justify-center gap-[28px]">
+             {!isLibrary && (
               <div className="flex w-full flex-col items-start justify-center gap-[16px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
                 <div className="w-full text-start text-gray-950 text-h5">
                   검색 결과 내 재검색
@@ -224,7 +224,7 @@ export default function Dashboard() {
                   onChange={(e) => setSearchValue(e.target.value)}
                 />
               </div>
-            )} */}
+            )} 
             <div className="flex w-full flex-col items-start justify-center gap-[16px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
               <div className="w-full text-start text-gray-950 text-h5">
                 {isLibrary ? "라이브러리 태그" : "검색 조건 및 필터"}
@@ -276,7 +276,7 @@ export default function Dashboard() {
                 </div>
               )}
             </div>
-          </div>
+          </div> */}
         </div>
         {/* 중간 영역 */}
         <div className="flex w-full flex-col items-start justify-center gap-[20px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
