@@ -182,33 +182,81 @@ export default function Compare() {
           <div className="grid w-full grid-cols-3 gap-[40px]">
             <BasicInfo
               title="평균 연령"
-              groupA={`${compareData.basic_comparison.group1.avg_age}세`}
-              groupB={`${compareData.basic_comparison.group2.avg_age}세`}
+              groupA={
+                compareData.basic_comparison.group1.avg_age != null
+                  ? `${compareData.basic_comparison.group1.avg_age}세`
+                  : "-"
+              }
+              groupB={
+                compareData.basic_comparison.group2.avg_age != null
+                  ? `${compareData.basic_comparison.group2.avg_age}세`
+                  : "-"
+              }
             />
             <BasicInfo
               title="평균 가족 수"
-              groupA={`${compareData.basic_comparison.group1.avg_family}명`}
-              groupB={`${compareData.basic_comparison.group2.avg_family}명`}
+              groupA={
+                compareData.basic_comparison.group1.avg_family != null
+                  ? `${compareData.basic_comparison.group1.avg_family}명`
+                  : "-"
+              }
+              groupB={
+                compareData.basic_comparison.group2.avg_family != null
+                  ? `${compareData.basic_comparison.group2.avg_family}명`
+                  : "-"
+              }
             />
             <BasicInfo
               title="평균 자녀 수"
-              groupA={`${compareData.basic_comparison.group1.avg_children}명`}
-              groupB={`${compareData.basic_comparison.group2.avg_children}명`}
+              groupA={
+                compareData.basic_comparison.group1.avg_children != null
+                  ? `${compareData.basic_comparison.group1.avg_children}명`
+                  : "-"
+              }
+              groupB={
+                compareData.basic_comparison.group2.avg_children != null
+                  ? `${compareData.basic_comparison.group2.avg_children}명`
+                  : "-"
+              }
             />
             <BasicInfo
               title="차량 보유율"
-              groupA={`${compareData.basic_comparison.group1.rate_possessing_car}%`}
-              groupB={`${compareData.basic_comparison.group2.rate_possessing_car}%`}
+              groupA={
+                compareData.basic_comparison.group1.rate_possessing_car != null
+                  ? `${compareData.basic_comparison.group1.rate_possessing_car}%`
+                  : "-"
+              }
+              groupB={
+                compareData.basic_comparison.group2.rate_possessing_car != null
+                  ? `${compareData.basic_comparison.group2.rate_possessing_car}%`
+                  : "-"
+              }
             />
             <BasicInfo
               title="평균 개인 소득"
-              groupA={`${compareData.basic_comparison.group1.avg_personal_income}만원`}
-              groupB={`${compareData.basic_comparison.group2.avg_personal_income}만원`}
+              groupA={
+                compareData.basic_comparison.group1.avg_personal_income != null
+                  ? `${compareData.basic_comparison.group1.avg_personal_income}만원`
+                  : "-"
+              }
+              groupB={
+                compareData.basic_comparison.group2.avg_personal_income != null
+                  ? `${compareData.basic_comparison.group2.avg_personal_income}만원`
+                  : "-"
+              }
             />
             <BasicInfo
               title="평균 가구 소득"
-              groupA={`${compareData.basic_comparison.group1.avg_family_income}만원`}
-              groupB={`${compareData.basic_comparison.group2.avg_family_income}만원`}
+              groupA={
+                compareData.basic_comparison.group1.avg_family_income != null
+                  ? `${compareData.basic_comparison.group1.avg_family_income}만원`
+                  : "-"
+              }
+              groupB={
+                compareData.basic_comparison.group2.avg_family_income != null
+                  ? `${compareData.basic_comparison.group2.avg_family_income}만원`
+                  : "-"
+              }
             />
           </div>
         </div>
