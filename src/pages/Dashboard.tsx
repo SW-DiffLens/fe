@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import apiClient from "@/api/client";
 import { getLibraryById } from "@/api/library";
-import PlusIcon from "@/assets/icons/ic_plus";
+import BestMatchProfile from "@/components/dashboard/best-match-profile";
 import ColumnChartComponent from "@/components/dashboard/column-chart";
 import DonutChartComponent from "@/components/dashboard/donut-chart";
 import IndividualResponses from "@/components/dashboard/individual-responses";
@@ -11,7 +11,6 @@ import MapChartComponent from "@/components/dashboard/map-chart";
 import PieChartComponent from "@/components/dashboard/pie-chart";
 import SemiCirclePieChartComponent from "@/components/dashboard/semi-circle-pie-chart";
 import StackedBarChartComponent from "@/components/dashboard/stacked-bar-chart";
-import SearchBar from "@/components/search-bar";
 import { useDashboard } from "@/contexts/DashboardContext";
 import type { DashboardPanel } from "@/types/dashboard_panel";
 import type { DashboardResult } from "@/types/dashboard_result";
@@ -21,7 +20,6 @@ export default function Dashboard() {
   const location = useLocation();
   const navigate = useNavigate();
   const params = useParams();
-  const [searchValue, setSearchValue] = useState("");
   const [data, setData] = useState<DashboardPanel>();
   const [page, setPage] = useState(1);
   const { setDashboardData } = useDashboard();
@@ -65,6 +63,7 @@ export default function Dashboard() {
                 residence: panel.residence || "-",
                 personal_income: "-", // 라이브러리 데이터에는 소득 정보가 없음
                 concordance_rate: "-", // 라이브러리에는 일치율이 없음
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
               })) as any,
               page_info: {
                 offset: (page - 1) * 10,
@@ -214,6 +213,22 @@ export default function Dashboard() {
             </div>
           </div>
           {/* 오른쪽 */}
+          {!isLibrary && data?.values?.[0] && (
+            <BestMatchProfile
+              respondentId={data.values[0].respondent_id}
+              concordanceRate={data.values[0].concordance_rate}
+              gender={data.values[0].gender}
+              age={data.values[0].age}
+              residence={data.values[0].residence}
+              personalIncome={data.values[0].personal_income}
+              onViewDetails={() =>
+                handlePanelClick(
+                  data.values[0].respondent_id,
+                  data.values[0].concordance_rate
+                )
+              }
+            />
+          )}
           {/* <div className="flex h-full w-full flex-col items-start justify-center gap-[28px]">
              {!isLibrary && (
               <div className="flex w-full flex-col items-start justify-center gap-[16px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
@@ -226,7 +241,7 @@ export default function Dashboard() {
                   onChange={(e) => setSearchValue(e.target.value)}
                 />
               </div>
-            )} 
+            )}
             <div className="flex w-full flex-col items-start justify-center gap-[16px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
               <div className="w-full text-start text-gray-950 text-h5">
                 {isLibrary ? "라이브러리 태그" : "검색 조건 및 필터"}
