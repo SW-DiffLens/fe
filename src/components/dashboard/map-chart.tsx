@@ -48,13 +48,13 @@ export default function MapChartComponent({
     polygonSeries.mapPolygons.template.setAll({
       tooltipText: "{name}: {value}",
       interactive: true,
-      fill: am5.color(0xe0e0e0),
+      fill: am5.color(0xf5f4fe),
       strokeWidth: 0.5,
       stroke: am5.color(0xffffff),
     });
 
     polygonSeries.mapPolygons.template.states.create("hover", {
-      fill: am5.color(0x677935),
+      fill: am5.color(0x8569e4),
     });
 
     // Set up heat rules
@@ -62,8 +62,8 @@ export default function MapChartComponent({
       {
         target: polygonSeries.mapPolygons.template,
         dataField: "value",
-        min: am5.color(0xd4e5c3),
-        max: am5.color(0x4a6129),
+        min: am5.color(0xedebfc),
+        max: am5.color(0x764ed9),
         key: "fill",
       },
     ]);
