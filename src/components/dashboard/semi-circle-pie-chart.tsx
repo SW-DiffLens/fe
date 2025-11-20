@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from "react";
 import ChartReasoningTooltip from "@/components/chart-reasoning-tooltip";
 import { CHART_COLORS } from "@/constants/chart-colors";
 import type { ChartDataPoint } from "@/types/dashboard_result";
+import { truncateBeforeParenthesis } from "@/utils/text";
 
 interface SemiCirclePieChartProps {
   data: ChartDataPoint[];
@@ -69,7 +70,7 @@ export default function SemiCirclePieChartComponent({
 
     // Set data
     const chartData = data.map((item) => ({
-      category: item.category || "Unknown",
+      category: truncateBeforeParenthesis(item.category || "Unknown"),
       value: item.value,
     }));
 

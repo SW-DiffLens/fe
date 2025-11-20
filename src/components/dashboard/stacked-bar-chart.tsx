@@ -4,6 +4,7 @@ import * as am5xy from "@amcharts/amcharts5/xy";
 import { useLayoutEffect, useRef } from "react";
 import ChartReasoningTooltip from "@/components/chart-reasoning-tooltip";
 import type { ChartDataPoint } from "@/types/dashboard_result";
+import { truncateBeforeParenthesis } from "@/utils/text";
 
 interface StackedBarChartProps {
   data: ChartDataPoint[];
@@ -57,7 +58,7 @@ export default function StackedBarChartComponent({
     );
 
     const chartData = data.map((item) => ({
-      category: item.category || "Unknown",
+      category: truncateBeforeParenthesis(item.category || "Unknown"),
       male: -(item.male || 0), // negative for left side
       female: item.female || 0,
       male_max: item.male_max || 0,
