@@ -4,11 +4,13 @@ import type { DashboardPanel } from "@/types/dashboard_panel";
 interface ResponseTableProps {
   data: DashboardPanel | undefined;
   onPanelClick: (panelId: string, concordanceRate: string) => void;
+  isLibrary?: boolean;
 }
 
 export default function ResponseTable({
   data,
   onPanelClick,
+  isLibrary = false,
 }: ResponseTableProps) {
   return (
     <table className="w-full table-fixed text-left">
@@ -19,7 +21,7 @@ export default function ResponseTable({
           <th className="px-3">나이</th>
           <th className="px-3">거주지</th>
           <th className="px-3">월소득</th>
-          <th className="px-3">일치율</th>
+          {!isLibrary && <th className="px-3">일치율</th>}
         </tr>
       </thead>
       <tbody>
@@ -55,7 +57,7 @@ export default function ResponseTable({
               <td className="px-3">{item.age}</td>
               <td className="px-3">{item.residence}</td>
               <td className="px-3">{item.personal_income}</td>
-              <td className="px-3">{concordancePercent}</td>
+              {!isLibrary && <td className="px-3">{concordancePercent}</td>}
             </tr>
           );
         })}

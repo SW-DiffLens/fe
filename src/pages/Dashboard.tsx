@@ -420,6 +420,7 @@ export default function Dashboard() {
           onPanelClick={handlePanelClick}
           searchId={isLibrary ? String(libraryId) : search_id || ""}
           question={isLibrary ? libraryData?.library_name || "" : question}
+          isLibrary={isLibrary}
         />
       </div>
     </div>

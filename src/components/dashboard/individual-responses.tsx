@@ -10,6 +10,7 @@ interface IndividualResponsesProps {
   onPanelClick: (panelId: string, concordanceRate: string) => void;
   searchId: string;
   question: string;
+  isLibrary?: boolean;
 }
 
 export default function IndividualResponses({
@@ -19,6 +20,7 @@ export default function IndividualResponses({
   onPanelClick,
   searchId,
   question,
+  isLibrary = false,
 }: IndividualResponsesProps) {
   const navigate = useNavigate();
 
@@ -43,7 +45,7 @@ export default function IndividualResponses({
           전체보기
         </button>
       </div>
-      <ResponseTable data={data} onPanelClick={onPanelClick} />
+      <ResponseTable data={data} onPanelClick={onPanelClick} isLibrary={isLibrary} />
       <Pagenation
         page={page}
         setPage={setPage}
