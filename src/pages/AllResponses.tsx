@@ -79,7 +79,7 @@ export default function AllResponses() {
             전체 응답 데이터 ({data?.page_info?.total_count || 0}명)
           </div>
         </div>
-        <ResponseTable data={data} onPanelClick={handlePanelClick} />
+        <ResponseTable data={data} onPanelClick={handlePanelClick} isLibrary={false} />
         <Pagenation
           page={page}
           setPage={setPage}
