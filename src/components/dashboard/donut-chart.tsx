@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from "react";
 import ChartReasoningTooltip from "@/components/chart-reasoning-tooltip";
 import { CHART_COLORS } from "@/constants/chart-colors";
 import type { ChartDataPoint } from "@/types/dashboard_result";
+import { truncateBeforeParenthesis } from "@/utils/text";
 
 interface DonutChartProps {
   data: ChartDataPoint[];
@@ -100,7 +101,7 @@ export default function DonutChartComponent({
 
       processedData = [
         ...topItems.map((item) => ({
-          category: item.category || "Unknown",
+          category: truncateBeforeParenthesis(item.category || "Unknown"),
           value: item.value,
         })),
         {
@@ -110,7 +111,7 @@ export default function DonutChartComponent({
       ];
     } else {
       processedData = sortedData.map((item) => ({
-        category: item.category || "Unknown",
+        category: truncateBeforeParenthesis(item.category || "Unknown"),
         value: item.value,
       }));
     }
