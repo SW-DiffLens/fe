@@ -45,7 +45,11 @@ export default function IndividualResponses({
           전체보기
         </button>
       </div>
-      <ResponseTable data={data} onPanelClick={onPanelClick} isLibrary={isLibrary} />
+      <ResponseTable
+        data={data}
+        onPanelClick={onPanelClick}
+        isLibrary={isLibrary}
+      />
       <Pagenation
         page={page}
         setPage={setPage}

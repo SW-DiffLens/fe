@@ -14,6 +14,8 @@ interface ButtonProps {
   bgColor?: string;
   textColor?: string;
   borderColor?: string;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 const sizeClasses = {
@@ -33,6 +35,8 @@ export default function Button({
   bgColor = "primary-700",
   textColor = "white",
   borderColor = "primary-700",
+  className = "",
+  style,
 }: ButtonProps) {
   const baseClasses = "rounded-lg disabled:cursor-not-allowed cursor-pointer";
   const sizeClass = sizeClasses[size];
@@ -45,10 +49,11 @@ export default function Button({
   const fullWidthClass = fullWidth ? "w-full" : "";
   return (
     <button
-      className={`${baseClasses} ${sizeClass} ${variantClass} ${fullWidthClass}`}
+      className={`${baseClasses} ${sizeClass} ${variantClass} ${fullWidthClass} ${className}`}
       onClick={onClick}
       disabled={disabled}
       type={type}
+      style={style}
     >
       {children}
     </button>
