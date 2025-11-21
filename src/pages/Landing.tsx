@@ -4,6 +4,7 @@ import DocSearchIcon from "@/assets/icons/ic_doc_search";
 import ExportIcon from "@/assets/icons/ic_export";
 import GroupIcon from "@/assets/icons/ic_group";
 import StatusSquareIcon from "@/assets/icons/ic_status_square";
+import mockupImage from "@/assets/images/mockup.webp";
 import LogoText from "@/assets/logos/logo_text";
 import Button from "@/components/button";
 
@@ -12,8 +13,8 @@ export default function Landing() {
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-center bg-opacity-200 px-6 pt-[158px] pb-[120px]">
-        <div className="grid w-full max-w-[1080px] grid-cols-2 gap-[80px]">
-          <div className="flex flex-col gap-[64px] py-[32px]">
+        <div className="flex w-full max-w-7xl gap-4">
+          <div className="flex flex-4 flex-col gap-[64px] py-[32px]">
             <div className="flex flex-col gap-[48px]">
               <div className="text-h2 text-primary-950">
                 차별화된 패널 데이터
@@ -44,7 +45,13 @@ export default function Landing() {
               </Button>
             </div>
           </div>
-          <div className="h-[425px] w-full rounded-lg bg-gray-300" />
+          <div className="flex w-full flex-6 items-center justify-center">
+            <img
+              src={mockupImage}
+              alt="DiffLens Mockup"
+              className="h-auto w-full max-w-md md:max-w-lg lg:max-w-[900px]"
+            />
+          </div>
         </div>
       </div>
       <div className="flex flex-col items-center gap-[64px] bg-opacity-700 px-6 py-[80px]">
