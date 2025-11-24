@@ -298,7 +298,7 @@ export default function Dashboard() {
         {/* 중간 영역 */}
         <div className="flex w-full flex-col items-start justify-center gap-[20px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
           <div className="w-full text-start text-gray-950 text-h4">
-            상세 분석
+            응답자 분포
           </div>
           {/* <div className="flex w-full items-center justify-start gap-[20px] border-gray-500 border-b-[0.5px]">
             <div
@@ -322,7 +322,7 @@ export default function Dashboard() {
               교차 분석 도구
             </div>
           </div> */}
-          <div className="grid w-full auto-cols-[480px] grid-flow-col items-start justify-start gap-[36px] overflow-x-auto">
+          <div className="flex w-full justify-center gap-12 overflow-x-hidden align-center">
             {result?.sub_charts?.map((chart, index) => {
               const key = `${chart.metric}-${index}`;
               switch (chart.chart_type) {
