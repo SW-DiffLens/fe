@@ -23,8 +23,8 @@ export default function SideBar() {
 
   return (
     <div
-      className={`fixed top-0 left-0 z-20 flex h-screen flex-col items-start justify-between overflow-hidden px-4 py-5 shadow-md transition-all duration-300 ease-in-out ${
-        isOpen ? "w-[200px]" : "w-[72px]"
+      className={`fixed top-0 left-0 z-20 flex h-screen flex-col items-start justify-between overflow-hidden px-4 py-5 shadow-md backdrop-blur-xl transition-all duration-300 ease-in-out ${
+        isOpen ? "w-[200px] bg-white/70" : "w-[72px]"
       }`}
     >
       <div className="flex flex-col items-start justify-start gap-[60px]">
