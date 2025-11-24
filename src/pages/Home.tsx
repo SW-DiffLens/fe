@@ -1,5 +1,6 @@
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "@/api/client";
 import ChevronDownIcon from "@/assets/icons/ic_chevron_down";
@@ -20,11 +21,9 @@ interface QuickSearchButton {
 
 export default function Home() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [searchValue, setSearchValue] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [quickSearchButtons, setQuickSearchButtons] = useState<
-    QuickSearchButton[]
-  >([]);
 
   const [totalSelectedChips, setTotalSelectedChips] = useState(0);
   const [selectedFilterCodes, setSelectedFilterCodes] = useState<number[][]>(
@@ -37,19 +36,13 @@ export default function Home() {
     setSearchType(type);
   };
 
-  useEffect(() => {
-    const fetchQuickSearchButtons = async () => {
-      try {
-        const response = await apiClient.get("/search/recommended");
-        setQuickSearchButtons(response.data.result.recommendations);
-        console.log(response.data);
-      } catch (error) {
-        console.error("빠른 검색 추천 데이터 로드 실패:", error);
-      }
-    };
-
-    fetchQuickSearchButtons();
-  }, []);
+  const { data: quickSearchButtons = [] } = useQuery<QuickSearchButton[]>({
+    queryKey: ["quickSearchButtons"],
+    queryFn: async () => {
+      const response = await apiClient.get("/search/recommended");
+      return response.data.result.recommendations;
+    },
+  });
 
   const handleSectionSelectionChange = (
     sectionIndex: number,
@@ -145,9 +138,10 @@ export default function Home() {
 
           // 자연어 검색도 실패하면 추천 검색어 API 재호출
           try {
-            const refreshResponse = await apiClient.get("/search/recommended");
-            setQuickSearchButtons(refreshResponse.data.result.recommendations);
-            console.log(refreshResponse.data);
+            // React Query 캐시 무효화 후 자동 재요청
+            await queryClient.invalidateQueries({
+              queryKey: ["quickSearchButtons"],
+            });
           } catch (refreshError) {
             console.error("추천 검색어 갱신 실패:", refreshError);
           }

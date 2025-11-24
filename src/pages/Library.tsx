@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getLibraries } from "@/api/library";
 import BarChartIcon from "@/assets/icons/ic_bar_chart";
@@ -8,7 +9,6 @@ import Button from "@/components/button";
 import Card from "@/components/library/card";
 import DropdownFilter from "@/components/library/dropdown-filter";
 import Modal from "@/components/modal";
-import type { Library } from "@/types/library";
 
 const filterOptions = [
   {
@@ -25,8 +25,6 @@ const filterOptions = [
 
 export default function Library() {
   const navigate = useNavigate();
-  const [libraries, setLibraries] = useState<Library[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [openFilters, setOpenFilters] = useState<Record<number, boolean>>({});
@@ -42,24 +40,18 @@ export default function Library() {
     )
   );
 
-  // 라이브러리 목록 조회
-  useEffect(() => {
-    const fetchLibraries = async () => {
-      try {
-        setIsLoading(true);
-        const response = await getLibraries();
-        if (response.is_success) {
-          setLibraries(response.result.libraries);
-        }
-      } catch (error) {
-        console.error("Failed to fetch libraries:", error);
-      } finally {
-        setIsLoading(false);
+  const { data, isLoading } = useQuery({
+    queryKey: ["libraries"],
+    queryFn: async () => {
+      const response = await getLibraries();
+      if (response.is_success) {
+        return response.result.libraries;
       }
-    };
+      return [];
+    },
+  });
 
-    fetchLibraries();
-  }, []);
+  const libraries = data ?? [];
 
   const handleCardSelect = (id: number) => {
     setSelectedCards((prev) => [...prev, id]);
