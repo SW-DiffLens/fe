@@ -4,6 +4,7 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import am5geodata_southKoreaLow from "@amcharts/amcharts5-geodata/southKoreaLow";
 import { useLayoutEffect, useRef } from "react";
 import ChartReasoningTooltip from "@/components/chart-reasoning-tooltip";
+import { REGION_NAME_MAP } from "@/constants/region-map";
 import type { ChartDataPoint } from "@/types/dashboard_result";
 
 interface MapChartProps {
@@ -46,8 +47,24 @@ export default function MapChartComponent({
       })
     );
 
+    polygonSeries.mapPolygons.template.adapters.add(
+      "tooltipText",
+      (_text, target) => {
+        const dataContext = target.dataItem?.dataContext as unknown as {
+          id?: string;
+          name?: string;
+          value?: number;
+        };
+        const id = dataContext?.id;
+        const value = dataContext?.value;
+        const name = id
+          ? REGION_NAME_MAP[id] || dataContext?.name || id
+          : dataContext?.name || "";
+        return value !== undefined ? `${name}: ${value}` : name;
+      }
+    );
+
     polygonSeries.mapPolygons.template.setAll({
-      tooltipText: "{name}: {value}",
       interactive: true,
       fill: am5.color(0xf5f4fe),
       strokeWidth: 0.5,
@@ -72,7 +89,7 @@ export default function MapChartComponent({
     // Prepare data with region IDs
     const chartData = data.map((item) => ({
       id: item.id,
-      name: item.name,
+      name: item.name || (item.id ? REGION_NAME_MAP[item.id] : undefined),
       value: item.value,
     }));
 
