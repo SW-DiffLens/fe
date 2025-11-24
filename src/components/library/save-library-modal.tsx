@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { createPortal } from "react-dom";
 import {
   addSearchHistoryToLibrary,
@@ -7,7 +8,6 @@ import {
 } from "@/api/library";
 import DownloadIcon from "@/assets/icons/ic_download";
 import Button from "@/components/button";
-import type { Library } from "@/types/library";
 
 interface SaveLibraryModalProps {
   open: boolean;
@@ -25,29 +25,24 @@ export default function SaveLibraryModal({
   const [saveType, setSaveType] = useState<"new" | "existing">("new");
   const [libraryName, setLibraryName] = useState("");
   const [tags, setTags] = useState("");
-  const [libraries, setLibraries] = useState<Library[]>([]);
   const [selectedLibraryId, setSelectedLibraryId] = useState<number | null>(
     null
   );
   const [isLoading, setIsLoading] = useState(false);
 
-  // Fetch libraries when modal opens and "existing" is selected
-  useEffect(() => {
-    const fetchLibraries = async () => {
-      if (open && saveType === "existing") {
-        try {
-          const response = await getLibraries();
-          if (response.is_success) {
-            setLibraries(response.result.libraries);
-          }
-        } catch (error) {
-          console.error("Failed to fetch libraries:", error);
-        }
+  const { data } = useQuery({
+    queryKey: ["libraries"],
+    queryFn: async () => {
+      const response = await getLibraries();
+      if (response.is_success) {
+        return response.result.libraries;
       }
-    };
+      return [];
+    },
+    enabled: open && saveType === "existing",
+  });
 
-    fetchLibraries();
-  }, [open, saveType]);
+  const libraries = data ?? [];
 
   const handleClose = () => {
     setLibraryName("");
