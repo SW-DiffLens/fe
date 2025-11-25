@@ -114,7 +114,7 @@ export default function Home() {
           timeout: 60000,
         }
       );
-      // console.log(response.data);
+
       navigate(`/dashboard/${response.data.result.search_id}`, {
         state: {
           result: response.data.result,
@@ -125,41 +125,44 @@ export default function Home() {
     } catch (error) {
       console.error("빠른 검색 요청 실패:", error);
       const axiosError = error as AxiosError<{ message?: string }>;
-      // 캐시 만료 오류인지 확인
+
       const isExpiredError =
         axiosError.response?.data.message === "만료된 추천 검색어입니다.";
 
       if (isExpiredError) {
-        // 만료된 경우 title을 사용해서 자연어 검색 API 호출
+        // 만료된 경우 자연어 검색으로 폴백
         try {
           const allFilterCodes = selectedFilterCodes.flat();
-          const searchQuery = button.title;
-
           const response = await apiClient.post(
             "/search",
             {
-              question: searchQuery,
+              question: button.title,
               mode: searchType || "FLEXIBLE",
               filters: allFilterCodes,
             },
             {
-              timeout: 60000, // 60초로 증가
+              timeout: 60000,
             }
           );
-          console.log(response.data);
+
+          navigate(`/dashboard/${response.data.result.search_id}`, {
+            state: {
+              result: response.data.result,
+              search_id: response.data.result.search_id,
+              question: button.title,
+            },
+          });
+
+          // 성공적으로 폴백했으면 추천 검색어 갱신
+          queryClient.invalidateQueries({
+            queryKey: ["quickSearchButtons"],
+          });
         } catch (searchError) {
           console.error("자연어 검색 실패:", searchError);
-
-          // 자연어 검색도 실패하면 추천 검색어 API 재호출
-          try {
-            // React Query 캐시 무효화 후 자동 재요청
-            await queryClient.invalidateQueries({
-              queryKey: ["quickSearchButtons"],
-            });
-          } catch (refreshError) {
-            console.error("추천 검색어 갱신 실패:", refreshError);
-          }
+          alert("검색에 실패했습니다. 다시 시도해주세요.");
         }
+      } else {
+        alert("검색에 실패했습니다. 다시 시도해주세요.");
       }
     }
   };
