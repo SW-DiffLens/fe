@@ -34,6 +34,13 @@ export default function Signup() {
     if (password2.length === 0) return true;
     return password2 !== password;
   }, [password2, password]);
+
+  const passwordDescription = useMemo(() => {
+    if (password.length === 0) return "비밀번호를 입력하세요.";
+    if (password.length < 9) return "비밀번호는 9자리 이상입니다.";
+    if (password.length > 16) return "비밀번호는 16자리 이하입니다.";
+    return "비밀번호 (9~16자 영문 대소문자, 숫자, 특수문자 조합)";
+  }, [password]);
   const isTermsError = useMemo(() => {
     return !terms;
   }, [terms]);
@@ -100,7 +107,7 @@ export default function Signup() {
               label="비밀번호"
               type="password"
               placeholder="비밀번호"
-              description="비밀번호 (9~16자 영문 대소문자, 숫자, 특수문자 조합)"
+              description={passwordDescription}
               error={isPasswordError}
               id="password"
             />

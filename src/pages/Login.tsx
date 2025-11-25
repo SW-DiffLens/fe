@@ -21,6 +21,13 @@ export default function Login() {
     return !re.test(password);
   }, [password]);
 
+  const passwordDescription = useMemo(() => {
+    if (password.length === 0) return "비밀번호를 입력하세요.";
+    if (password.length < 9) return "비밀번호는 9자리 이상입니다.";
+    if (password.length > 16) return "비밀번호는 16자리 이하입니다.";
+    return "비밀번호 (9~16자 영문 대소문자, 숫자, 특수문자 조합)";
+  }, [password]);
+
   const onFormChange = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     const target = e.target as HTMLElement;
     if (!(target instanceof HTMLInputElement)) return;
@@ -85,7 +92,7 @@ export default function Login() {
               label="비밀번호"
               type="password"
               placeholder="비밀번호"
-              description="비밀번호는 9자리 이상입니다."
+              description={passwordDescription}
               error={isPasswordError}
               id="password"
             />
