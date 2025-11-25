@@ -79,7 +79,7 @@ export default function StackedBarChartComponent({
     // Create male series (left side)
     const maleSeries = chart.series.push(
       am5xy.ColumnSeries.new(root, {
-        name: "Male",
+        name: "남성",
         xAxis: xAxis,
         yAxis: yAxis,
         valueXField: "male",
@@ -88,7 +88,7 @@ export default function StackedBarChartComponent({
         clustered: false,
         tooltip: am5.Tooltip.new(root, {
           pointerOrientation: "horizontal",
-          labelText: "Male: {valueX}",
+          labelText: "남성: {valueX}",
         }),
       })
     );
@@ -109,7 +109,7 @@ export default function StackedBarChartComponent({
     // Create female series (right side)
     const femaleSeries = chart.series.push(
       am5xy.ColumnSeries.new(root, {
-        name: "Female",
+        name: "여성",
         xAxis: xAxis,
         yAxis: yAxis,
         valueXField: "female",
@@ -118,7 +118,7 @@ export default function StackedBarChartComponent({
         clustered: false,
         tooltip: am5.Tooltip.new(root, {
           pointerOrientation: "horizontal",
-          labelText: "Female: {valueX}",
+          labelText: "여성: {valueX}",
         }),
       })
     );

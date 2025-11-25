@@ -4,7 +4,7 @@ import * as am5xy from "@amcharts/amcharts5/xy";
 import { useLayoutEffect, useRef } from "react";
 import ChartReasoningTooltip from "@/components/chart-reasoning-tooltip";
 import { CHART_COLORS } from "@/constants/chart-colors";
-import { truncateBeforeParenthesis } from "@/utils/text";
+import { processChartCategory } from "@/utils/text";
 
 interface DataPoint {
   label: string;
@@ -72,7 +72,7 @@ export default function ColumnChartComponent({
 
     xAxis.data.setAll(
       data.map((item) => ({
-        category: truncateBeforeParenthesis(item.label),
+        category: processChartCategory(item.label),
       }))
     );
 
@@ -109,7 +109,7 @@ export default function ColumnChartComponent({
 
     // Set data
     const chartData = data.map((item) => ({
-      category: truncateBeforeParenthesis(item.label),
+      category: processChartCategory(item.label),
       value: item.value,
     }));
 
