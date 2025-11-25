@@ -41,7 +41,9 @@ export default function Home() {
     useQuery<QuickSearchButton[]>({
       queryKey: ["quickSearchButtons"],
       queryFn: async () => {
-        const response = await apiClient.get("/search/recommended");
+        const response = await apiClient.get("/search/recommended", {
+          skipGlobalLoading: true,
+        });
         return response.data.result.recommendations;
       },
     });
