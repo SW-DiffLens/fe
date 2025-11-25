@@ -9,8 +9,10 @@ import FilterIcon from "@/assets/icons/ic_filter";
 import Button from "@/components/button";
 import FilterSection from "@/components/home/filter-section";
 import QuickSearchButton from "@/components/home/quick-search-button";
+import QuickSearchButtonSkeleton from "@/components/home/quick-search-button-skeleton";
 import SearchBar from "@/components/search-bar";
 import Tooltip from "@/components/tooltip";
+import { useLoading } from "@/contexts/LoadingContext";
 import { filterSections } from "@/data/filter-sectioins";
 
 interface QuickSearchButton {
@@ -22,6 +24,7 @@ interface QuickSearchButton {
 export default function Home() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { showLoading, hideLoading } = useLoading();
   const [searchValue, setSearchValue] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -36,13 +39,17 @@ export default function Home() {
     setSearchType(type);
   };
 
-  const { data: quickSearchButtons = [] } = useQuery<QuickSearchButton[]>({
-    queryKey: ["quickSearchButtons"],
-    queryFn: async () => {
-      const response = await apiClient.get("/search/recommended");
-      return response.data.result.recommendations;
-    },
-  });
+  const { data: quickSearchButtons = [], isLoading: isQuickSearchLoading } =
+    useQuery<QuickSearchButton[]>({
+      queryKey: ["quickSearchButtons"],
+      queryFn: async () => {
+        const response = await apiClient.get("/search/recommended", {
+          skipGlobalLoading: true,
+          timeout: 60000,
+        });
+        return response.data.result.recommendations;
+      },
+    });
 
   const handleSectionSelectionChange = (
     sectionIndex: number,
@@ -66,6 +73,8 @@ export default function Home() {
 
   const handleSearch = async () => {
     try {
+      showLoading("패널 데이터를 불러오는 중입니다...");
+
       // 모든 섹션의 선택된 code들을 하나의 배열로 합치기
       const allFilterCodes = selectedFilterCodes.flat();
       const response = await apiClient.post(
@@ -77,8 +86,12 @@ export default function Home() {
         },
         {
           timeout: 60000,
+          skipGlobalLoading: true,
         }
       );
+
+      hideLoading();
+
       navigate(`/dashboard/${response.data.result.search_id}`, {
         state: {
           result: response.data.result,
@@ -88,6 +101,7 @@ export default function Home() {
       });
     } catch (error) {
       console.error("검색 요청 실패:", error);
+      hideLoading();
     }
   };
 
@@ -273,14 +287,18 @@ export default function Home() {
         <div className="flex w-full flex-col items-start justify-center gap-[12px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
           <div className="text-gray-950 text-subtitle1">빠른 검색 추천</div>
           <div className="grid w-full grid-cols-3 gap-[12px]">
-            {quickSearchButtons.map((button) => (
-              <QuickSearchButton
-                key={button.id}
-                title={button.title}
-                subtitle={button.description}
-                onClick={() => handleQuickSearch(button)}
-              />
-            ))}
+            {isQuickSearchLoading
+              ? Array.from({ length: 3 }).map((_, index) => (
+                  <QuickSearchButtonSkeleton key={index} />
+                ))
+              : quickSearchButtons.map((button) => (
+                  <QuickSearchButton
+                    key={button.id}
+                    title={button.title}
+                    subtitle={button.description}
+                    onClick={() => handleQuickSearch(button)}
+                  />
+                ))}
           </div>
         </div>
       </div>

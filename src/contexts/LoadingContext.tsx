@@ -8,7 +8,8 @@ import {
 
 interface LoadingContextType {
   isLoading: boolean;
-  showLoading: () => void;
+  loadingMessage: string | null;
+  showLoading: (message?: string) => void;
   hideLoading: () => void;
   setLoading: (loading: boolean) => void;
 }
@@ -30,12 +31,16 @@ interface LoadingProviderProps {
 
 export function LoadingProvider({ children }: LoadingProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState<string | null>(null);
   const requestCountRef = useRef(0);
 
-  const showLoading = () => {
+  const showLoading = (message?: string) => {
     requestCountRef.current += 1;
     if (requestCountRef.current > 0) {
       setIsLoading(true);
+      if (message) {
+        setLoadingMessage(message);
+      }
     }
   };
 
@@ -43,17 +48,27 @@ export function LoadingProvider({ children }: LoadingProviderProps) {
     requestCountRef.current = Math.max(0, requestCountRef.current - 1);
     if (requestCountRef.current === 0) {
       setIsLoading(false);
+      setLoadingMessage(null);
     }
   };
 
   const setLoading = (loading: boolean) => {
     setIsLoading(loading);
     requestCountRef.current = loading ? 1 : 0;
+    if (!loading) {
+      setLoadingMessage(null);
+    }
   };
 
   return (
     <LoadingContext.Provider
-      value={{ isLoading, showLoading, hideLoading, setLoading }}
+      value={{
+        isLoading,
+        loadingMessage,
+        showLoading,
+        hideLoading,
+        setLoading,
+      }}
     >
       {children}
     </LoadingContext.Provider>

@@ -7,11 +7,13 @@ import BasicInfo from "@/components/compare/basic-info";
 import CompareCard from "@/components/compare/card";
 import DistributionBox from "@/components/compare/distribution-box";
 import InsightItem from "@/components/compare/insight-item";
+import { useLoading } from "@/contexts/LoadingContext";
 import type { CompareLibrariesResponse } from "@/types/library";
 
 export default function Compare() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { showLoading, hideLoading } = useLoading();
   const [compareData, setCompareData] =
     useState<CompareLibrariesResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,6 +33,8 @@ export default function Compare() {
 
       try {
         setIsLoading(true);
+        showLoading("라이브러리를 비교 분석하고 있습니다...");
+
         const response = await compareLibraries({
           libraryId1: stateData.libraryId1,
           libraryId2: stateData.libraryId2,
@@ -43,10 +47,12 @@ export default function Compare() {
         console.error("Failed to fetch comparison data:", error);
       } finally {
         setIsLoading(false);
+        hideLoading();
       }
     };
 
     fetchCompareData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateData?.libraryId1, stateData?.libraryId2]);
 
   if (isLoading) {

@@ -1,6 +1,12 @@
 import type { InternalAxiosRequestConfig } from "axios";
 import axios, { type AxiosError } from "axios";
 
+declare module "axios" {
+  export interface AxiosRequestConfig {
+    skipGlobalLoading?: boolean;
+  }
+}
+
 const apiClient = axios.create({
   baseURL: import.meta.env.DEV ? "/api" : "https://api.difflens.site",
   timeout: 10000,
@@ -47,7 +53,9 @@ const publicEndpoints = ["/auth/login/local", "/auth/signup/local"];
 // 요청 인터셉터
 apiClient.interceptors.request.use(
   (config) => {
-    loadingShowCallback?.();
+    if (!config.skipGlobalLoading) {
+      loadingShowCallback?.();
+    }
 
     // 공개 엔드포인트인지 확인
     const isPublicEndpoint = publicEndpoints.some((endpoint) =>
@@ -80,15 +88,21 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => {
     // 성공
-    loadingHideCallback?.();
+    if (!response.config.skipGlobalLoading) {
+      loadingHideCallback?.();
+    }
     return response;
   },
   async (error: AxiosError) => {
     // 에러
-    loadingHideCallback?.();
     const originalRequest = error.config as InternalAxiosRequestConfig & {
       _retry?: boolean;
+      skipGlobalLoading?: boolean;
     };
+
+    if (!originalRequest.skipGlobalLoading) {
+      loadingHideCallback?.();
+    }
 
     // 401
     const isPublicEndpoint = publicEndpoints.some((endpoint) =>

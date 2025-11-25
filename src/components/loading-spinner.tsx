@@ -1,15 +1,64 @@
 /** biome-ignore-all lint/correctness/useUniqueElementIds: <explanation> */
+
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLoading } from "../contexts/LoadingContext";
 
 export const LoadingSpinner = () => {
-  const { isLoading } = useLoading();
+  const { isLoading, loadingMessage } = useLoading();
+  const [displayedText, setDisplayedText] = useState("");
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+
+  const searchMessages = [
+    "패널 데이터를 불러오는 중입니다...",
+    "조건에 맞는 패널을 검색하고 있습니다...",
+    "패널 프로필을 분석하고 있습니다...",
+    "검색 결과를 준비하고 있습니다...",
+  ];
+
+  const compareMessages = [
+    "라이브러리를 비교 분석하고 있습니다...",
+    "인사이트를 생성하고 있습니다...",
+  ];
+
+  const loadingMessages = loadingMessage?.includes("비교")
+    ? compareMessages
+    : searchMessages;
+
+  useEffect(() => {
+    if (!loadingMessage) {
+      setDisplayedText("");
+      setCurrentMessageIndex(0);
+      setCharIndex(0);
+      return;
+    }
+
+    const currentMessage = loadingMessages[currentMessageIndex];
+
+    if (charIndex < currentMessage.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText((prev) => prev + currentMessage[charIndex]);
+        setCharIndex((prev) => prev + 1);
+      }, 150);
+
+      return () => clearTimeout(timeout);
+    } else {
+      const timeout = setTimeout(() => {
+        setDisplayedText("");
+        setCharIndex(0);
+        setCurrentMessageIndex((prev) => (prev + 1) % loadingMessages.length);
+      }, 3000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [loadingMessage, currentMessageIndex, charIndex]);
 
   if (!isLoading) return null;
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[150] flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-200"
+      className="fixed inset-0 z-[150] flex flex-col items-center justify-center gap-6 bg-black/50 backdrop-blur-sm transition-opacity duration-200"
       aria-label="Loading"
       role="status"
     >
@@ -126,6 +175,14 @@ export const LoadingSpinner = () => {
           </defs>
         </svg>
       </div>
+      {loadingMessage && (
+        <div className="mt-4 text-center text-white">
+          <p className="font-medium text-lg tracking-wide">
+            {displayedText}
+            <span className="animate-pulse">|</span>
+          </p>
+        </div>
+      )}
       <span className="sr-only">Loading...</span>
     </div>,
     document.body
