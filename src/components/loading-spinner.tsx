@@ -10,12 +10,21 @@ export const LoadingSpinner = () => {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
 
-  const loadingMessages = [
+  const searchMessages = [
     "패널 데이터를 불러오는 중입니다...",
     "조건에 맞는 패널을 검색하고 있습니다...",
     "패널 프로필을 분석하고 있습니다...",
     "검색 결과를 준비하고 있습니다...",
   ];
+
+  const compareMessages = [
+    "라이브러리를 비교 분석하고 있습니다...",
+    "인사이트를 생성하고 있습니다...",
+  ];
+
+  const loadingMessages = loadingMessage?.includes("비교")
+    ? compareMessages
+    : searchMessages;
 
   useEffect(() => {
     if (!loadingMessage) {
