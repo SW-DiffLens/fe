@@ -38,13 +38,25 @@ export default function Button({
   className = "",
   style,
 }: ButtonProps) {
-  const baseClasses = "rounded-lg disabled:cursor-not-allowed cursor-pointer";
+  const baseClasses = disabled
+    ? "rounded-lg cursor-not-allowed transition-all duration-300 ease-in-out"
+    : "rounded-lg cursor-pointer transition-all duration-300 ease-in-out";
   const sizeClass = sizeClasses[size];
-  const variantClasses: Record<ButtonVariant, string> = {
-    filled: `bg-${bgColor} text-${textColor} flex items-center justify-center gap-[4px]`,
-    outlined: `bg-transparent text-gray-800 border border-${borderColor} flex items-center justify-center gap-[4px]`,
-    icon: `bg-${bgColor} text-${textColor} flex items-center justify-center gap-[4px]`,
-  };
+
+  const variantClasses: Record<ButtonVariant, string> = disabled
+    ? {
+        filled:
+          "bg-gray-300 text-gray-500 border-gray-300 flex items-center justify-center gap-[4px]",
+        outlined:
+          "bg-gray-100 text-gray-500 border border-gray-300 flex items-center justify-center gap-[4px]",
+        icon: "bg-gray-300 text-gray-500 flex items-center justify-center gap-[4px]",
+      }
+    : {
+        filled: `bg-${bgColor} text-${textColor} flex items-center justify-center gap-[4px]`,
+        outlined: `bg-transparent text-gray-800 border border-${borderColor} flex items-center justify-center gap-[4px]`,
+        icon: `bg-${bgColor} text-${textColor} flex items-center justify-center gap-[4px]`,
+      };
+
   const variantClass = variantClasses[variant];
   const fullWidthClass = fullWidth ? "w-full" : "";
   return (

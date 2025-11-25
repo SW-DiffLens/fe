@@ -17,8 +17,15 @@ export default function Login() {
   }, [email]);
   const isPasswordError = useMemo(() => {
     if (password.length === 0) return true;
-    const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,16}$/;
+    const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{9,16}$/;
     return !re.test(password);
+  }, [password]);
+
+  const passwordDescription = useMemo(() => {
+    if (password.length === 0) return "비밀번호를 입력하세요.";
+    if (password.length < 9) return "비밀번호는 9자리 이상입니다.";
+    if (password.length > 16) return "비밀번호는 16자리 이하입니다.";
+    return "비밀번호 (9~16자 영문 대소문자, 숫자, 특수문자 조합)";
   }, [password]);
 
   const onFormChange = useCallback((e: React.FormEvent<HTMLFormElement>) => {
@@ -46,6 +53,16 @@ export default function Login() {
     }
   }, [email, password, navigate]);
 
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (!isEmailError && !isPasswordError) {
+        handleLogin();
+      }
+    },
+    [isEmailError, isPasswordError, handleLogin]
+  );
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-6 py-[194px]">
       <div className="w-full max-w-[680px]">
@@ -61,6 +78,7 @@ export default function Login() {
           <form
             className="flex w-full flex-col items-center justify-center gap-[16px]"
             onChange={onFormChange}
+            onSubmit={handleSubmit}
           >
             <InputField
               label="아이디(이메일)"
@@ -74,7 +92,7 @@ export default function Login() {
               label="비밀번호"
               type="password"
               placeholder="비밀번호"
-              description="비밀번호는 8자리 이상입니다."
+              description={passwordDescription}
               error={isPasswordError}
               id="password"
             />
@@ -84,6 +102,7 @@ export default function Login() {
               fullWidth
               disabled={isEmailError || isPasswordError}
               onClick={handleLogin}
+              type="submit"
             >
               로그인
             </Button>
