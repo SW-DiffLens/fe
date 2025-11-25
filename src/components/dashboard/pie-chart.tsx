@@ -4,7 +4,7 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { useLayoutEffect, useRef } from "react";
 import ChartReasoningTooltip from "@/components/chart-reasoning-tooltip";
 import { CHART_COLORS } from "@/constants/chart-colors";
-import { truncateBeforeParenthesis } from "@/utils/text";
+import { processChartCategory } from "@/utils/text";
 
 interface DataPoint {
   label: string;
@@ -85,7 +85,7 @@ export default function PieChartComponent({
 
       processedData = [
         ...topItems.map((item) => ({
-          category: truncateBeforeParenthesis(item.label),
+          category: processChartCategory(item.label),
           value: item.value,
         })),
         {
@@ -95,7 +95,7 @@ export default function PieChartComponent({
       ];
     } else {
       processedData = sortedData.map((item) => ({
-        category: truncateBeforeParenthesis(item.label),
+        category: processChartCategory(item.label),
         value: item.value,
       }));
     }
