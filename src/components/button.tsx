@@ -45,8 +45,10 @@ export default function Button({
 
   const variantClasses: Record<ButtonVariant, string> = disabled
     ? {
-        filled: "bg-gray-300 text-gray-500 border-gray-300 flex items-center justify-center gap-[4px]",
-        outlined: "bg-gray-100 text-gray-500 border border-gray-300 flex items-center justify-center gap-[4px]",
+        filled:
+          "bg-gray-300 text-gray-500 border-gray-300 flex items-center justify-center gap-[4px]",
+        outlined:
+          "bg-gray-100 text-gray-500 border border-gray-300 flex items-center justify-center gap-[4px]",
         icon: "bg-gray-300 text-gray-500 flex items-center justify-center gap-[4px]",
       }
     : {
