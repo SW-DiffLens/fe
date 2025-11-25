@@ -46,6 +46,16 @@ export default function Login() {
     }
   }, [email, password, navigate]);
 
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (!isEmailError && !isPasswordError) {
+        handleLogin();
+      }
+    },
+    [isEmailError, isPasswordError, handleLogin]
+  );
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-6 py-[194px]">
       <div className="w-full max-w-[680px]">
@@ -61,6 +71,7 @@ export default function Login() {
           <form
             className="flex w-full flex-col items-center justify-center gap-[16px]"
             onChange={onFormChange}
+            onSubmit={handleSubmit}
           >
             <InputField
               label="아이디(이메일)"
@@ -84,6 +95,7 @@ export default function Login() {
               fullWidth
               disabled={isEmailError || isPasswordError}
               onClick={handleLogin}
+              type="submit"
             >
               로그인
             </Button>
