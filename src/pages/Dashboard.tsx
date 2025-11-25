@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import apiClient from "@/api/client";
-import { getLibraryById } from "@/api/library";
 import BestMatchProfile from "@/components/dashboard/best-match-profile";
 import ColumnChartComponent from "@/components/dashboard/column-chart";
 import DonutChartComponent from "@/components/dashboard/donut-chart";
@@ -14,24 +13,15 @@ import StackedBarChartComponent from "@/components/dashboard/stacked-bar-chart";
 import { useDashboard } from "@/contexts/DashboardContext";
 import type { DashboardPanel } from "@/types/dashboard_panel";
 import type { DashboardResult } from "@/types/dashboard_result";
-import type { LibraryDetailResponse } from "@/types/library";
 
 export default function Dashboard() {
   const location = useLocation();
   const navigate = useNavigate();
-  const params = useParams();
   const [data, setData] = useState<DashboardPanel>();
   const [page, setPage] = useState(1);
   const { setDashboardData } = useDashboard();
-  const [libraryData, setLibraryData] = useState<LibraryDetailResponse | null>(
-    null
-  );
 
-  // URL 경로로 라이브러리인지 검색 결과인지 판단
-  const isLibrary = location.pathname.includes("/library/");
-  const libraryId = isLibrary ? Number(params.id) : null;
-
-  // location.state가 있으면 검색 결과, 없으면 라이브러리
+  // location.state에서 검색 결과 데이터 가져오기
   const stateData = location.state as DashboardResult | null;
   const { result, search_id, question } = stateData || {
     result: null,
@@ -42,43 +32,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (isLibrary && libraryId) {
-          // 라이브러리 데이터 로드
-          const response = await getLibraryById(libraryId);
-          if (response.is_success) {
-            setLibraryData(response.result);
-
-            // 라이브러리 패널 데이터를 DashboardPanel 형식으로 변환
-            const panelData = response.result.panels || [];
-            const startIndex = (page - 1) * 10;
-            const endIndex = startIndex + 10;
-            const paginatedPanels = panelData.slice(startIndex, endIndex);
-
-            const transformedData: DashboardPanel = {
-              keys: ["gender"],
-              values: paginatedPanels.map((panel) => ({
-                respondent_id: panel.panel_id,
-                gender: panel.gender,
-                age: String(panel.age),
-                residence: panel.residence || "-",
-                personal_income: "-", // 라이브러리 데이터에는 소득 정보가 없음
-                concordance_rate: "-", // 라이브러리에는 일치율이 없음
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              })) as any,
-              page_info: {
-                offset: (page - 1) * 10,
-                limit: 10,
-                current_page: page,
-                current_page_count: paginatedPanels.length,
-                total_page_count: Math.ceil(panelData.length / 10),
-                total_count: panelData.length,
-                has_next: endIndex < panelData.length,
-                has_previous: page > 1,
-              },
-            };
-            setData(transformedData);
-          }
-        } else if (search_id) {
+        if (search_id) {
           // 검색 결과 데이터 로드
           const response = await apiClient.get(
             `/search/${search_id}/each-responses`,
@@ -100,11 +54,10 @@ export default function Dashboard() {
       } catch (error) {
         console.error("데이터 로드 실패:", error);
         setData(undefined);
-        setLibraryData(null);
       }
     };
     fetchData();
-  }, [search_id, page, setDashboardData, isLibrary, libraryId]);
+  }, [search_id, page, setDashboardData]);
 
   const handlePanelClick = (panelId: string, concordanceRate: string) => {
     navigate(`/panel/${panelId}`, {
@@ -125,7 +78,7 @@ export default function Dashboard() {
           <div className="flex h-full w-full flex-col items-start justify-between rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
             <div className="flex w-full flex-col items-center justify-center gap-[48px]">
               <div className="w-full text-start text-gray-950 text-h4">
-                {isLibrary ? libraryData?.library_name : question}
+                {question}
               </div>
               {result?.main_chart &&
                 (() => {
@@ -193,27 +146,14 @@ export default function Dashboard() {
             </div>
             <div className="flex w-full flex-col items-start justify-center gap-[16px]">
               <div className="w-full text-center text-caption text-gray-700">
-                {isLibrary ? (
-                  <>
-                    패널 수: {libraryData?.panel_count}명 / 생성일:{" "}
-                    {libraryData?.created_at
-                      ? new Date(libraryData.created_at).toLocaleDateString(
-                          "ko-KR"
-                        )
-                      : "-"}
-                  </>
-                ) : (
-                  <>
-                    표본 수: {result?.summary?.total_respondents}명 / 데이터
-                    수집일: {result?.summary?.data_capture_date} / 신뢰도:{" "}
-                    {result?.summary?.confidence_level || "-"}%
-                  </>
-                )}
+                표본 수: {result?.summary?.total_respondents}명 / 데이터 수집일:{" "}
+                {result?.summary?.data_capture_date} / 신뢰도:{" "}
+                {result?.summary?.confidence_level || "-"}%
               </div>
             </div>
           </div>
           {/* 오른쪽 */}
-          {!isLibrary && data?.values?.[0] && (
+          {data?.values?.[0] && (
             <BestMatchProfile
               respondentId={data.values[0].respondent_id}
               concordanceRate={data.values[0].concordance_rate}
@@ -418,9 +358,9 @@ export default function Dashboard() {
           page={page}
           setPage={setPage}
           onPanelClick={handlePanelClick}
-          searchId={isLibrary ? String(libraryId) : search_id || ""}
-          question={isLibrary ? libraryData?.library_name || "" : question}
-          isLibrary={isLibrary}
+          searchId={search_id || ""}
+          question={question}
+          isLibrary={false}
         />
       </div>
     </div>

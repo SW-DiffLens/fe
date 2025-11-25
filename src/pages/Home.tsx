@@ -9,6 +9,7 @@ import FilterIcon from "@/assets/icons/ic_filter";
 import Button from "@/components/button";
 import FilterSection from "@/components/home/filter-section";
 import QuickSearchButton from "@/components/home/quick-search-button";
+import QuickSearchButtonSkeleton from "@/components/home/quick-search-button-skeleton";
 import SearchBar from "@/components/search-bar";
 import Tooltip from "@/components/tooltip";
 import { filterSections } from "@/data/filter-sectioins";
@@ -36,13 +37,14 @@ export default function Home() {
     setSearchType(type);
   };
 
-  const { data: quickSearchButtons = [] } = useQuery<QuickSearchButton[]>({
-    queryKey: ["quickSearchButtons"],
-    queryFn: async () => {
-      const response = await apiClient.get("/search/recommended");
-      return response.data.result.recommendations;
-    },
-  });
+  const { data: quickSearchButtons = [], isLoading: isQuickSearchLoading } =
+    useQuery<QuickSearchButton[]>({
+      queryKey: ["quickSearchButtons"],
+      queryFn: async () => {
+        const response = await apiClient.get("/search/recommended");
+        return response.data.result.recommendations;
+      },
+    });
 
   const handleSectionSelectionChange = (
     sectionIndex: number,
@@ -273,14 +275,18 @@ export default function Home() {
         <div className="flex w-full flex-col items-start justify-center gap-[12px] rounded-2xl bg-opacity-500 px-[40px] py-[32px]">
           <div className="text-gray-950 text-subtitle1">빠른 검색 추천</div>
           <div className="grid w-full grid-cols-3 gap-[12px]">
-            {quickSearchButtons.map((button) => (
-              <QuickSearchButton
-                key={button.id}
-                title={button.title}
-                subtitle={button.description}
-                onClick={() => handleQuickSearch(button)}
-              />
-            ))}
+            {isQuickSearchLoading
+              ? Array.from({ length: 3 }).map((_, index) => (
+                  <QuickSearchButtonSkeleton key={index} />
+                ))
+              : quickSearchButtons.map((button) => (
+                  <QuickSearchButton
+                    key={button.id}
+                    title={button.title}
+                    subtitle={button.description}
+                    onClick={() => handleQuickSearch(button)}
+                  />
+                ))}
           </div>
         </div>
       </div>
