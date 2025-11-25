@@ -12,6 +12,7 @@ import QuickSearchButton from "@/components/home/quick-search-button";
 import QuickSearchButtonSkeleton from "@/components/home/quick-search-button-skeleton";
 import SearchBar from "@/components/search-bar";
 import Tooltip from "@/components/tooltip";
+import { useLoading } from "@/contexts/LoadingContext";
 import { filterSections } from "@/data/filter-sectioins";
 
 interface QuickSearchButton {
@@ -23,6 +24,7 @@ interface QuickSearchButton {
 export default function Home() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { showLoading, hideLoading } = useLoading();
   const [searchValue, setSearchValue] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -43,6 +45,7 @@ export default function Home() {
       queryFn: async () => {
         const response = await apiClient.get("/search/recommended", {
           skipGlobalLoading: true,
+          timeout: 60000,
         });
         return response.data.result.recommendations;
       },
@@ -70,6 +73,8 @@ export default function Home() {
 
   const handleSearch = async () => {
     try {
+      showLoading("패널 데이터를 불러오는 중입니다...");
+
       // 모든 섹션의 선택된 code들을 하나의 배열로 합치기
       const allFilterCodes = selectedFilterCodes.flat();
       const response = await apiClient.post(
@@ -81,8 +86,12 @@ export default function Home() {
         },
         {
           timeout: 60000,
+          skipGlobalLoading: true,
         }
       );
+
+      hideLoading();
+
       navigate(`/dashboard/${response.data.result.search_id}`, {
         state: {
           result: response.data.result,
@@ -92,6 +101,7 @@ export default function Home() {
       });
     } catch (error) {
       console.error("검색 요청 실패:", error);
+      hideLoading();
     }
   };
 
