@@ -6,6 +6,7 @@ import AllResponses from "@/pages/AllResponses";
 import Compare from "@/pages/Compare";
 import Dashboard from "@/pages/Dashboard";
 import Library from "@/pages/Library";
+import LibraryDetail from "@/pages/LibraryDetail";
 import Panel from "@/pages/Panel";
 import BasicLayout from "../layouts/BasicLayout";
 import HomeLayout from "../layouts/HomeLayout";
@@ -81,6 +82,10 @@ export const router = createBrowserRouter([
                 element: <Library />,
               },
               {
+                path: ":id",
+                element: <LibraryDetail />,
+              },
+              {
                 path: "compare",
                 element: <Compare />,
               },
@@ -122,10 +127,6 @@ export const router = createBrowserRouter([
           },
           {
             path: ":id",
-            element: <Dashboard />,
-          },
-          {
-            path: "library/:id",
             element: <Dashboard />,
           },
           {

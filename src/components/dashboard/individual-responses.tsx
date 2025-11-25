@@ -29,6 +29,7 @@ export default function IndividualResponses({
       state: {
         search_id: searchId,
         question,
+        isLibrary,
       },
     });
   };

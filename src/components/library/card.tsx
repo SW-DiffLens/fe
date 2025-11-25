@@ -25,7 +25,7 @@ export default function Card({
   const navigate = useNavigate();
 
   const handleViewClick = () => {
-    navigate(`/dashboard/library/${id}`);
+    navigate(`/home/library/${id}`);
   };
 
   return (
