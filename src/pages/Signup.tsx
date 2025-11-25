@@ -27,7 +27,7 @@ export default function Signup() {
   }, [email]);
   const isPasswordError = useMemo(() => {
     if (password.length === 0) return true;
-    const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,16}$/;
+    const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{9,16}$/;
     return !re.test(password);
   }, [password]);
   const isPassword2Error = useMemo(() => {
@@ -100,7 +100,7 @@ export default function Signup() {
               label="비밀번호"
               type="password"
               placeholder="비밀번호"
-              description="비밀번호 (8~16자 영문 대소문자, 숫자, 특수문자 조합)"
+              description="비밀번호 (9~16자 영문 대소문자, 숫자, 특수문자 조합)"
               error={isPasswordError}
               id="password"
             />

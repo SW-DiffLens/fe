@@ -17,7 +17,7 @@ export default function Login() {
   }, [email]);
   const isPasswordError = useMemo(() => {
     if (password.length === 0) return true;
-    const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,16}$/;
+    const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{9,16}$/;
     return !re.test(password);
   }, [password]);
 
@@ -74,7 +74,7 @@ export default function Login() {
               label="비밀번호"
               type="password"
               placeholder="비밀번호"
-              description="비밀번호는 8자리 이상입니다."
+              description="비밀번호는 9자리 이상입니다."
               error={isPasswordError}
               id="password"
             />
