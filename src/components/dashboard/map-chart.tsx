@@ -4,7 +4,7 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import am5geodata_southKoreaLow from "@amcharts/amcharts5-geodata/southKoreaLow";
 import { useLayoutEffect, useRef } from "react";
 import ChartReasoningTooltip from "@/components/chart-reasoning-tooltip";
-import { REGION_NAME_MAP } from "@/constants/region-map";
+import { REGION_CODE_MAP, REGION_NAME_MAP } from "@/constants/region-map";
 import type { ChartDataPoint } from "@/types/dashboard_result";
 
 interface MapChartProps {
@@ -87,11 +87,25 @@ export default function MapChartComponent({
     ]);
 
     // Prepare data with region IDs
-    const chartData = data.map((item) => ({
-      id: item.id,
-      name: item.name || (item.id ? REGION_NAME_MAP[item.id] : undefined),
-      value: item.value,
-    }));
+    const chartData = data.map((item) => {
+      const isAlreadyCode = item.id?.startsWith("KR-");
+
+      let regionCode: string | null | undefined = item.id;
+      if (!isAlreadyCode && item.id) {
+        regionCode = REGION_CODE_MAP[item.id] || item.id;
+      }
+
+      if (!regionCode && item.category) {
+        regionCode = REGION_CODE_MAP[item.category] || item.category;
+      }
+
+      return {
+        id: regionCode,
+        name:
+          item.name || (regionCode ? REGION_NAME_MAP[regionCode] : undefined),
+        value: item.value,
+      };
+    });
 
     polygonSeries.data.setAll(chartData);
 
