@@ -156,13 +156,21 @@ export default function LibraryDetail() {
       {} as Record<string, number>
     );
 
-    // 객체를 배열로 변환하고 정렬
     const toChartData = (
       distribution: Record<string, number>,
       limit?: number
     ) => {
       const sorted = Object.entries(distribution)
-        .map(([category, value]) => ({ category, value }))
+        .map(([category, value]) => ({
+          category,
+          value,
+          male: null,
+          female: null,
+          id: null,
+          name: null,
+          male_max: null,
+          female_max: null,
+        }))
         .sort((a, b) => b.value - a.value);
 
       if (limit && sorted.length > limit) {
@@ -171,7 +179,16 @@ export default function LibraryDetail() {
           .slice(limit)
           .reduce((sum, item) => sum + item.value, 0);
         if (othersValue > 0) {
-          top.push({ category: "기타", value: othersValue });
+          top.push({
+            category: "기타",
+            value: othersValue,
+            male: null,
+            female: null,
+            id: null,
+            name: null,
+            male_max: null,
+            female_max: null,
+          });
         }
         return top;
       }
