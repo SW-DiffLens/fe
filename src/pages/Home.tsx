@@ -99,8 +99,7 @@ export default function Home() {
           question: searchValue,
         },
       });
-    } catch (error) {
-      console.error("검색 요청 실패:", error);
+    } catch {
       hideLoading();
     }
   };
@@ -123,14 +122,24 @@ export default function Home() {
         },
       });
     } catch (error) {
-      console.error("빠른 검색 요청 실패:", error);
-      const axiosError = error as AxiosError<{ message?: string }>;
+      const axiosError = error as AxiosError<{
+        message?: string;
+        is_success?: boolean;
+        code?: string;
+      }>;
 
+      const errorMessage = axiosError.response?.data?.message || "";
+      const errorCode = axiosError.response?.data?.code || "";
+      const statusCode = axiosError.response?.status;
       const isExpiredError =
-        axiosError.response?.data.message === "만료된 추천 검색어입니다.";
+        errorMessage.includes("만료") ||
+        errorMessage.includes("expired") ||
+        errorMessage.includes("서브서버") ||
+        errorCode === "COMMON502" ||
+        statusCode === 404 ||
+        statusCode === 500;
 
       if (isExpiredError) {
-        // 만료된 경우 자연어 검색으로 폴백
         try {
           const allFilterCodes = selectedFilterCodes.flat();
           const response = await apiClient.post(
@@ -153,12 +162,10 @@ export default function Home() {
             },
           });
 
-          // 성공적으로 폴백했으면 추천 검색어 갱신
           queryClient.invalidateQueries({
             queryKey: ["quickSearchButtons"],
           });
-        } catch (searchError) {
-          console.error("자연어 검색 실패:", searchError);
+        } catch {
           alert("검색에 실패했습니다. 다시 시도해주세요.");
         }
       } else {
