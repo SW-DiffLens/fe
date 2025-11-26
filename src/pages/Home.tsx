@@ -85,7 +85,7 @@ export default function Home() {
           filters: allFilterCodes,
         },
         {
-          timeout: 60000,
+          timeout: 60000 * 5,
           skipGlobalLoading: true,
         }
       );
@@ -150,7 +150,7 @@ export default function Home() {
               filters: allFilterCodes,
             },
             {
-              timeout: 60000,
+              timeout: 60000 * 5,
             }
           );
 
