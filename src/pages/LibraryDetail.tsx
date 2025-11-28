@@ -48,6 +48,8 @@ export default function LibraryDetail() {
         residence: panel.residence || "-",
         personal_income: "-",
         concordance_rate: "-",
+        marital_status: panel.marital_status || "-",
+        occupation: panel.occupation || "-",
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       })) as any,
       page_info: {

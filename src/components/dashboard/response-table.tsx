@@ -1,5 +1,6 @@
 import MyPageIcon from "@/assets/icons/ic_mypage";
 import type { DashboardPanel } from "@/types/dashboard_panel";
+import { truncateBeforeParenthesis } from "@/utils/text";
 
 interface ResponseTableProps {
   data: DashboardPanel | undefined;
@@ -19,8 +20,10 @@ export default function ResponseTable({
           <th className="w-[220px] px-3">응답자ID</th>
           <th className="px-3">성별</th>
           <th className="px-3">나이</th>
-          <th className="px-3">거주지</th>
+          {isLibrary && <th className="px-3">결혼상태</th>}
+          {!isLibrary && <th className="px-3">거주지</th>}
           {/* <th className="px-3">월소득</th> */}
+          {isLibrary && <th className="px-3">직업</th>}
           {!isLibrary && <th className="px-3">일치율</th>}
         </tr>
       </thead>
@@ -55,8 +58,18 @@ export default function ResponseTable({
                     : item.gender}
               </td>
               <td className="px-3">{item.age}</td>
-              <td className="px-3">{item.residence}</td>
+              {!isLibrary && <td className="px-3">{item.residence}</td>}
+              {isLibrary && (
+                <td className="px-3">{item.marital_status || "-"}</td>
+              )}
               {/* <td className="px-3">{item.personal_income}</td> */}
+              {isLibrary && (
+                <td className="px-3">
+                  {item.occupation
+                    ? truncateBeforeParenthesis(item.occupation)
+                    : "-"}
+                </td>
+              )}
               {!isLibrary && <td className="px-3">{concordancePercent}</td>}
             </tr>
           );
