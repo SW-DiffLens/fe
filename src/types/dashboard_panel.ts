@@ -8,6 +8,8 @@ export interface DashboardPanel {
       respondent_id: string;
       personal_income: string;
       concordance_rate: string;
+      marital_status?: string;
+      occupation?: string;
     },
   ];
   page_info: {

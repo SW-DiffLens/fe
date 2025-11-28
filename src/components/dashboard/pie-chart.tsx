@@ -60,6 +60,7 @@ export default function PieChartComponent({
       centerY: 0,
       fontSize: 12,
       fill: am5.color(0x000000),
+      text: "{valuePercentTotal.formatNumber('0.0')}%",
     });
 
     series.ticks.template.setAll({

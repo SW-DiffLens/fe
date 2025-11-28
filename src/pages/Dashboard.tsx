@@ -60,6 +60,7 @@ export default function Dashboard() {
   }, [search_id, page, setDashboardData]);
 
   const handlePanelClick = (panelId: string, concordanceRate: string) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     navigate(`/panel/${panelId}`, {
       state: {
         question,
