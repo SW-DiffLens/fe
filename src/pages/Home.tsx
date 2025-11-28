@@ -106,13 +106,18 @@ export default function Home() {
 
   const handleQuickSearch = async (button: QuickSearchButton) => {
     try {
+      showLoading("패널 데이터를 불러오는 중입니다...");
+
       const response = await apiClient.post(
         `/search/recommended/${button.id}`,
         {},
         {
           timeout: 60000,
+          skipGlobalLoading: true,
         }
       );
+
+      hideLoading();
 
       navigate(`/dashboard/${response.data.result.search_id}`, {
         state: {
@@ -151,8 +156,11 @@ export default function Home() {
             },
             {
               timeout: 60000 * 5,
+              skipGlobalLoading: true,
             }
           );
+
+          hideLoading();
 
           navigate(`/dashboard/${response.data.result.search_id}`, {
             state: {
@@ -166,9 +174,11 @@ export default function Home() {
             queryKey: ["quickSearchButtons"],
           });
         } catch {
+          hideLoading();
           alert("검색에 실패했습니다. 다시 시도해주세요.");
         }
       } else {
+        hideLoading();
         alert("검색에 실패했습니다. 다시 시도해주세요.");
       }
     }
