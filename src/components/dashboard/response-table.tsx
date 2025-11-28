@@ -20,7 +20,7 @@ export default function ResponseTable({
           <th className="px-3">성별</th>
           <th className="px-3">나이</th>
           <th className="px-3">거주지</th>
-          <th className="px-3">월소득</th>
+          {/* <th className="px-3">월소득</th> */}
           {!isLibrary && <th className="px-3">일치율</th>}
         </tr>
       </thead>
@@ -56,7 +56,7 @@ export default function ResponseTable({
               </td>
               <td className="px-3">{item.age}</td>
               <td className="px-3">{item.residence}</td>
-              <td className="px-3">{item.personal_income}</td>
+              {/* <td className="px-3">{item.personal_income}</td> */}
               {!isLibrary && <td className="px-3">{concordancePercent}</td>}
             </tr>
           );
